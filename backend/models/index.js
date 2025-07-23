@@ -7,4 +7,5 @@ const journal=require('./Journal')
 const notes=require('./Notes')
 const paper=require('./Paper')
 const semester=require('./Semester')
-module.exports={admin,syllabus,book,course,feedback,journal,notes,paper,semester}
+const faculty=require('./faculty')
+module.exports={admin,syllabus,book,course,feedback,journal,notes,paper,semester,faculty}
