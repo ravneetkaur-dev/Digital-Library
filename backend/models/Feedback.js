@@ -34,4 +34,5 @@ const feedbackSchema=mongoose.Schema({
     //     required: true
     // },
 });
-module.exports=mongoose.model("Feedback",feedbackSchema);
+const feedback=mongoose.model("Feedback",feedbackSchema);
+module.exports=feedback

@@ -1,0 +1,11 @@
+const admin=require('./Admin')
+const syllabus=require('./Syllabus')
+const book=require('./Book')
+const course=require('./Course')
+const feedback=require('./Feedback')
+const journal=require('./Journal')
+const notes=require('./Notes')
+const paper=require('./Paper')
+const semester=require('./Semester')
+const faculty=require('./faculty')
+module.exports={admin,syllabus,book,course,feedback,journal,notes,paper,semester,faculty}

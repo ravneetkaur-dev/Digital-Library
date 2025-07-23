@@ -27,4 +27,5 @@ const courseSchema=mongoose.Schema({
     fileUrl: String
   }]
 });
-Medule.exports=mongoose.model("Course",courseSchema);
+const course=mongoose.model("Course",courseSchema);
+Medule.exports= course

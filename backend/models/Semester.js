@@ -13,4 +13,6 @@ const semesterSchema = mongoose.Schema({
     type: String
   }],
 });
-module.exports = mongoose.model("Semester", semesterSchema);
+const semester=mongoose.model("Semester", semesterSchema);
+
+module.exports = semester 
