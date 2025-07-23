@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const user= require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const registeruser = async (req, res) => {
+const registerFaculty = async (req, res) => {
     const { name, email, password, role } = req.body;
     try {
         // Check if user already exists
@@ -41,6 +41,7 @@ const registeruser = async (req, res) => {
         res.status(500).json({ message: 'Internal server error' });
     }
 }
+
 module.exports = {
-    registeruser
+    registerFaculty
 };
