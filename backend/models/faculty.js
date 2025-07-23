@@ -30,5 +30,5 @@ const UserSchema = mongoose.Schema({
        default:Date.now
     }
 })
-const admin=mongoose.model("User",UserSchema);
-module.exports=admin
+const faculty=mongoose.model("User",UserSchema);
+module.exports= faculty; 

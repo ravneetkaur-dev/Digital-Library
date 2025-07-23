@@ -43,4 +43,5 @@ const notesSchema = mongoose.Schema({
         fileUrl: String
     }]
 });
-module.exports = mongoose.model("Notes", notesSchema);
+const journal=mongoose.model("Notes", notesSchema);
+module.exports = journal;

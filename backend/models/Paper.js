@@ -43,4 +43,5 @@ const paperSchema = mongoose.Schema({
         fileUrl: String
     }]
 });
-module.exports = mongoose.model("Paper", paperSchema);
+const paper= mongoose.model("Paper", paperSchema);
+module.exports = paper
