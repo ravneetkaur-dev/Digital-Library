@@ -1,2 +1,5 @@
 const admin=require('./Admin')
 const syllabus=require('./Syllabus')
+const book=require('./Book')
+const course=require('./Course')
+const feedback=require('./Feedback')
