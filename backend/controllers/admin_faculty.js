@@ -12,3 +12,9 @@ const password='Raju123';
         });
         console.log('Admin created successfully',newAdmin);
 }
+export const permissions = {
+    canUpdate: true,
+    canEdit: true,
+    canDelete: true,
+    canManageFaculty: true
+};
