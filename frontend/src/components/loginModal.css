@@ -1,0 +1,39 @@
+.modal-backdrop.show {
+  backdrop-filter: blur(8px);
+}
+
+.login-body {
+  background: #002147;
+  color: #fdc800;
+  padding: 2rem;
+  border-radius: 8px;
+}
+
+.login-body .btn {
+  background: #fdc800;
+  color: #002147;
+  border: none;
+}
+
+.login-body .btn:hover {
+  background: #e6b800;
+  color: #002147;
+}
+
+.login-buttons {
+  display: flex;
+  gap: 15px;
+}
+
+.forgot-password-link {
+  font-size: 0.9rem;
+  color: #fdc800; 
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.forgot-password-link:hover {
+  color: #e6b800;
+  text-decoration: underline;
+}
+
