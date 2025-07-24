@@ -1,0 +1,87 @@
+.home-main {
+  background-image: url('/images/library.webp');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 58vh;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  /* background-attachment: fixed;
+  z-index: 0; */
+}
+
+
+
+.main-section-quote {
+  font-family: Georgia, 'Times New Roman', serif;
+  padding: 30px 40px;
+  width: 100%;
+  max-width: 500px;
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: #002147;
+  text-align: left;
+  /* letter-spacing: 0.002rem; */
+}
+
+
+
+.page-content {
+  padding: 70px 0;
+}
+
+.content-row {
+  min-height: 500px;
+}
+
+.image-block {
+  background: linear-gradient(
+      to right,
+      rgba(255,255,255, 0.1) 0%,
+      rgba(255,255,255, 0.5) 60%,
+      rgba(255,255,255, 1) 100%
+    ),
+    url('/images/book5.jpg');
+  background-size: cover;
+  background-position: left center;
+  min-height: 500px;
+}
+
+.text-block {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px;
+  background: transparent;
+}
+
+.quote-text {
+  font-style: italic;
+  font-size: 1.1rem;
+  margin: 20px 0;
+  border-left: 3px solid #1e3c72;
+  padding-left: 15px;
+  color: #555;
+}
+
+.section-title {
+  font-family: Roboto, sans-serif;
+  font-size: 2.2rem;
+  color: #002147; 
+  margin-bottom: 20px;
+}
+
+.section-text {
+  font-family: Roboto, sans-serif;
+  font-size: 1.1rem;
+  /* color: #002147;  */
+  line-height: 1.5;
+  text-align: justify;
+}
+
+.section-text em {
+  font-style: italic;
+  color: #002147;
+}
