@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-// import { Boolean } from 'webidl-conversions';
 const UserSchema = mongoose.Schema({
     name: {
         type: String,
