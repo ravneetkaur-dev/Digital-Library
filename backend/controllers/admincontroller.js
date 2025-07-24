@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const user= require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const registeruser = async (req, res) => {
+exports.get = async (req, res) => {
     const { name, email, password, role } = req.body;
     try {
         // Check if user already exists
@@ -22,10 +22,7 @@ const registeruser = async (req, res) => {
         });
         // Save the user to the database
         await newUser.save();
-        // Generate a JWT token
-        const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET
-            , { expiresIn: '1h' });
-        // Respond with the user data and token
+        const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
         res.status(201).json({
             user: {
                 id: newUser._id,
@@ -33,7 +30,7 @@ const registeruser = async (req, res) => {
                 email: newUser.email,
                 role: newUser.role
             },
-            token
+            message: 'User registered successfully'
         });
     }
     catch (error) {
@@ -41,6 +38,6 @@ const registeruser = async (req, res) => {
         res.status(500).json({ message: 'Internal server error' });
     }
 }
-module.exports = {
-    registeruser
-};
+// module.exports = {
+//     registeruser
+// };
