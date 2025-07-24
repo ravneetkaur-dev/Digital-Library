@@ -56,4 +56,20 @@ export const registeruser = async (req, res) => {
         res.status(500).json({ message: 'Internal server error' });
     }
     }
+    export const candelete=async(req,res)=>{
+const {id}=req.params;
 
+try{
+   
+    const deletefaculty=await faculty.findByIdAndDelete(id);
+
+    if(!deletefaculty){
+        return res.status(404).json({message:'Faculty not found'});
+    }
+    res.status(200).json({message:'Faculty deleted successfully'});
+
+}
+catch(error){
+    res.status(500).json({message:"internal server error"});
+}
+    }
