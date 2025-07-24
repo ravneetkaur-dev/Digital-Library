@@ -25,8 +25,8 @@ export const login = async (req, res) => {
     process.env.JWT_SECRET,
     { expiresIn: '1d' }
   );
-
-  return res.status(200).json({ message: "Login successful", token });
+  
+  return res.status(200).json({ message: "Login successful", token,id:data.id });
 };
 
 export const logout = async (req, res) => {
