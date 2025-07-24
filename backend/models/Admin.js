@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const { boolean } = require('webidl-conversions');
+import mongoose from 'mongoose';
+// import { Boolean } from 'webidl-conversions';
 const UserSchema = mongoose.Schema({
     name: {
         type: String,
@@ -20,15 +20,15 @@ const UserSchema = mongoose.Schema({
         require:true
     },
     permission:{
-        canUpdate:{type:boolean,default:false},
-        canEdit:{type:boolean,default:false},
-        canDelete:{type:boolean,default:false},
-        canManageFaculty:{type:boolean,default:false},
+        canUpdate:{type:Boolean,default:false},
+        canEdit:{type:Boolean,default:false},
+        canDelete:{type:Boolean,default:false},
+        canManageFaculty:{type:Boolean,default:false},
     },
     createdAt:{
-       date:{type:Date},
+       type:Date,
        default:Date.now
     }
 })
 const admin=mongoose.model("User",UserSchema);
-module.exports=admin
+export default admin;
