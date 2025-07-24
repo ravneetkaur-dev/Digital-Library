@@ -1,15 +1,24 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const db = require('./config/db');
-const cors = require('cors');
-const facultyRouter = require('./routes/facultyrouter');
-const adminRouter = require('./routes/adminrouter');
+import express from 'express';
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+import db from './config/db.js'; // ✅ Fixed
+import facultyRouter from './routes/facultyrouter.js';
+import adminRouter from './routes/adminrouter.js';
+// import cors from 'cors'; // Uncomment if using CORS
+
+dotenv.config();
+
 const app = express();
 const PORT = process.env.PORT || 5000;
-require('dotenv').config();
+
 db();
-app.use(cors());
+
+// app.use(cors()); // Uncomment if needed
 app.use(express.json());
+
+app.use('/faculty', facultyRouter);
+app.use('/admin', adminRouter);
+
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
