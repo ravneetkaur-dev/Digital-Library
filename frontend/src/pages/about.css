@@ -1,0 +1,125 @@
+:root {
+  --deep-blue: #002244;
+  --gold: #ffcc00;
+  --light-gold: #ffe680;
+  --off-white: #f9f9f9;
+  --dark-grey: #1e1e1e;
+}
+
+.about-page {
+  background-color: var(--off-white);
+  color: var(--deep-blue);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.about-hero {
+  background: linear-gradient(120deg, #002147 70%, #fdc800 30%);
+}
+
+.about-hero h1 {
+  font-size: 3.5rem;
+  color: #fdc800;
+}
+
+.about-hero p {
+  font-size: 1.3rem;
+  color: #fff;
+}
+
+.section-title {
+  font-weight: bold;
+  color: var(--deep-blue);
+  border-left: 5px solid var(--gold);
+  padding-left: 12px;
+  margin-bottom: 1rem;
+}
+
+.section-text {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--dark-grey);
+}
+
+.bg-deep-blue {
+  background-color: var(--deep-blue) !important;
+}
+
+.bg-light {
+  background-color: #f2f2f2 !important;
+}
+
+/* Cards */
+.info-card, .why-card {
+  border-left: 4px solid var(--gold);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  height: 100%;
+}
+
+.info-card:hover, .why-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+}
+
+.info-card h4,
+.info-card p {
+  color: var(--gold) !important;
+}
+
+/* Timeline */
+.timeline {
+  border-left: 3px solid var(--gold);
+  padding-left: 20px;
+  position: relative;
+}
+
+.timeline-item {
+  position: relative;
+  padding: 1rem 0;
+  margin-left: 10px;
+}
+
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -13px;
+  top: 10px;
+  width: 15px;
+  height: 15px;
+  background-color: var(--deep-blue);
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
+.image-card img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+
+.bg-deep-blue .section-title,
+.bg-deep-blue .why-card,
+.bg-deep-blue p,
+.bg-deep-blue h5 {
+  color: var(--light-gold) !important;
+}
+
+.bg-deep-blue .why-card {
+  background-color: #011d3c;
+}
+
+.bg-deep-blue .info-card {
+  background-color: #011d3c;
+  color: var(--light-gold) !important;
+}
+
+.bg-deep-blue .info-card h4,
+.bg-deep-blue .info-card p {
+  color: var(--light-gold) !important;
+}
+
+
+.info-card,
+.why-card {
+  flex-grow: 1;
+}
