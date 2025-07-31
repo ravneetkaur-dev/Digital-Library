@@ -1,4 +1,4 @@
-const mongoose=require('mongoose');
+import mongoose from 'mongoose';
 const feedbackSchema=mongoose.Schema({
     userName:{
         type: String,
@@ -34,5 +34,5 @@ const feedbackSchema=mongoose.Schema({
     //     required: true
     // },
 });
-const feedback=mongoose.model("Feedback",feedbackSchema);
-module.exports=feedback
+const Feedback=mongoose.model("Feedback",feedbackSchema);
+export default Feedback;

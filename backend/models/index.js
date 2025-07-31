@@ -25,4 +25,5 @@
 
 import admin from './Admin.js';
 import faculty from './faculty.js';
-export { admin, faculty };
+import book from './Book.js';
+export { admin, faculty,book };
