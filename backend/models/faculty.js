@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import syllabus from './Syllabus';
+
 const UserSchema = mongoose.Schema({
     name: {
         type: String,

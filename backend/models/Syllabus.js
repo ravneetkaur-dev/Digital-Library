@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 const SyllabusSchema = mongoose.Schema({
     title: {
         type: String,
@@ -36,4 +36,4 @@ const SyllabusSchema = mongoose.Schema({
     
 });
 const syllabus = mongoose.model("Syllabus", SyllabusSchema);
-module.exports=syllabus;
+export default syllabus;

@@ -1,9 +1,14 @@
-import bcrypt from 'bcryptjs';
+// controllers/facultyController.js
+
 import faculty from '../models/faculty.js';
-export const registeruser = async (req, res) => {
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+
+// Register a new faculty
+export const registerUser = async (req, res) => {
     const { name, email, password, role } = req.body;
     try {
-
         const existingUser = await faculty.findOne({ email });
         if (existingUser) {
             return res.status(400).json({ message: 'Faculty already exists' });
@@ -20,6 +25,8 @@ export const registeruser = async (req, res) => {
 
         await newFaculty.save();
 
+        const token = jwt.sign({ userId: newFaculty._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+
         res.status(201).json({
             user: {
                 id: newFaculty._id,
@@ -27,6 +34,7 @@ export const registeruser = async (req, res) => {
                 email: newFaculty.email,
                 role: newFaculty.role
             },
+            token,
             message: 'Faculty registered successfully'
         });
     } catch (error) {
@@ -34,11 +42,17 @@ export const registeruser = async (req, res) => {
         res.status(500).json({ message: 'Internal server error' });
     }
 };
-    export const updateFaculty = async (req, res) => {
+
+// Update a faculty
+export const updateFaculty = async (req, res) => {
     const { id } = req.params;
     const { name, email, role } = req.body;
     try {
-        const updatedFaculty = await faculty.findByIdAndUpdate(id,{ name, email, role },{ new: true });
+        const updatedFaculty = await faculty.findByIdAndUpdate(
+            id,
+            { name, email, role },
+            { new: true }
+        );
         if (!updatedFaculty) {
             return res.status(404).json({ message: 'Faculty not found' });
         }
@@ -55,21 +69,25 @@ export const registeruser = async (req, res) => {
         console.error('Error updating faculty:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
-    }
-    export const candelete=async(req,res)=>{
-const {id}=req.params;
+};
 
-try{
-   
-    const deletefaculty=await faculty.findByIdAndDelete(id);
-
-    if(!deletefaculty){
-        return res.status(404).json({message:'Faculty not found'});
+// Delete a faculty
+export const deleteFaculty = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const deletedFaculty = await faculty.findByIdAndDelete(id);
+        if (!deletedFaculty) {
+            return res.status(404).json({ message: 'Faculty not found' });
+        }
+        res.status(200).json({ message: 'Faculty deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting faculty:', error);
+        res.status(500).json({ message: 'Internal server error' });
     }
-    res.status(200).json({message:'Faculty deleted successfully'});
+};
 
-}
-catch(error){
-    res.status(500).json({message:"internal server error"});
-}
-    }
+// module.exports = {
+//     registerUser,
+//     updateFaculty,
+//     deleteFaculty
+// };
