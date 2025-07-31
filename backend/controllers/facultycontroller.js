@@ -4,7 +4,7 @@ import bcrypt from 'bcryptjs';
 const jwt=require('jsonwebtoken')
 const dotenv = require('dotenv');
 const {faculty}=require('../models/index')
-const login=async(req,res)=>{
+export const login=async(req,res)=>{
     const {email,password}=req.body;
     const data=await faculty.findOne({email})
      if (!data) {
@@ -19,7 +19,7 @@ const login=async(req,res)=>{
        return res.status(200).json({message: "Login successful",token})
 }
 
-const logout=async(req,res)=>{
+export const logout=async(req,res)=>{
     try {
          res.send("Logged out successfully");
     }
@@ -28,4 +28,4 @@ const logout=async(req,res)=>{
         res.status(500).send("Internal server error");
     }
 };
-module.exports={login,logout};
+//module.exports={login,logout};
