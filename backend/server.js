@@ -16,11 +16,6 @@ db();
 
 // app.use(cors()); // Uncomment if needed
 app.use(express.json());
-
-app.use('/faculty', facultyRouter);
-app.use('/admin', adminRouter);
-app.use('/feedback', feedbackRouter);
-app.use('/syllabus', syllabusRoutes);
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
