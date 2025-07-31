@@ -1,0 +1,10 @@
+import express from 'express';
+import multer from 'multer';
+import { syllabus, getSyllabus, getSyllabusById, deleteSyllabus } from '../controllers/syllabuscontroller.js';
+const router = express.Router();
+const upload =multer({dest: 'uploads/syllabus/'});
+router.post('/uploadsyllabus', upload.single('file'), syllabus);
+router.get('/getsyllabus', getSyllabus);
+router.get('/getsyllabus/:id', getSyllabusById);
+router.delete('/deletesyllabus/:id', deleteSyllabus);
+export default router;

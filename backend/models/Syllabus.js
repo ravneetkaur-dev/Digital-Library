@@ -28,6 +28,10 @@ const SyllabusSchema = mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now
+    },
+    fileUrl:{
+        type:String,
+        required:true
     }
     
 });
