@@ -28,16 +28,6 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // app.use(cors()); // Uncomment if needed
 app.use(express.json());
-
-app.use('/faculty', facultyRouter);
-app.use('/admin', adminRouter);
-app.use('/feedback', feedbackRouter);
-app.use('/admins',admins)
-app.get('/book/upload-form', (req, res) => {
-  res.render('upload');
-});
-app.use('/book',book)
-
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
