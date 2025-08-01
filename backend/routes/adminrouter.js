@@ -6,6 +6,6 @@ const router = express.Router();
 
 router.post('/register', registerUser);
 router.put('/update/:id', updateFaculty);
-router.delete('/deletes/:id', deleteFaculty);
+router.delete('/delete/:id', deleteFaculty);
 router.get('/getfaculty', getFaculty);
 export default router;
