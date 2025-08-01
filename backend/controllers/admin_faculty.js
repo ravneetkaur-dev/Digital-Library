@@ -20,10 +20,10 @@
 // };
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { user } from '../models/User.js'; // correct import if using ES module
-
+import  admin from '../models/Admin.js' 
 export const createAdmin = async () => {
   try {
+    console.log("Creating admin...");
     const name = "raju";
     const email = "raju@gmail.com";
     const role = "admin";
@@ -31,20 +31,20 @@ export const createAdmin = async () => {
 
     const hashedPassword = await bcrypt.hash(plainPassword, 10);
 
-    const newAdmin = new user({
+    const newAdmin = new admin({
       name,
       email,
       role,
       password: hashedPassword
     });
 
-    await newAdmin.save(); // ✅ Save to DB
-    console.log("✅ Admin created successfully:", newAdmin);
+    await newAdmin.save(); 
+    console.log("Admin created successfully:", newAdmin);
   } catch (err) {
-    console.error("❌ Error creating admin:", err);
+    console.error("Error creating admin:", err);
   }
 };
 
-// ✅ Call the function
-//createAdmin();
+// Call the function
+// createAdmin();
 

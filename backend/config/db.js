@@ -1,4 +1,3 @@
-// ✅ db.js (ESM style)
 import mongoose from 'mongoose';
 
 const connectDB = async () => {
