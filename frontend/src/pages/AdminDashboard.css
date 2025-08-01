@@ -1,0 +1,45 @@
+.admin-dashboard {
+  height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.sidebar {
+  background: #002147;
+  color: white;
+  padding: 20px;
+  height: 100vh;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar h4 {
+  font-size: 1.5rem;
+  margin-bottom: 30px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.sidebar .nav-link {
+  color: white;
+  padding: 10px 15px;
+  margin: 5px 0;
+  border-radius: 8px;
+  transition: background 0.3s;
+}
+
+.sidebar .nav-link:hover,
+.sidebar .nav-link.active {
+  background-color: #fdc800;
+  color: #002147;
+  font-weight: 600;
+}
+
+.notifications-dropdown {
+  width: 270px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.dropdown-item {
+  white-space: normal;
+  font-size: 0.9rem;
+}

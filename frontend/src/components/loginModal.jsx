@@ -2,10 +2,14 @@ import { Modal, Button, Form } from "react-bootstrap";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import "./loginModal.css";
-import { Link } from "react-router-dom";
-import axios from "../api/axiosConfig.js"; 
+import axios from "../api/axiosConfig.js";
 
-export const LoginModal = ({ show, handleClose }) => {
+export const LoginModal = ({ show, handleClose, role }) => {
+  const isAdmin = role === "admin";
+
+  const loginRoute = isAdmin ? "/api/loginadmin" : "/api/faculty/login";
+  const redirectRoute = isAdmin ? "/api/admin/dashboard" : "/api/faculty/dashboard";
+
   const validationSchema = Yup.object().shape({
     email: Yup.string()
       .email("Invalid email address")
@@ -19,25 +23,25 @@ export const LoginModal = ({ show, handleClose }) => {
   return (
     <Modal show={show} onHide={handleClose} centered>
       <Modal.Body className="login-body">
-        <h3 className="login-title">Admin Login</h3>
+        <h3 className="login-title">{isAdmin ? "Admin Login" : "Faculty Login"}</h3>
 
         <Formik
           initialValues={{ email: "", password: "" }}
           validationSchema={validationSchema}
-          onSubmit={async (values, { setSubmitting, setErrors }) => {
+          onSubmit={async (values, { setSubmitting }) => {
             try {
-              const response = await axios.post("/api/loginadmin", values); 
+              const response = await axios.post(loginRoute, values);
               const { token, name, email, id } = response.data;
 
               localStorage.setItem("token", token);
-              localStorage.setItem("adminName", name);
-              localStorage.setItem("adminEmail", email);
-              localStorage.setItem("adminId", id);
+              localStorage.setItem(`${role}Name`, name);
+              localStorage.setItem(`${role}Email`, email);
+              localStorage.setItem(`${role}Id`, id);
 
               alert("Login Successful!");
               handleClose();
 
-              window.location.href = "/dashboard";
+              window.location.href = redirectRoute;
 
             } catch (error) {
               if (error.response && error.response.data.message) {
