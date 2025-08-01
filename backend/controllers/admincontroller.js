@@ -1,11 +1,7 @@
-// controllers/facultyController.js
 
 import faculty from '../models/faculty.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv';
-
-// Register a new faculty
 export const registerUser = async (req, res) => {
     const { name, email, password, role } = req.body;
     try {
@@ -85,6 +81,16 @@ export const deleteFaculty = async (req, res) => {
         res.status(500).json({ message: 'Internal server error' });
     }
 };
+export const getFaculty = async (req, res) => {
+    try {
+        const faculties = await faculty.find();
+        res.status(200).json(faculties);
+    }
+    catch (error) {
+        console.error('Error fetching faculties:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+}
 
 // module.exports = {
 //     registerUser,

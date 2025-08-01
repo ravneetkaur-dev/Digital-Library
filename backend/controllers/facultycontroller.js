@@ -15,18 +15,15 @@ export const login = async (req, res) => {
     if (!data) {
       return res.status(404).send("Faculty not found");
     }
-
     const isMatch = await bcrypt.compare(password, data.password);
     if (!isMatch) {
       return res.status(401).send("Invalid credentials");
     }
-
     const token = jwt.sign(
       { userId: data._id, role: data.role },
       process.env.JWT_SECRET,
       { expiresIn: '1d' }
     );
-
     return res.status(200).json({
       message: "Login successful",
       token,
