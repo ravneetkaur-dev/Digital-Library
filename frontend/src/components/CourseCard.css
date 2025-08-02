@@ -1,0 +1,130 @@
+.banner-cards-section {
+  background-color: #f7f7f7;
+}
+
+.course-card {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  text-align: center;
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.course-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.course-card-header {
+  background-size: cover;
+  background-position: center;
+  height: 120px;
+}
+
+.course-card-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.course-card-icon img {
+  width: 40px;
+  height: 40px;
+}
+
+.course-card-body {
+  padding: 60px 20px 20px;
+}
+
+.course-title {
+  font-size: 0.5rem;
+  margin-bottom: 15px;
+  font-weight: 700;
+}
+
+.course-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px 0;
+  text-align: left;
+}
+
+.course-list li {
+  margin: 8px 0;
+  font-size: 0.95rem;
+  padding-left: 20px;
+  position: relative;
+}
+
+.course-list li::before {
+  content: "▸";
+  position: absolute;
+  left: 0;
+  color: #004085;
+}
+
+.course-btn {
+  background: none;
+  border: none;
+  color: #002147;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.data-hero {
+  background: linear-gradient(120deg, #002147 70%, #fdc800 30%);
+}
+
+.data-hero h1 {
+  font-size: 3.5rem;
+  color: #fdc800;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
+}
+
+
+.subject-content-box {
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.resource-section {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e1e1e1;
+}
+
+.resource-heading {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #002147;
+}
+
+.resource-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px dashed #ddd;
+}
+
+.resource-item:last-child {
+  border-bottom: none;
+}
+
+.resource-buttons button {
+  margin-left: 10px;
+}

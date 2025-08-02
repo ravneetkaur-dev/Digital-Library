@@ -7,7 +7,7 @@ import axios from "../api/axiosConfig.js";
 export const LoginModal = ({ show, handleClose, role }) => {
   const isAdmin = role === "admin";
 
-  const loginRoute = isAdmin ? "/api/loginadmin" : "/api/faculty/login";
+  const loginRoute = isAdmin ? "/api/loginAdmin" : "/api/faculty/login";
   const redirectRoute = isAdmin ? "/api/admin/dashboard" : "/api/faculty/dashboard";
 
   const validationSchema = Yup.object().shape({
