@@ -14,14 +14,14 @@ const UserSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    department: {
-        type: String,
-        required: true
-    },
-    designation: {
-        type: String,
-        required: true
-    },
+    // department: {
+    //     type: String,
+    //     required: true
+    // },
+    // designation: {
+    //     type: String,
+    //     required: true
+    // },
     role:{
         type:String,
         enum:["admin","faculty"],
