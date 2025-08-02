@@ -1,7 +1,7 @@
 import { Container, Row, Col, Card } from 'react-bootstrap';
 import { Header } from '../components/Header';
-import { NavBar } from '../components/navBar';
-import { Footer } from '../components/footer';
+import { NavBar } from '../components/NavBar';
+import { Footer } from '../components/Footer';
 import './about.css';
 
 export const About = () => {

@@ -1,0 +1,86 @@
+.subject-scroller {
+  padding: 1rem;
+}
+
+.section-title {
+  color: #002147;
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+}
+
+.scroll-container {
+  display: flex;
+  overflow-x: auto;
+  gap: 1.2rem;
+  padding-bottom: 0.8rem;
+  scrollbar-width: thin;
+  scrollbar-color: #fdc800 #002147;
+}
+
+.scroll-container::-webkit-scrollbar {
+  height: 6px;
+}
+.scroll-container::-webkit-scrollbar-thumb {
+  background: #fdc800;
+  border-radius: 10px;
+}
+.scroll-container::-webkit-scrollbar-track {
+  background: #002147;
+}
+
+.custom-subject-card {
+  min-width: 190px;
+  height: 120px;
+  background: linear-gradient(145deg, #002147, #011a3c);
+  border-radius: 12px;
+  color: white;
+  flex: 0 0 auto;
+  padding: 1rem;
+  text-align: left;
+  position: relative;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+  border-left: 6px solid #0a0a0a; /* Dark left border */
+}
+
+.custom-subject-card:hover {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 12px 24px rgba(253, 200, 0, 0.4);
+  cursor: pointer;
+}
+
+.subject-header {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #fdc800;
+  margin-bottom: 0.3rem;
+}
+
+.subject-name {
+  font-size: 1rem;
+  color: #002147;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.add-card {
+  background: rgba(253, 200, 0, 0.1);
+  border: 2px dashed #fdc800;
+  color: #fdc800;
+  justify-content: center;
+  align-items: flex-start;
+  border-left: 6px solid #fdc800;
+}
+
+.add-icon {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 0.4rem;
+  margin-left: 4px;
+}

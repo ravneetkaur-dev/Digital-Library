@@ -25,8 +25,8 @@ export const NavBar = () => {
               <Nav.Link as={Link} to="/paper">Paper</Nav.Link>
               <Nav.Link as={Link} to="/syllabus">Syllabus</Nav.Link>
               <Nav.Link as={Link} to="/rules">Rules & Regulations</Nav.Link>
-              <Nav.Link as={Link} to="/journals">Journals</Nav.Link>
-              <Nav.Link as={Link} to="/time-table">Time Table</Nav.Link>
+              {/* <Nav.Link as={Link} to="/journals">Journals</Nav.Link> */}
+              {/* <Nav.Link as={Link} to="/time-table">Time Table</Nav.Link> */}
               <Nav.Link as={Link} to="/econtent">E-Content</Nav.Link>
               <Nav.Link as={Link} to="/contact">Contact Us</Nav.Link>
 
@@ -52,7 +52,7 @@ export const NavBar = () => {
         </Container>
       </Navbar>
 
-      <LoginModal show={showLogin} handleClose={handleClose} />
+      <LoginModal show={showLogin} handleClose={handleClose}  role='admin'/>
     </>
   );
 };

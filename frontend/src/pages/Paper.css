@@ -1,0 +1,29 @@
+.paper-hero {
+  background: linear-gradient(120deg, #002147 70%, #fdc800 30%);
+}
+
+.paper-hero h1 {
+  font-size: 3.5rem;
+  color: #fdc800;
+}
+
+
+section {
+  background-color: #f4f6f9;
+}
+
+h2 {
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.shadow {
+  box-shadow: 0 0 12px rgba(0,0,0,0.1) !important;
+}
+
+.bg-white {
+  background-color: white !important;
+}
+
+.rounded {
+  border-radius: 12px !important;
+}

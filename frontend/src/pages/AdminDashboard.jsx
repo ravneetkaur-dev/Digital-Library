@@ -6,6 +6,7 @@ import './AdminDashboard.css';
 import { FacultyManagement } from '../components/adminDashboardComponents/FacultyManagement';
 import { FileManagement } from '../components/adminDashboardComponents/FileManagement';
 import { NotificationsPanel } from '../components/adminDashboardComponents/NotificationPanel';
+import { Header } from '../components/Header';
 
 export const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState('faculty');
@@ -14,6 +15,8 @@ export const AdminDashboard = () => {
   ]);
 
   return (
+    <>
+    <Header/>
     <Container fluid className="admin-dashboard text-center">
       <Row>
         <Col md={2} className="sidebar d-none d-md-block text-start">
@@ -74,5 +77,6 @@ export const AdminDashboard = () => {
         </Col>
       </Row>
     </Container>
+    </>
   );
 };

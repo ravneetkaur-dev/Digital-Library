@@ -1,0 +1,75 @@
+.syllabus-section {
+  background-color: #0a1a2f;
+  color: #ffffff;
+  min-height: 100vh;
+}
+
+.syllabus-heading {
+  font-size: 2.8rem;
+  font-weight: bold;
+  color: gold;
+  letter-spacing: 1px;
+  text-shadow: 0 0 6px rgba(255, 215, 0, 0.4);
+}
+
+.syllabus-subheading {
+  font-size: 1.5rem;
+  color: #ddd;
+  margin-bottom: 1rem;
+}
+
+.syllabus-card {
+  background-color: #12263a;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.1);
+}
+
+.syllabus-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.5);
+}
+
+.syllabus-card-banner {
+  height: 120px;
+  background-size: cover;
+  background-position: center;
+}
+
+.syllabus-card-content {
+  padding: 1rem;
+  text-align: center;
+}
+
+.syllabus-card-icon {
+  width: 50px;
+  height: 50px;
+  margin-bottom: 0.5rem;
+}
+
+.syllabus-card h5 {
+  color: gold;
+  font-size: 1.1rem;
+  margin-top: 0.5rem;
+}
+
+.syllabus-resource-card {
+  background-color: #1b2f47;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.1);
+  text-align: center;
+}
+
+.custom-back-btn {
+  border-color: gold;
+  color: gold;
+  font-weight: 500;
+}
+
+.custom-back-btn:hover {
+  background-color: gold;
+  color: #0a1a2f;
+}

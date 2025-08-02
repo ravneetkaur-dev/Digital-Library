@@ -1,0 +1,145 @@
+/* .subject-details {
+  background-color: #011a3c;
+  padding: 1.5rem;
+  border-radius: 12px;
+  color: #fff;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  border-left: 6px solid #fdc800;
+}
+
+.subject-details h4 {
+  color: #fdc800;
+  margin-bottom: 0.8rem;
+  font-weight: 600;
+  font-size: 1.6rem;
+}
+
+.subject-details .btn {
+  background-color: transparent;
+  border: 1px solid #fdc800;
+  color: #fdc800;
+  font-weight: 500;
+  padding: 0.3rem 0.6rem;
+  transition: all 0.3s ease;
+  margin-bottom: 1rem;
+}
+
+.subject-details .btn:hover {
+  background-color: #fdc800;
+  color: #00142e;
+  font-weight: 600;
+}
+
+.accordion-item {
+  background-color: #021c40;
+  border: none;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.accordion-header {
+  background-color: #002147;
+  color: #fdc800;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.accordion-button {
+  background-color: #002147;
+  color: #fdc800;
+  font-weight: 600;
+  padding: 0.8rem 1rem;
+}
+
+.accordion-button:not(.collapsed) {
+  background-color: #fdc800;
+  color: #002147;
+}
+
+.accordion-body {
+  background-color: #01142c;
+  padding: 1rem;
+  border-top: 1px solid #223c60;
+  color: #f0f0f0;
+}
+
+.form-label {
+  color: #fdc800;
+  font-weight: 500;
+}
+
+.form-control {
+  background-color: #02142b;
+  border: 1px solid #444;
+  color: white;
+}
+
+.form-control:focus {
+  border-color: #fdc800;
+  box-shadow: 0 0 0 0.2rem rgba(253, 200, 0, 0.25);
+}
+
+.subject-details .btn-primary {
+  background-color: #fdc800;
+  color: #002147;
+  font-weight: 600;
+  border: none;
+  margin-top: 0.5rem;
+}
+
+.subject-details .btn-primary:hover {
+  background-color: #e6b800;
+  color: #00142e;
+}
+
+.topic-modal-body {
+  background: #002147;
+  color: #fdc800;
+  padding: 2rem;
+  border-radius: 8px;
+}
+
+.modal-title-text {
+  font-weight: 600;
+  font-size: 1.4rem;
+  color: #fdc800;
+}
+
+.modal-label {
+  color: #fdc800;
+  font-weight: 500;
+}
+
+.modal-input {
+  background-color: #02142b;
+  border: 1px solid #444;
+  color: white;
+}
+
+.modal-input:focus {
+  border-color: #fdc800;
+  box-shadow: 0 0 0 0.2rem rgba(253, 200, 0, 0.25);
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 1rem;
+}
+
+.modal-save,
+.modal-close {
+  background: #fdc800;
+  color: #002147;
+  font-weight: 600;
+  border: none;
+}
+
+.modal-save:hover,
+.modal-close:hover {
+  background: #e6b800;
+  color: #00142e;
+} */

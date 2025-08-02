@@ -1,7 +1,8 @@
 import { Header } from "../components/Header";
 import { NavBar } from "../components/NavBar";
-import { Footer } from "../components/footer";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Carousel, Row, Col } from "react-bootstrap";
+import { CourseCard } from "../components/CourseCards";
+import { Footer } from "../components/Footer";
 import "./Home.css";
 
 export const Home = () => {
@@ -10,22 +11,50 @@ export const Home = () => {
       <Header />
       <NavBar />
 
-      <Container fluid className="home-main">
-        <Row className="justify-content-start">
-          <Col md="auto" className="main-section-quote">
-            <p>
-              <em>
-                "Amidst shelves of words and wisdom, we discover ourselves - one
-                page at a time."
-              </em>
-            </p>
-          </Col>
-        </Row>
-      </Container>
+      <Carousel fade interval={3000} controls={true} indicators={false} pause={false} className="home-carousel">
+        <Carousel.Item>
+          <div className="home-main d-flex align-items-center">
+            <Container>
+              <Row className="justify-content-start">
+                <Col md="auto" className="main-section-quote">
+                  <p>
+                    <em>
+                      "Amidst shelves of words and wisdom, we discover ourselves - one
+                      page at a time."
+                    </em>
+                  </p>
+                </Col>
+              </Row>
+            </Container>
+          </div>
+        </Carousel.Item>
+
+        <Carousel.Item>
+          <div
+            className="carousel-image-only"
+            style={{ backgroundImage: "url('/images/maimt1.jpg')" }}
+          ></div>
+        </Carousel.Item>
+
+        <Carousel.Item>
+          <div
+            className="carousel-image-only"
+            style={{ backgroundImage: "url('/images/Ullaas-2025.jpg')" }}
+          ></div>
+        </Carousel.Item>
+
+        <Carousel.Item>
+          <div
+            className="carousel-image-only"
+            style={{ backgroundImage: "url('/images/Ullaas-2024-1.jpg')" }}
+          ></div>
+        </Carousel.Item>
+      </Carousel>
+
 
       <div className="page-content" style={{ backgroundColor: "snow" }}>
         <Container fluid>
-          <Row className="border shadow-lg mx-2 content-row align-items-center">
+          <Row className="border shadow-lg content-row align-items-center">
             <Col md={6} className="image-block d-none d-md-block"></Col>
             <Col xs={12} md={6} className="text-block">
               <h2 className="section-title">
@@ -65,10 +94,11 @@ export const Home = () => {
             for you.
           </p>
 
+          <CourseCard />
         </Row>
         
       </Container>
-      <Footer/>
+      <Footer />
     </>
   );
 };

@@ -1,0 +1,32 @@
+.course-details-wrapper {
+  min-height: 80vh;
+  padding: 60px 0;
+  font-family: 'Roboto', sans-serif;
+}
+
+.course-title {
+  font-size: 2.5rem;
+  color: #002147;
+  font-family: 'Georgia', serif;
+  margin-bottom: 20px;
+}
+
+.course-duration {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.course-description {
+  font-size: 1.1rem;
+  color: #444;
+  text-align: justify;
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+
+.course-image {
+  border-radius: 10px;
+  max-height: 400px;
+  object-fit: cover;
+}
