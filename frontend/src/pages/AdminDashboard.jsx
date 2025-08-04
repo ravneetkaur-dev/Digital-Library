@@ -6,7 +6,7 @@ import './AdminDashboard.css';
 import { FacultyManagement } from '../components/adminDashboardComponents/FacultyManagement';
 import { FileManagement } from '../components/adminDashboardComponents/FileManagement';
 import { NotificationsPanel } from '../components/adminDashboardComponents/NotificationPanel';
-import { Header } from '../components/Header';
+import { Header } from '../components/Header/Header';
 
 export const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState('faculty');

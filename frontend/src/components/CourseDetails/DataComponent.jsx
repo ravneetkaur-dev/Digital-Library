@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Container, Row, Col, Button, Card } from "react-bootstrap";
-import { courses, semesters, subjects } from "../utils/courses";
+import { courses, semesters, subjects } from "../../utils/courses";
 import "./CourseCard.css";
 
 export const DataComponent = ({ data, mode, title, initialCourse }) => {

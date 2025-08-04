@@ -1,7 +1,7 @@
-import { DataComponent } from "../components/DataComponent";
+import { DataComponent } from "../components/CourseDetails/DataComponent";
 import { data } from "../utils/data";
-import { Header } from "../components/Header";
-import { NavBar } from "../components/NavBar";
+import { Header } from "../components/Header/Header";
+import { NavBar } from "../components/NavBar/NavBar";
 
 export const Econtent=()=>(
         <>

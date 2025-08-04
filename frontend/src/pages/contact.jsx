@@ -1,8 +1,8 @@
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
-import { Header } from "../components/Header";
-import { NavBar } from "../components/navBar";
-import { Footer } from "../components/footer";
-import axios from "../api/axiosConfig"; // your axios baseURL
+import { Header } from "../components/Header/Header";
+import { NavBar } from "../components/NavBar/NavBar";
+import { Footer } from "../components/Footer/Footer";
+import axios from "../api/axiosConfig"; 
 import { useState } from "react";
 import "./contact.css";
 

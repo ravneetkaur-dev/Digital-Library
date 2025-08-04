@@ -8,7 +8,7 @@ import { Contact } from './pages/Contact';
 import { Rules } from './pages/Rule';
 import { AdminDashboard } from './pages/AdminDashboard';
 import { CourseDetails } from './pages/CourseDetails';
-import { FacultyDashboard } from './components/FacultyDashboard';
+import { FacultyDashboard } from './components/FacultyDashboard/FacultyDashboard';
 import { ScrollToTop } from './components/ScrollToTop';
 
 

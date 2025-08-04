@@ -2,7 +2,7 @@ import { Modal, Button, Form } from "react-bootstrap";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import "./loginModal.css";
-import axios from "../api/axiosConfig.js";
+import axios from "../../api/axiosConfig.js";
 
 export const LoginModal = ({ show, handleClose, role }) => {
   const isAdmin = role === "admin";

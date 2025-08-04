@@ -3,11 +3,11 @@ import { Container, Row, Col } from "react-bootstrap";
 import { Sidebar } from "./Sidebar";
 import { FacultyProfile } from "./FacultyProfile";
 import { FullFacultyProfile } from "./FullFacultyProfile"; 
-import { SubjectScroller } from "./SubjectScroller";
-import { SubjectDetails } from "./SubjectDetails";
-import { MyFiles } from "./MyFiles";
-import { Header } from "./Header";
-import { Footer } from "./Footer";
+// import { SubjectScroller } from "./SubjectScroller";
+// import { SubjectDetails } from "./SubjectDetails";
+import { MyFiles } from "./MyFiles"
+import { Header } from "../Header/Header";
+import { Footer } from "../Footer/Footer";
 import "./FacultyDashboard.css";
 
 export const FacultyDashboard = () => {
@@ -34,13 +34,13 @@ export const FacultyDashboard = () => {
                 <FacultyProfile />
               </div>
 
-              <div className="subject-scroller-section mb-4">
+              {/* <div className="subject-scroller-section mb-4">
                 <SubjectScroller onSelectSubject={setSelectedSubject} />
               </div>
 
               <div className="subject-details-section">
                 {selectedSubject && <SubjectDetails subject={selectedSubject} />}
-              </div>
+              </div> */}
             </>
           )}
         </Col>

@@ -1,8 +1,8 @@
-import { Header } from "../components/Header";
-import { NavBar } from "../components/NavBar";
+import { Header } from "../components/Header/Header";
+import { NavBar } from "../components/NavBar/NavBar";
 import { Container, Carousel, Row, Col } from "react-bootstrap";
-import { CourseCard } from "../components/CourseCards";
-import { Footer } from "../components/Footer";
+import { CourseCard} from '../components/CourseDetails/CourseCards';
+import { Footer } from "../components/Footer/Footer";
 import "./Home.css";
 
 export const Home = () => {

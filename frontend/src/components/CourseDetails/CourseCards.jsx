@@ -1,6 +1,6 @@
 import { Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { courses } from "../utils/courses.js";
+import { courses } from "../../utils/courses.js";
 import "./CourseCard.css";
 
 export const CourseCard = () => {
