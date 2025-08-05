@@ -3,7 +3,7 @@ import express from 'express';
 import multer from 'multer';
 const storage=multer.diskStorage({
     destination: function(req,file,cb){
-        return cb(null,"./uploads/syllabus.js");
+        return cb(null,"./uploads/syllabus");
     },
     filename: function (req,file,cb){
         return cb(null,`${Date.now()}+${file.originalname}`)

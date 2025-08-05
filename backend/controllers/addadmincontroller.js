@@ -15,7 +15,6 @@ export const loginAdmin = async (req, res) => {
             return res.status(400).json({ message: "Admin not found or unauthorized access" });
         }
 
-        // 🔥 DO NOT re-hash the password — just compare the plain text with the hash
         const ismatch = await bcrypt.compare(password, isexist.password);
 
         if (!ismatch) {
