@@ -28,7 +28,24 @@ const UserSchema = mongoose.Schema({
     createdAt:{
        type:Date,
        default:Date.now
-    }
+    },
+    designation: {
+        type: String,
+        default: 'Faculty'
+    },
+    department: {
+        type: String,
+        default: 'General'
+    },
+    profilePicture: {
+        type: String,
+        default: 'default.jpg'
+    },
+    subjects: {
+        type: [String],
+        default: []
+    },
+
 })
 const faculty=mongoose.model("faculty",UserSchema);
 export default faculty;
