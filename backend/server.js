@@ -23,9 +23,8 @@ app.use('/api/faculty', facultyRouter);
 app.use('/api/admin', adminRouter);
 app.use('/api/feedback', feedbackRouter);
 app.use('/api/syllabus', syllabusRoutes);
-app.use('/api/loginadmin', loginAdmin); // Use the login route
+app.use('/api', loginAdmin); // Use the login route
 // app.use(cors()); // Uncomment if needed
-//book route======>
 app.use('/api/book', book); // Use book routes
 app.use(express.json());
 app.listen(PORT, () => {
