@@ -26,7 +26,7 @@ app.use('/api/faculty', facultyRouter);
 app.use('/api/admin', adminRouter);
 app.use('/api/feedback', feedbackRouter);
 app.use('/api/syllabus', syllabusRoutes);
-app.use('/api/loginAdmin', loginAdmin); 
+app.use('/api/loginadmin', loginAdmin); 
 
 // createAdmin();
 

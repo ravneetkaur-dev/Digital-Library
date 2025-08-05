@@ -1,9 +1,9 @@
-
+import { sendEmail } from '../utils/mailer.js';
 import faculty from '../models/faculty.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 export const registerUser = async (req, res) => {
-    const { name, email, password, role } = req.body;
+    const { name, email, password, role ,designation, department,subjects } = req.body;
     try {
         const existingUser = await faculty.findOne({ email });
         if (existingUser) {
@@ -16,19 +16,26 @@ export const registerUser = async (req, res) => {
             name,
             email,
             password: hashedPassword,
-            role
+            role,
+            designation,
+            department,
+            subjects
         });
 
         await newFaculty.save();
 
         const token = jwt.sign({ userId: newFaculty._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-
+        await sendEmail(email, name, password);
+        console.log('Email sent successfully to:', email);
         res.status(201).json({
             user: {
                 id: newFaculty._id,
                 name: newFaculty.name,
                 email: newFaculty.email,
-                role: newFaculty.role
+                role: newFaculty.role,
+                designation: newFaculty.designation || 'Not specified',
+                department: newFaculty.department || 'Not specified',
+                subjects: newFaculty.subjects || []
             },
             token,
             message: 'Faculty registered successfully'
@@ -42,11 +49,12 @@ export const registerUser = async (req, res) => {
 // Update a faculty
 export const updateFaculty = async (req, res) => {
     const { id } = req.params;
-    const { name, email, role } = req.body;
+    const { name, email, role,designation,department,subjects } = req.body;
     try {
         const updatedFaculty = await faculty.findByIdAndUpdate(
             id,
             { name, email, role },
+            { name, email, role,designation, department, subjects },
             { new: true }
         );
         if (!updatedFaculty) {
@@ -57,7 +65,10 @@ export const updateFaculty = async (req, res) => {
                 id: updatedFaculty._id,
                 name: updatedFaculty.name,
                 email: updatedFaculty.email,
-                role: updatedFaculty.role
+                role: updatedFaculty.role,
+                designation: updatedFaculty.designation || 'Not specified',
+                department: updatedFaculty.department || 'Not specified',
+                subjects: updatedFaculty.subjects || []
             },
             message: 'Faculty updated successfully'
         });

@@ -8,10 +8,10 @@ dotenv.config();
 
 // Login Controller
 export const login = async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, role } = req.body;
 
   try {
-    const data = await faculty.findOne({ email });
+    const data = await faculty.findOne({ email, role });
     if (!data) {
       return res.status(404).send("Faculty not found");
     }
