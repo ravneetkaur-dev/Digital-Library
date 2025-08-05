@@ -1,118 +1,115 @@
-import { Modal, Button, Form } from "react-bootstrap";
+import { useState } from "react";
+import { Modal, Button, Form, Alert } from "react-bootstrap";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import "./loginModal.css";
-import axios from "../../api/axiosConfig.js";
+import axios from "axios";
+import "./LoginModal.css"; 
 
 export const LoginModal = ({ show, handleClose, role }) => {
-  const isAdmin = role === "admin";
+  const [error, setError] = useState("");
 
-  const loginRoute = isAdmin ? "/api/loginadmin" : "/api/faculty/login";
-  const redirectRoute = isAdmin ? "/api/admin/dashboard" : "/api/faculty/dashboard";
+  const initialValues = {
+    email: "",
+    password: "",
+  };
 
-  const validationSchema = Yup.object().shape({
-    email: Yup.string()
-      .email("Invalid email address")
-      .min(6, "Email must be at least 6 characters")
-      .required("Email is required"),
-    password: Yup.string()
-      .min(6, "Password must be at least 6 characters")
-      .required("Password is required"),
+  const validationSchema = Yup.object({
+    email: Yup.string().email("Invalid email").required("Email is required"),
+    password: Yup.string().required("Password is required"),
   });
 
+  const handleSubmit = async (values, { setSubmitting }) => {
+    setError("");
+
+    try {
+      const loginRoute =
+        role === "admin"
+          ? "http://localhost:5000/api/loginadmin"
+          : "http://localhost:5000/api/faculty/login";
+
+      const response = await axios.post(loginRoute, {
+        email: values.email,
+        password: values.password,
+      });
+
+      localStorage.setItem("token", response.data.token);
+      alert("Login successful");
+
+      handleClose();
+      window.location.reload();
+    } catch (err) {
+      setError(err.response?.data?.message || "Login failed");
+      console.log("Full error:", err);
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   return (
-    <Modal show={show} onHide={handleClose} centered>
-      <Modal.Body className="login-body">
-        <h3 className="login-title">{isAdmin ? "Admin Login" : "Faculty Login"}</h3>
+    <Modal show={show} onHide={handleClose} centered backdrop="static">
+      <Modal.Header closeButton className="login-body">
+        <Modal.Title>
+          {role === "admin" ? "Admin Login" : "Faculty Login"}
+        </Modal.Title>
+      </Modal.Header>
 
-        <Formik
-          initialValues={{ email: "", password: "" }}
-          validationSchema={validationSchema}
-          onSubmit={async (values, { setSubmitting }) => {
-            try {
-              const response = await axios.post(loginRoute, values);
-              const { token, name, email, id } = response.data;
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
+      >
+        {({
+          handleSubmit,
+          handleChange,
+          handleBlur,
+          values,
+          touched,
+          errors,
+          isSubmitting,
+        }) => (
+          <Form className="login-body" onSubmit={handleSubmit}>
+            {error && <Alert variant="danger">{error}</Alert>}
 
-              localStorage.setItem("token", token);
-              localStorage.setItem(`${role}Name`, name);
-              localStorage.setItem(`${role}Email`, email);
-              localStorage.setItem(`${role}Id`, id);
+            <Form.Group className="mb-3" controlId="formEmail">
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                type="email"
+                name="email"
+                value={values.email}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                isInvalid={touched.email && !!errors.email}
+                placeholder="Enter email"
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.email}
+              </Form.Control.Feedback>
+            </Form.Group>
 
-              alert("Login Successful!");
-              handleClose();
+            <Form.Group className="mb-3" controlId="formPassword">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="password"
+                name="password"
+                value={values.password}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                isInvalid={touched.password && !!errors.password}
+                placeholder="Enter password"
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.password}
+              </Form.Control.Feedback>
+            </Form.Group>
 
-              window.location.href = redirectRoute;
-
-            } catch (error) {
-              if (error.response && error.response.data.message) {
-                alert(error.response.data.message);
-              } else {
-                alert("Login failed. Please try again.");
-              }
-            } finally {
-              setSubmitting(false);
-            }
-          }}
-        >
-          {({
-            handleSubmit,
-            handleChange,
-            handleBlur,
-            values,
-            touched,
-            errors,
-          }) => (
-            <Form onSubmit={handleSubmit}>
-              <Form.Group className="mb-3">
-                <Form.Label>Email</Form.Label>
-                <Form.Control
-                  type="email"
-                  name="email"
-                  placeholder="Enter email"
-                  value={values.email}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  isInvalid={touched.email && !!errors.email}
-                />
-                <Form.Control.Feedback type="invalid">
-                  {errors.email}
-                </Form.Control.Feedback>
-              </Form.Group>
-
-              <Form.Group className="mb-3">
-                <Form.Label>Password</Form.Label>
-                <Form.Control
-                  type="password"
-                  name="password"
-                  placeholder="Password"
-                  value={values.password}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  isInvalid={touched.password && !!errors.password}
-                />
-                <Form.Control.Feedback type="invalid">
-                  {errors.password}
-                </Form.Control.Feedback>
-              </Form.Group>
-
-              <Form.Group className="mb-3 text-end">
-                <a href="#" className="forgot-password-link">
-                  Forgot Password?
-                </a>
-              </Form.Group>
-
-              <div className="login-buttons">
-                <Button type="submit" className="login-submit">
-                  Login
-                </Button>
-                <Button onClick={handleClose} className="login-close">
-                  Close
-                </Button>
-              </div>
-            </Form>
-          )}
-        </Formik>
-      </Modal.Body>
+            <div className="login-buttons justify-content-end">
+              <Button type="submit" disabled={isSubmitting}>
+                {isSubmitting ? "Logging in..." : "Login"}
+              </Button>
+            </div>
+          </Form>
+        )}
+      </Formik>
     </Modal>
   );
 };

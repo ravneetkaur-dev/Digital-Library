@@ -1,4 +1,4 @@
-import { Nav, Navbar, Container, Button } from "react-bootstrap";
+import { Nav, Navbar, Container, Dropdown } from "react-bootstrap";
 import { Link } from 'react-router-dom';
 import { LoginModal } from "../Login/LoginModal";
 import { useState } from "react";
@@ -6,9 +6,17 @@ import './navBar.css';
 
 export const NavBar = () => {
   const [showLogin, setShowLogin] = useState(false);
+  const [selectedRole, setSelectedRole] = useState(""); 
 
-  const handleShow = () => setShowLogin(true);
-  const handleClose = () => setShowLogin(false);
+  const handleLoginSelect = (role) => {
+    setSelectedRole(role);
+    setShowLogin(true);
+  };
+
+  const handleClose = () => {
+    setShowLogin(false);
+    setSelectedRole("");
+  };
 
   return (
     <>
@@ -25,34 +33,38 @@ export const NavBar = () => {
               <Nav.Link as={Link} to="/paper">Paper</Nav.Link>
               <Nav.Link as={Link} to="/syllabus">Syllabus</Nav.Link>
               <Nav.Link as={Link} to="/rules">Rules & Regulations</Nav.Link>
-              {/* <Nav.Link as={Link} to="/journals">Journals</Nav.Link> */}
-              {/* <Nav.Link as={Link} to="/time-table">Time Table</Nav.Link> */}
               <Nav.Link as={Link} to="/econtent">E-Content</Nav.Link>
               <Nav.Link as={Link} to="/contact">Contact Us</Nav.Link>
 
-              <Button
-                onClick={handleShow}
-                className="border-0 mt-3 d-lg-none"
-                style={{ backgroundColor: "#fdc800", color: "#002147" }}
-              >
-                Login
-              </Button>
+              <Dropdown className="mt-3 d-lg-none" onSelect={handleLoginSelect}>
+                <Dropdown.Toggle
+                  style={{ backgroundColor: "#fdc800", color: "#002147", border: "none" }}
+                >
+                  Login
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  <Dropdown.Item eventKey="admin">Admin</Dropdown.Item>
+                  <Dropdown.Item eventKey="faculty">Faculty</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
             </Nav>
           </Navbar.Collapse>
 
-          <div className="d-none d-lg-block">
-            <Button
-              onClick={handleShow}
-              className="border-0 ms-3"
-              style={{ backgroundColor: "#fdc800", color: "#002147" }}
+          <Dropdown className="d-none d-lg-block" onSelect={handleLoginSelect}>
+            <Dropdown.Toggle
+              style={{ backgroundColor: "#fdc800", color: "#002147", border: "none" }}
             >
               Login
-            </Button>
-          </div>
+            </Dropdown.Toggle>
+            <Dropdown.Menu className="login-option">
+              <Dropdown.Item eventKey="admin">Admin</Dropdown.Item>
+              <Dropdown.Item eventKey="faculty">Faculty</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
         </Container>
       </Navbar>
 
-      <LoginModal show={showLogin} handleClose={handleClose}  role='admin'/>
+      <LoginModal show={showLogin} handleClose={handleClose} role={selectedRole} />
     </>
   );
 };
