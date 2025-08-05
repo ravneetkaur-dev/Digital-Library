@@ -53,7 +53,6 @@ export const updateFaculty = async (req, res) => {
     try {
         const updatedFaculty = await faculty.findByIdAndUpdate(
             id,
-            { name, email, role },
             { name, email, role,designation, department, subjects },
             { new: true }
         );

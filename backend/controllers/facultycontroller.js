@@ -8,7 +8,7 @@ dotenv.config();
 
 // Login Controller
 export const login = async (req, res) => {
-  const { email, password, role } = req.body;
+  const { email, password,role } = req.body;
 
   try {
     const data = await faculty.findOne({ email, role });
@@ -19,18 +19,20 @@ export const login = async (req, res) => {
     if (!isMatch) {
       return res.status(401).send("Invalid credentials");
     }
+    
     const token = jwt.sign(
       { userId: data._id, role: data.role },
       process.env.JWT_SECRET,
       { expiresIn: '1d' }
     );
-    return res.status(200).json({
-      message: "Login successful",
-      token,
+    return res.status(200).json({message: "Login successful",token,
       id: data._id,
       name: data.name,
       email: data.email,
-      role: data.role
+      role: data.role,
+      // designation: data.designation,
+      // department: data.department,
+      // subjects: data.subjects,
     });
   } catch (error) {
     console.error("Login error:", error);

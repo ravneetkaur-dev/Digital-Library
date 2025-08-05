@@ -17,8 +17,9 @@ const BookSchema = mongoose.Schema({
         required: true
     },
     year: {
-        type: Number,
-        required: true
+        type: String,
+        required: true,
+        match: /^\d{4}$/ // Ensures the year is a 4-digit number
     },
     isbn: {
         type: String,
@@ -61,4 +62,4 @@ const BookSchema = mongoose.Schema({
     }
 });
 const book = mongoose.model("Book", BookSchema);
-module.exports=book
+export default book;

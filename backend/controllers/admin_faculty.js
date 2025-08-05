@@ -1,23 +1,4 @@
-// const user = require('../models/User');
-// const bcrypt = require('bcryptjs');
-// const jwt = require('jsonwebtoken');
-// const password='Raju123';
-//    export const createAdmin = async () => {
-//         const hashedPassword = await bcrypt.hash(password, 10);
-//         const newAdmin = new user({
-//             name,
-//             email,
-//             role,
-//             password: hashedPassword
-//         });
-//         console.log('Admin created successfully',newAdmin);
-// }
-// export const permissions = {
-//     canUpdate: true,
-//     canEdit: true,
-//     canDelete: true,
-//     canManageFaculty: true
-// };
+
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import  admin from '../models/Admin.js' 
@@ -39,12 +20,10 @@ export const createAdmin = async () => {
     });
 
     await newAdmin.save(); 
-    console.log("Admin created successfully:", newAdmin);
+    console.log(" Admin created successfully:", newAdmin);
   } catch (err) {
-    console.error("Error creating admin:", err);
+    console.error(" Error creating admin:", err);
   }
 };
 
-// Call the function
-// createAdmin();
 
