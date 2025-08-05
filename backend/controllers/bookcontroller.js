@@ -16,8 +16,9 @@ export const uploadedfile=async(req,res)=>{
      const rdata=data.role;
      console.log("hklklk",data)
     //    console.log("datatttattata",rdata)
-const roles = await User.find({}, 'role').lean();
-console.log(roles);
+const currentUser = await admin.findById(req.user._id).lean();
+console.log("Current User Role:", currentUser.role);
+
 //    const rol=await data.findOne({data.role=="admin"})
 // console.log("req.data",req.data.User)
 console.log(data.role)

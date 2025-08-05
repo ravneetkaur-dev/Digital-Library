@@ -5,7 +5,8 @@ const BookSchema = new Schema({
   title:      { type: String, required: true, trim: true },
   author:     { type: String, required: true, trim: true },
   subject:    { type: String, required: true, trim: true },
-  year:       { type: Date, required: true },
+ year: { type: String, required: true, match: /^\d{4}$/ }
+,
   fileUrl:    { type: String, required: true, trim: true },
   uploadedBy: { type: Schema.Types.ObjectId, ref: 'User', required: false},
   visibility: {
