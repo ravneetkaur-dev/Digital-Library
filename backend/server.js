@@ -6,6 +6,7 @@ import facultyRouter from './routes/facultyrouter.js';
 //import adminRouter from './routes/adminrouter.js';
 import path from 'path'; 
 // import cors from 'cors'; // Uncomment if using CORS
+import admins from './routes/admin.js'
 import feedbackRouter from './routes/feedbackrouter.js'; 
 import syllabusRoutes from './routes/syllabusroute.js';
 import facultyManagement from './routes/adminrouter.js'

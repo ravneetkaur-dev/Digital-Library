@@ -57,6 +57,8 @@ export const logout = async (req, res) => {
   try {
     // Note: You can implement JWT blacklist or just handle token expiry
     res.status(200).send("Logged out successfully");
+    // Note: You can implement JWT blacklist or just handle token expiry
+    res.status(200).send("Logged out successfully");
   } catch (error) {
     console.error("Logout error:", error);
     res.status(500).send("Internal server error");

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<form action="/book/upload" method="POST" enctype="multipart/form-data">
+    <input type="text" name="title" placeholder="title"/>
+    <input type="text" name="author" placeholder="author"/>
+    <input  type="text" name="subject" placeholder="subject"/>
+    <input type="date" name="year" placeholder="year"/>
+    <input type="text" name="file" placeholder="url"/>
+
+    <input type="file" name="profile" />
+     <button type="submit" > upload</button>
+</form>
+<body>
+    
+</body>
+</html>
+<!-- title:      { type: String, required: true, trim: true },
+  author:     { type: String, required: true, trim: true },
+  subject:    { type: String, required: true, trim: true },
+  year:       { type: Number, required: true, min: 0 },
+  fileUrl:    { type: String, required: true, trim: true },
+  uploadedBy: { type: Schema.Types.ObjectId, ref: 'User', required: true }, -->
