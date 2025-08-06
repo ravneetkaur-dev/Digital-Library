@@ -1,4 +1,5 @@
-const mongoose = require('mongoose');
+
+import mongoose from 'mongoose';
 const notesSchema = mongoose.Schema({
     title: {
         type: String,
@@ -26,6 +27,11 @@ const notesSchema = mongoose.Schema({
         enum: ["public", "faculty-only", "students"],
         default: "public"
     },
+    Course:{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Course',
+            required: true
+        },
     // available: {
     //     type: Boolean,
     //     default: true
@@ -41,7 +47,15 @@ const notesSchema = mongoose.Schema({
         filename: String,
         fileType: String,
         fileUrl: String
+    }],
+    extraLinks:[{
+        url:String,
+        type:{
+            type: String,
+            enum: ['video', 'site'],
+            required: true
+        }
     }]
 });
 const notes=  mongoose.model("Notes", notesSchema);
-module.exports = notes
+export default notes

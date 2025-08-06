@@ -12,6 +12,9 @@ import syllabusRoutes from './routes/syllabusroute.js';
 import facultyManagement from './routes/adminrouter.js'
 import loginAdmin from './routes/loginadmin.js'; // Import the login route
 import book from './routes/book.js'; // Import book routes
+import notes from './routes/notes.js';
+import notification from './routes/notification.js';
+import course from './routes/courseRoute.js'; // Import course routes
 dotenv.config();
 
 const app = express();
@@ -29,6 +32,9 @@ app.use('/api', loginAdmin); // Use the login route
 app.use('/api/facultymanagement', facultyManagement); // Use faculty management routes
 // app.use(cors()); // Uncomment if needed
 app.use('/api/book', book); // Use book routes
+app.use('/api/notes', notes); // Uncomment if using notes routes
+app.use('/api/notification', notification); // Use notification routes
+app.use('/api/course', course); // Use course routes
 app.use(express.json());
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

@@ -1,5 +1,4 @@
 import express from 'express';
-<<<<<<< HEAD
 import { uploadedfile, upload } from '../controllers/bookcontroller.js';
 
 const router = express.Router();
@@ -12,14 +11,6 @@ router.get('/upload', (req, res) => {
 });
 
 // Upload route
-=======
-import { uploadedfile,upload} from '../controllers/bookcontroller.js';
-// or configure `upload` here directly
-
-const router = express.Router();
-
-// Multer middleware must precede handler
->>>>>>> ed2e5468380bfa1c046ca61721621d2f52376da9
 router.post('/upload', upload.single('profile'), uploadedfile);
 
 export default router;

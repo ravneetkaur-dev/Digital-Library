@@ -59,7 +59,7 @@ const BookSchema = mongoose.Schema({
     uploadedAt: {
         type: Date,
         default: Date.now
-    }
+    },
 });
 const book = mongoose.model("Book", BookSchema);
 export default book;
