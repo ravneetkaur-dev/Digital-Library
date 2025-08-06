@@ -2,8 +2,10 @@ import { sendEmail } from '../utils/mailer.js';
 import faculty from '../models/faculty.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+
 export const registerUser = async (req, res) => {
-    const { name, email, password, role ,designation, department,subjects } = req.body;
+    const { name, email, password, role, designation, department, subjects } = req.body;
+
     try {
         const existingUser = await faculty.findOne({ email });
         if (existingUser) {
@@ -12,6 +14,11 @@ export const registerUser = async (req, res) => {
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
+        // ✅ Handle profile image from multer
+        const profileImage = req.file
+            ? `/uploads/facultyimages/${req.file.filename}`
+            : "/backend/utils/images/images.jpeg"; // default image
+
         const newFaculty = new faculty({
             name,
             email,
@@ -19,14 +26,17 @@ export const registerUser = async (req, res) => {
             role,
             designation,
             department,
-            subjects
+            subjects,
+            profileImage
         });
 
         await newFaculty.save();
 
         const token = jwt.sign({ userId: newFaculty._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+
         await sendEmail(email, name, password);
         console.log('Email sent successfully to:', email);
+
         res.status(201).json({
             user: {
                 id: newFaculty._id,
@@ -35,7 +45,8 @@ export const registerUser = async (req, res) => {
                 role: newFaculty.role,
                 designation: newFaculty.designation || 'Not specified',
                 department: newFaculty.department || 'Not specified',
-                subjects: newFaculty.subjects || []
+                subjects: newFaculty.subjects || [],
+                profileImage: newFaculty.profileImage
             },
             token,
             message: 'Faculty registered successfully'
@@ -45,6 +56,7 @@ export const registerUser = async (req, res) => {
         res.status(500).json({ message: 'Internal server error' });
     }
 };
+
 
 // Update a faculty
 export const updateFaculty = async (req, res) => {
@@ -56,6 +68,9 @@ export const updateFaculty = async (req, res) => {
             { name, email, role,designation, department, subjects },
             { new: true }
         );
+        const profileImage = req.file
+      ? `/uploads/facultyimages/${req.file.filename}`
+      : "/backend/utils/images/images.jpeg";
         if (!updatedFaculty) {
             return res.status(404).json({ message: 'Faculty not found' });
         }
@@ -67,7 +82,8 @@ export const updateFaculty = async (req, res) => {
                 role: updatedFaculty.role,
                 designation: updatedFaculty.designation || 'Not specified',
                 department: updatedFaculty.department || 'Not specified',
-                subjects: updatedFaculty.subjects || []
+                subjects: updatedFaculty.subjects || [],
+                profileImage: profileImage
             },
             message: 'Faculty updated successfully'
         });

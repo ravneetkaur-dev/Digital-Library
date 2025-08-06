@@ -9,11 +9,6 @@ const feedbackSchema=mongoose.Schema({
         required: true,
         match: /.+\@.+\..+/
     },
-    // courseId: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'Course',
-    //     required: true
-    // },
     content: {
         type: String,
         required: true
@@ -28,11 +23,6 @@ const feedbackSchema=mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    // userId: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'User',
-    //     required: true
-    // },
 });
 const Feedback=mongoose.model("Feedback",feedbackSchema);
 export default Feedback;

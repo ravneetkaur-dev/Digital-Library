@@ -1,7 +1,7 @@
 import express from "express";
 import multer from "multer";
 import { createAdmin,updateProfileImage} from "../controllers/manageAdmin.js";
-import { loginAdmin } from "../controllers/addadmincontroller.js";
+import { loginAdmin } from "../controllers/loginadmincontroller.js";
 const router = express.Router();
 
 const storage = multer.diskStorage({
