@@ -1,16 +1,16 @@
 import express from 'express';
-import { uploadedfile,upload} from '../controllers/bookcontroller.js';
-// or configure `upload` here directly
+import { uploadedfile, upload } from '../controllers/bookcontroller.js';
 
 const router = express.Router();
+
+// Optional: Remove this route if you're not serving a page
 router.get('/upload', (req, res) => {
-  res.render('upload', {
-    action: '/book/upload',  // form action
-    fields: ['title','author','subject','year'],
-    fileField: 'profile'     // must match upload.single()
+  res.json({
+    message: 'Use POST /api/book/upload with a file field named "profile"'
   });
 });
-// Multer middleware must precede handler
+
+// Upload route
 router.post('/upload', upload.single('profile'), uploadedfile);
 
 export default router;

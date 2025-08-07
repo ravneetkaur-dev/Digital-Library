@@ -27,6 +27,11 @@ const notesSchema = mongoose.Schema({
         enum: ["public", "faculty-only", "students"],
         default: "public"
     },
+    Course:{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Course',
+            required: true
+        },
     // available: {
     //     type: Boolean,
     //     default: true
@@ -42,17 +47,15 @@ const notesSchema = mongoose.Schema({
         filename: String,
         fileType: String,
         fileUrl: String
-    }],extraLinks: [
-  {
-    url: String,
-    type: {
-      type: String,
-      enum: ['video', 'site'],
-      required: true
-    }
-  }
-]
-
+    }],
+    extraLinks:[{
+        url:String,
+        type:{
+            type: String,
+            enum: ['video', 'site'],
+            required: true
+        }
+    }]
 });
-const Notes=  mongoose.model("Notes", notesSchema);
-export default  Notes
+const notes=  mongoose.model("Notes", notesSchema);
+export default notes
