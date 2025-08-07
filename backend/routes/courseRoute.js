@@ -1,9 +1,22 @@
-import express from 'express'
-import { createCourse, getAllCourses } from '../controllers/courseController.js'
-import {adminAuth} from '../middlewares/adminauth.js'
-const router = express.Router()
+import express from 'express';
+import {
+  createDepartment,
+  createCourse,
+  createSemester,
+  getDepartments,
+  getCoursesByDepartment,
+  getSemestersByCourse
+} from '../controllers/courseController.js';
+import { adminAuth } from '../middlewares/adminauth.js';
 
-router.post('/add', adminAuth, createCourse)       // Admin can add course
-router.get('/all', getAllCourses)       // Anyone can fetch all
+const router = express.Router();
 
-export default router
+router.post('/departments',adminAuth, createDepartment);
+router.post('/courses',adminAuth, createCourse);
+router.post('/semesters',adminAuth, createSemester);
+
+router.get('/departments', getDepartments);
+router.get('/courses/:departmentId', getCoursesByDepartment);
+router.get('/semesters/:courseId', getSemestersByCourse);
+
+export default router;

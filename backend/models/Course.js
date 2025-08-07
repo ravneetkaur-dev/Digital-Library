@@ -1,4 +1,5 @@
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
+
 const courseSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -6,18 +7,10 @@ const courseSchema = new mongoose.Schema({
     trim: true
   },
   department: {
-    type: String,
-    required: true
-  },
-  semester: {
-    type: String,
-    required: true
-  },
-  year: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'department',
     required: true
   }
-}, { timestamps: true })
+}, { timestamps: true });
 
-const Course = mongoose.model('Course', courseSchema)
-export default Course
+export default mongoose.model('Course', courseSchema);

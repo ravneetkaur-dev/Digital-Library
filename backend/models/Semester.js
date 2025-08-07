@@ -1,18 +1,16 @@
-const mongoose = require('mongoose');
-const semesterSchema = mongoose.Schema({
+import mongoose from 'mongoose';
+
+const semesterSchema = new mongoose.Schema({
   number: {
-    type: Number, 
-    required: true
+    type: String,
+    required: true,
+    trim: true
   },
   course: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Course',
     required: true
-  },
-  subjects: [{
-    type: String
-  }],
-});
-const semester=mongoose.model("Semester", semesterSchema);
+  }
+}, { timestamps: true });
 
-module.exports = semester 
+export default mongoose.model('Semester', semesterSchema);
