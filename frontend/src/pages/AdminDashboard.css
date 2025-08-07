@@ -1,19 +1,18 @@
-/* AdminDashboard.css */
 
 .sidebar {
-  background-color: #002147;
-  color: #ffffff;
+  background-color: #e1e1e1;
+  color: #002147;
   min-height: 100vh;
 }
 
 .sidebar-title {
-  color: #fdc800;
+  color: #002147;
   font-weight: bold;
   text-align: center;
 }
 
 .sidebar-link {
-  color: #ffffff;
+  color: #002147 !important;
   font-size: 1rem;
   margin-bottom: 0.8rem;
   display: flex;
@@ -24,16 +23,22 @@
 }
 
 .sidebar-link:hover {
-  background-color: #003366;
+  background-color: #002147;
+  color: white !important;
   text-decoration: none;
 }
 
 .sidebar-link.active {
-  background-color: #fdc800;
-  color: #002147;
+  background-color: #002147;
+  color: white !important;
   font-weight: 600;
 }
 
 .sidebar-link svg {
   vertical-align: middle;
 }
+
+.side-nav{
+  background-color: #e1e1e1;
+}
+

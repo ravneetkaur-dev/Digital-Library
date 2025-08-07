@@ -19,7 +19,7 @@ export const AdminDashboard = () => {
         <Row>
           <Col md={2} className="sidebar p-3">
             <h4 className="sidebar-title mb-4">Admin Panel</h4>
-            <Nav className="flex-column">
+            <Nav className="flex-column side-nav">
               <Nav.Link
                 onClick={() => setActiveTab('welcome')}
                 className={`sidebar-link ${activeTab === 'welcome' ? 'active' : ''}`}

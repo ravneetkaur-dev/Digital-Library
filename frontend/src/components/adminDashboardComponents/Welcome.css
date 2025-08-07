@@ -1,18 +1,18 @@
 .admin-navbar {
-  background-color: #002147;
-  color: #fdc800;
+  background-color: #e1e1e1;
+  color: #002147;
   padding: 0.8rem 1rem;
 }
 
 .admin-title {
-  color: #fdc800;
+  color: #002147;
   font-weight: bold;
   margin: 0;
 }
 
 .notification-icon {
   position: relative;
-  color: #fdc800;
+  color: #002147;
   text-decoration: none;
   padding: 5px;
   border: none;

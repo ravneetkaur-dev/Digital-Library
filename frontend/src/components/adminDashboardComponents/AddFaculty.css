@@ -1,0 +1,17 @@
+.card {
+  background-color: #ffffff;
+  border-radius: 20px;
+}
+
+form label {
+  font-weight: 500;
+}
+
+.add-button {
+  transition: all 0.3s ease-in-out;
+  background-color: #002147;
+}
+
+.add-button:hover {
+  background-color: #12437a !important;
+}
