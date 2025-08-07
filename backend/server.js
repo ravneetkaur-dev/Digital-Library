@@ -10,6 +10,9 @@ import feedbackRouter from './routes/feedbackrouter.js';
 import book from './routes/book.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
+
+import notes from './routes/notes.js';
+import notification from './routes/notification.js';
 dotenv.config();
 
 const app = express();
@@ -26,7 +29,9 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/book',book)
+app.use('/notes',notes)
 // app.use(cors()); // Uncomment if needed
+app.use('/notifications', notification);
 app.use(express.json());
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

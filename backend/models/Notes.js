@@ -1,4 +1,5 @@
-const mongoose = require('mongoose');
+
+import mongoose from 'mongoose';
 const notesSchema = mongoose.Schema({
     title: {
         type: String,
@@ -41,7 +42,17 @@ const notesSchema = mongoose.Schema({
         filename: String,
         fileType: String,
         fileUrl: String
-    }]
+    }],extraLinks: [
+  {
+    url: String,
+    type: {
+      type: String,
+      enum: ['video', 'site'],
+      required: true
+    }
+  }
+]
+
 });
-const notes=  mongoose.model("Notes", notesSchema);
-module.exports = notes
+const Notes=  mongoose.model("Notes", notesSchema);
+export default  Notes
