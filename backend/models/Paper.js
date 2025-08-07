@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 const paperSchema = mongoose.Schema({
     title: {
         type: String,
@@ -13,7 +13,7 @@ const paperSchema = mongoose.Schema({
         required: true
     },
     year: {
-        type: Number,
+        type: String,
         required: true
     },
     uploadedBy: {
@@ -30,7 +30,7 @@ const paperSchema = mongoose.Schema({
         type: Boolean,
         default: true
     },
-    Course:{
+    course:{
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Course',
             required: true
@@ -49,4 +49,4 @@ const paperSchema = mongoose.Schema({
     }]
 });
 const paper= mongoose.model("Paper", paperSchema);
-module.exports = paper
+ export default paper

@@ -15,6 +15,7 @@ import book from './routes/book.js'; // Import book routes
 import notes from './routes/notes.js';
 import notification from './routes/notification.js';
 import course from './routes/courseRoute.js'; // Import course routes
+import paper from './routes/paper.js'
 dotenv.config();
 
 const app = express();
@@ -35,6 +36,8 @@ app.use('/api/book', book); // Use book routes
 app.use('/api/notes', notes); // Uncomment if using notes routes
 app.use('/api/notification', notification); // Use notification routes
 app.use('/api/course', course); // Use course routes
+app.use('/api/paper',paper)
+
 app.use(express.json());
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
