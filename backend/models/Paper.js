@@ -30,6 +30,11 @@ const paperSchema = mongoose.Schema({
         type: Boolean,
         default: true
     },
+    Course:{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Course',
+            required: true
+        },
     description: {
         type: String
     },

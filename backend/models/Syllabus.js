@@ -20,6 +20,11 @@ const SyllabusSchema = mongoose.Schema({
         type: Number,
         required: true
     },
+    Course:{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Course',
+            required: true
+        },
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',

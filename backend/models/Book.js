@@ -60,6 +60,11 @@ const BookSchema = mongoose.Schema({
         type: Date,
         default: Date.now
     },
+    Course:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Course',
+        required: true
+    }
 });
 const book = mongoose.model("Book", BookSchema);
 export default book;
