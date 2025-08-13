@@ -1,7 +1,7 @@
 import subjects from "../models/subjects.js";
 import mongoose from "mongoose";
 
-// ✅ CREATE SUBJECT
+//  CREATE SUBJECT
 export const createSubject = async (req, res) => {
     const { name, code, department, course, semester, description } = req.body;
 
@@ -33,7 +33,7 @@ export const createSubject = async (req, res) => {
     }
 };
 
-// ✅ GET ALL SUBJECTS
+//  GET ALL SUBJECTS
 export const getAllSubjects = async (req, res) => {
     try {
         const subjectsList = await subjects
@@ -49,7 +49,7 @@ export const getAllSubjects = async (req, res) => {
     }
 };
 
-// ✅ DELETE SUBJECT
+//  DELETE SUBJECT
 export const deleteSubject = async (req, res) => {
     const { id } = req.params;
     try {
@@ -69,7 +69,7 @@ export const deleteSubject = async (req, res) => {
     }
 };
 
-// ✅ UPDATE SUBJECT
+//  UPDATE SUBJECT
 export const updateSubject = async (req, res) => {
     const { id } = req.params;
     const { name, code, department, course, semester, description } = req.body;
@@ -94,4 +94,39 @@ export const updateSubject = async (req, res) => {
         console.error('Error updating subject:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
+};
+//==========| search subject 🔍 |============//
+//==========| search subject 🔍 |============//
+
+
+// Search subjects by name, code, description, department name, course name, or semester number
+export const searchSubjects = async (req, res) => {
+  try {
+    const key = req.query.key?.trim().toLowerCase();
+
+    if (!key) {
+      return res.status(400).json({ message: "Search key is required" });
+    }
+
+    const allSubjects = await subjects
+      .find()
+      .populate('department', 'name')
+      .populate('course', 'name')
+      .populate('semester', 'number');
+
+    const filteredSubjects = allSubjects.filter(sub =>
+      sub.name?.toLowerCase().includes(key) ||
+      sub.code?.toLowerCase().includes(key) ||
+      sub.description?.toLowerCase().includes(key) ||
+      sub.department?.name?.toLowerCase().includes(key) ||
+      sub.course?.name?.toLowerCase().includes(key) ||
+      sub.semester?.number?.toString().includes(key)
+    );
+
+    res.json(filteredSubjects);
+
+  } catch (error) {
+    console.error("Error searching subjects:", error);
+    res.status(500).json({ message: "Server error" });
+  }
 };
