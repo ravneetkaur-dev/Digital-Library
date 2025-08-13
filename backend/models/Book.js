@@ -19,7 +19,7 @@ const BookSchema = mongoose.Schema({
     year: {
         type: String,
         required: true,
-        match: /^\d{4}$/ // Ensures the year is a 4-digit number
+        match: /^\d{4}$/ 
     },
     isbn: {
         type: String,

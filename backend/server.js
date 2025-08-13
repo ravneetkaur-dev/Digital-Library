@@ -23,6 +23,8 @@ db();
 app.set('view engine', 'ejs');
 app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 app.use(express.json()); 
+app.use('/api/admin', loginAdmin);
+app.use('/api/createadmin', admins);
 app.use('/api/faculty', facultyRouter);
 app.use('/api/feedback', feedbackRouter);
 app.use('/api/syllabus', syllabusRoutes);

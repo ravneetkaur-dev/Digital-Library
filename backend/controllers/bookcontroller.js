@@ -48,12 +48,23 @@ const file=f.path
   }
 }
 export const filterAndSearchBooks = async (req, res) => {
-  const { title, author, subject, year, semester } = req.query;
+  const { key, title, author, subject, year, semester } = req.query;
 
-  const sanitize = (value) => value?.trim(); // Remove extra spaces
-  const filter = {}; // ✅ define first
+  const sanitize = (value) => value?.trim();
+  const filter = {};
 
-  // ✅ Apply filters only if provided
+  // 🔹 General keyword search
+  if (key) {
+    const searchRegex = { $regex: sanitize(key), $options: 'i' };
+    filter.$or = [
+      { title: searchRegex },
+      { author: searchRegex },
+      { subject: searchRegex },
+      { description: searchRegex }
+    ];
+  }
+
+  // 🔹 Field-specific filters
   if (title) filter.title = { $regex: sanitize(title), $options: 'i' };
   if (author) filter.author = { $regex: sanitize(author), $options: 'i' };
   if (subject) filter.subject = { $regex: sanitize(subject), $options: 'i' };
@@ -63,7 +74,7 @@ export const filterAndSearchBooks = async (req, res) => {
   try {
     const books = await book.find(filter)
       .sort({ createdAt: -1 })
-      .populate('uploadedBy', 'name email'); // optional: if you want uploader info
+      .populate('uploadedBy', 'name email');
 
     res.status(200).json(books);
   } catch (error) {
@@ -71,6 +82,7 @@ export const filterAndSearchBooks = async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 };
+
 export const getAllBooks = async (req, res) => {
   try {
     const books = await book.find().sort({ uploadedAt: -1 }).populate('uploadedBy', 'name email');
