@@ -9,5 +9,4 @@ const notificationSchema = new mongoose.Schema({
   subject: { type: String, required: true }
 });
 
-// ✅ Check if already compiled
 export default mongoose.models.Notification || mongoose.model('Notification', notificationSchema);

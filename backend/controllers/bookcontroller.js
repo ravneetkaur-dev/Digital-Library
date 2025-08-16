@@ -1,59 +1,80 @@
 import book from '../models/Book.js';
 import multer from 'multer';
-import {admin} from'../models/index.js'
 import mongoose from 'mongoose';
-const storage=multer.diskStorage({
-    destination: function(req,file,cb){
-        return cb(null,"./uploads");
-    },
-    filename: function (req,file,cb){
-        return cb(null,`${Date.now()}+${file.originalname}`)
-    }
-})
-export const upload=multer({storage})
-const data=admin
 
-export const uploadedfile=async(req,res)=>{
-     const rdata=data.role;
-    
-  
-  if (!req.file) {
-    return res.status(400).send("No file uploaded");
-  }
-  
-const {title,author,subject,year,semester}=req.body
-try{
-const f=req.file;
-console.log(req.body)
-const user=new book({
-    originalname: f.originalname,
-    filename: f.filename,
-    path: f.path,
-    title: title,
-    author: author,
-    subject:subject,
-    semester:semester,
-    year:year,
-    fileUrl: f.path,
-      uploadedBy:new mongoose.Types.ObjectId(req.body.uploadedBy),
-})
+// Multer storage config
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => cb(null, "./uploads"),
+  filename: (req, file, cb) => cb(null, `${Date.now()}+${file.originalname}`)
+});
 
-await user.save()
-const file=f.path
+// Accept single 'file' and optional 'coverImage'
+export const upload = multer({ storage }).fields([
+  { name: 'file', maxCount: 1 },
+  { name: 'coverImage', maxCount: 1 }
+]);
 
-    res.send('Upload complete!');
+export const uploadedfile = async (req, res) => {
+  try {
+    const uploadedBy = req.user?.userId;
+    if (!uploadedBy) return res.status(401).json({ error: 'Unauthorized: User ID missing' });
+
+    const { title, author, department, subject, semester, year, isbn, edition, pages, visibility, available, description, Course } = req.body;
+
+    if (!req.files || !req.files.file) return res.status(400).send("No main file uploaded");
+
+    const mainFile = req.files.file[0];
+    const coverFile = req.files.coverImage ? req.files.coverImage[0] : undefined;
+
+    const newBook = new book({
+      title,
+      author,
+      department: new mongoose.Types.ObjectId(department),
+      subject: new mongoose.Types.ObjectId(subject),
+      semester: new mongoose.Types.ObjectId(semester),
+      year,
+      isbn: isbn || undefined,
+      edition: edition || undefined,
+      pages: pages ? Number(pages) : undefined,
+      fileUrl: mainFile.path,
+      coverImageUrl: coverFile ? coverFile.path : undefined,
+      uploadedBy: new mongoose.Types.ObjectId(uploadedBy),
+      visibility: visibility || "public",
+      available: available !== undefined ? Boolean(available) : true,
+      description: description || undefined,
+      Course: new mongoose.Types.ObjectId(Course)
+    });
+
+    await newBook.save();
+    res.status(201).json({ message: 'Book uploaded successfully', book: newBook });
   } catch (err) {
-   console.error("Upload error:", err);
+    console.error("Upload error:", err);
     res.status(500).send('Server error during file upload.');
   }
-}
+};
+
+// 🔹 Populate all references
+export const getAllBooks = async (req, res) => {
+  try {
+    const books = await book.find()
+      .sort({ uploadedAt: -1 })
+      .populate('uploadedBy', 'name email')
+      .populate('subject', 'name')      // populate subject
+      .populate('semester', 'name number') // populate semester
+      .populate('department', 'name')   // populate department
+      .populate('Course', 'name');      // populate course
+    res.status(200).json(books);
+  } catch (error) {
+    console.error('Error fetching books:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
 export const filterAndSearchBooks = async (req, res) => {
   const { title, author, subject, year, semester } = req.query;
+  const sanitize = (value) => value?.trim();
+  const filter = {};
 
-  const sanitize = (value) => value?.trim(); // Remove extra spaces
-  const filter = {}; // ✅ define first
-
-  // ✅ Apply filters only if provided
   if (title) filter.title = { $regex: sanitize(title), $options: 'i' };
   if (author) filter.author = { $regex: sanitize(author), $options: 'i' };
   if (subject) filter.subject = { $regex: sanitize(subject), $options: 'i' };
@@ -63,36 +84,29 @@ export const filterAndSearchBooks = async (req, res) => {
   try {
     const books = await book.find(filter)
       .sort({ createdAt: -1 })
-      .populate('uploadedBy', 'name email'); // optional: if you want uploader info
+      .populate('uploadedBy', 'name email')
+      .populate('subject', 'name')
+      .populate('semester', 'name number')
+      .populate('department', 'name')
+      .populate('Course', 'name');
+    res.status(200).json(books);
+  } catch (error) {
+    console.error('Error fetching books:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
 
-    res.status(200).json(books);
-  } catch (error) {
-    console.error('Error fetching books:', error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-};
-export const getAllBooks = async (req, res) => {
-  try {
-    const books = await book.find().sort({ uploadedAt: -1 }).populate('uploadedBy', 'name email');
-    res.status(200).json(books);
-  } catch (error) {
-    console.error('Error fetching books:', error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-};
 export const deleteBook = async (req, res) => {
   const { id } = req.params;
   try {
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-      return res.status(400).json({ message: 'Invalid book ID' });
-    }
+    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(400).json({ message: 'Invalid book ID' });
+
     const deletedBook = await book.findByIdAndDelete(id);
-    if (!deletedBook) {
-      return res.status(404).json({ message: 'Book not found' });
-    }
+    if (!deletedBook) return res.status(404).json({ message: 'Book not found' });
+
     res.status(200).json({ message: 'Book deleted successfully' });
   } catch (error) {
     console.error('Error deleting book:', error);
-    res.status(500).json({ message: 'Internal server error' }); 
+    res.status(500).json({ message: 'Internal server error' });
   }
 };

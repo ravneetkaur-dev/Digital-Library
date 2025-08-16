@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+
 const SyllabusSchema = mongoose.Schema({
     title: {
         type: String,
@@ -6,25 +7,32 @@ const SyllabusSchema = mongoose.Schema({
     },
     description: {
         type: String,
-        required: true
+        required: false 
     },
     subject: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Subject',
         required: true
     },
     semester: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Semester',
         required: true
     },
     year: {
         type: Number,
         required: true
     },
-    Course:{
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Course',
-            required: true
-        },
+    Course: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Course',
+        required: true
+    },
+    department: { 
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Department',
+        required: true
+    },
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
@@ -34,11 +42,17 @@ const SyllabusSchema = mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    fileUrl:{
-        type:String,
-        required:true
+    fileUrl: {
+        type: String,
+        required: true
+    },
+    visibility: {
+        type: String,
+        enum: ['public', 'faculty-only', 'students'],
+        default: 'public'
     }
-    
 });
-const syllabus = mongoose.model("Syllabus", SyllabusSchema);
-export default syllabus;
+
+const Syllabus = mongoose.model("Syllabus", SyllabusSchema);
+
+export default Syllabus;

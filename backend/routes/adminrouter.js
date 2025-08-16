@@ -1,29 +1,19 @@
 import express from 'express';
-import {  updateFaculty } from '../controllers/facultyManagmentController.js';
-import { registerUser,deleteFaculty,getFaculty } from '../controllers/facultyManagmentController.js';
-// import { adminAuth } from '../middlewares/adminauth.js';
+import { registerUser, updateFaculty, deleteFaculty, getFaculty } from '../controllers/facultyManagmentController.js';
+import multer from 'multer';
+
 const router = express.Router();
-router.post('/register', registerUser);
-router.put('/update/:id', updateFaculty);
+
+// Multer config for profile image
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => cb(null, './uploads/facultyimages'),
+  filename: (req, file, cb) => cb(null, Date.now() + '-' + file.originalname),
+});
+const upload = multer({ storage });
+
+router.post('/register', upload.single('profileImage'), registerUser);
+router.put('/update/:id', upload.single('profileImage'), updateFaculty);
 router.delete('/delete/:id', deleteFaculty);
 router.get('/getfaculty', getFaculty);
+
 export default router;
-// import express from 'express';
-// import {
-//   registerUser,
-//   updateFaculty,
-//   deleteFaculty,
-//   getFaculty
-// } from '../controllers/facultyManagmentController.js';
-
-// import { adminAuth } from '../middlewares/adminauth.js'; // ✅ Import the middleware
-
-// const router = express.Router();
-
-// // ✅ Apply adminAuth to all admin-only routes
-// router.post('/register', adminAuth, registerUser);
-// router.put('/update/:id', adminAuth, updateFaculty);
-// router.delete('/deletes/:id', adminAuth, deleteFaculty);
-// router.get('/getfaculty', adminAuth, getFaculty);
-
-// export default router;

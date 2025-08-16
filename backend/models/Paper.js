@@ -1,19 +1,32 @@
-const mongoose = require('mongoose');
-const paperSchema = mongoose.Schema({
+import mongoose from "mongoose";
+
+const paperSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true
     },
-    subject: {
-        type: String,
+    department: { 
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Department',
         required: true
     },
-    semester: {
-        type: String,
+    course: { 
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Course',
+        required: true
+    },
+    semester: { 
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Semester',
+        required: true
+    },
+    subject: { 
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Subject',
         required: true
     },
     year: {
-        type: Number,
+        type: String,
         required: true
     },
     uploadedBy: {
@@ -30,11 +43,6 @@ const paperSchema = mongoose.Schema({
         type: Boolean,
         default: true
     },
-    Course:{
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Course',
-            required: true
-        },
     description: {
         type: String
     },
@@ -48,5 +56,6 @@ const paperSchema = mongoose.Schema({
         fileUrl: String
     }]
 });
-const paper= mongoose.model("Paper", paperSchema);
-module.exports = paper
+
+const Paper = mongoose.model("Paper", paperSchema);
+export default Paper;
