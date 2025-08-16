@@ -1,7 +1,8 @@
 import { useState } from "react"
 import { Container, Row, Col, Card, Form, Button, Alert, Spinner } from "react-bootstrap"
 import { FaStar, FaEnvelope, FaUser, FaComment, FaPaperPlane } from "react-icons/fa"
-import { apiJson, ENDPOINTS } from "../utils/api"
+import { apiPost, ENDPOINTS } from "../utils/api" // ✅ use apiPost instead of api
+
 import "./Contact.css"
 
 export const ContactForm = () => {
@@ -52,10 +53,8 @@ export const ContactForm = () => {
 
     setLoading(true)
     try {
-      await apiJson(ENDPOINTS.feedback.submit, {
-        method: "POST",
-        body: JSON.stringify(formData),
-      })
+      // ✅ use apiPost (axios helper)
+      await apiPost(ENDPOINTS.feedback.submit, formData)
 
       showAlert("success", "Thank you for your feedback! We appreciate your input.")
       setFormData({
@@ -195,4 +194,3 @@ export const ContactForm = () => {
     </div>
   )
 }
-
