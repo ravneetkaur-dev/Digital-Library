@@ -7,7 +7,7 @@ import { Resources } from './pages/Resources';
 import { ScrollToTop } from './components/ScrollToTop';
 import { AdminPage } from './pages/AdminPage';
 import { DepartmentsPage } from './pages/DepartmentsPage';
-// import { FacultyDashboardPage } from './pages/FacultyDashboardPage';
+import { FacultyDashboardPage } from './pages/FacultyDashboardPage';
 import './App.css';
 
 
@@ -27,7 +27,7 @@ function App() {
           <Route path='/resources' element={<Resources/>}/>
           <Route path="/admin-dashboard" element={<AdminPage/>}/>
           <Route path="/departments" element={<DepartmentsPage/>} />
-          {/* <Route path="/faculty-dashboard" element={<FacultyDashboardPage/>}/> */}
+          <Route path="/faculty-dashboard" element={<FacultyDashboardPage/>}/>
           {/* <Route path="/course/:courseId" element={<CourseDetails />} /> */}
         </Routes>
       </ScrollToTop>
