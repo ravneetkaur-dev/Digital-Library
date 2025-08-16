@@ -1,0 +1,617 @@
+/* Department Page Variables */
+:root {
+  --dept-navy: #14155c;
+  --dept-navy-light: #183e7b;
+  --dept-blue: #2563eb;
+  --dept-blue-light: #60a5fa;
+  --dept-text-primary: #1f2937;
+  --dept-text-secondary: #4b5563;
+  --dept-text-muted: #6b7280;
+  --dept-bg-light: #f8fafc;
+  --dept-bg-white: #ffffff;
+  --dept-border: #e5e7eb;
+  --dept-shadow-sm: 0 2px 8px rgba(30, 58, 138, 0.08);
+  --dept-shadow-md: 0 8px 25px rgba(30, 58, 138, 0.12);
+  --dept-shadow-lg: 0 15px 35px rgba(30, 58, 138, 0.15);
+  --dept-shadow-xl: 0 25px 50px rgba(30, 58, 138, 0.2);
+  --dept-radius: 12px;
+  --dept-radius-lg: 20px;
+  --dept-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Page Layout */
+.dept-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+}
+
+/* Hero Section */
+.dept-hero {
+  background: linear-gradient(135deg, var(--dept-navy) 0%, var(--dept-blue) 100%);
+  color: white;
+  padding: 6rem 0 4rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.dept-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="hero-pattern" width="40" height="40" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23hero-pattern)"/></svg>');
+  opacity: 0.5;
+}
+
+.dept-hero-title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+.dept-hero-subtitle {
+  font-size: 1.5rem;
+  opacity: 0.9;
+  position: relative;
+  z-index: 1;
+}
+
+/* Navigation Section */
+.dept-nav-section {
+  background: var(--dept-bg-white);
+  padding: 2rem 0;
+  box-shadow: var(--dept-shadow-sm);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.dept-nav {
+  background: var(--dept-bg-light);
+  border-radius: var(--dept-radius-lg);
+  padding: 0.5rem;
+  box-shadow: var(--dept-shadow-md);
+}
+
+.dept-nav-link {
+  color: var(--dept-text-secondary);
+  font-weight: 600;
+  padding: 1rem 2rem;
+  border-radius: var(--dept-radius);
+  transition: var(--dept-transition);
+  border: none;
+  background: transparent;
+}
+
+.dept-nav-link:hover {
+  color: var(--dept-navy);
+  background: rgba(30, 58, 138, 0.1);
+}
+
+.dept-nav-link.active {
+  background: var(--dept-navy);
+  color: white;
+  box-shadow: var(--dept-shadow-md);
+}
+
+/* Department Overview */
+.dept-overview {
+  padding: 6rem 0;
+}
+
+.dept-overview-content {
+  padding-right: 2rem;
+}
+
+.dept-overview-title {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--dept-navy);
+  margin-bottom: 1rem;
+}
+
+.dept-overview-tagline {
+  font-size: 1.25rem;
+  color: var(--dept-blue);
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.dept-overview-description {
+  font-size: 1.125rem;
+  color: var(--dept-text-secondary);
+  line-height: 1.7;
+  margin-bottom: 3rem;
+}
+
+.dept-stats {
+  margin-top: 2rem;
+}
+
+.dept-stat {
+  text-align: center;
+  padding: 0.5rem;
+  background: var(--dept-bg-white);
+  border-radius: var(--dept-radius);
+  box-shadow: var(--dept-shadow-sm);
+  margin-bottom: 1rem;
+}
+
+.dept-stat-number {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--dept-navy);
+  margin-bottom: 0.5rem;
+}
+
+.dept-stat-label {
+  color: var(--dept-text-muted);
+  font-weight: 500;
+  text-transform: uppercase;
+  font-size: 0.875rem;
+  letter-spacing: 0.05em;
+}
+
+.dept-overview-image {
+  position: relative;
+}
+
+.dept-overview-image img {
+  box-shadow: var(--dept-shadow-xl);
+  border-radius: var(--dept-radius-lg);
+}
+
+/* Vision & Mission */
+.dept-vision-mission {
+  padding: 4rem 0;
+  background: var(--dept-bg-white);
+}
+
+.dept-vm-card {
+  border: none;
+  border-radius: var(--dept-radius-lg);
+  box-shadow: var(--dept-shadow-md);
+  transition: var(--dept-transition);
+  height: 100%;
+}
+
+.dept-vm-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--dept-shadow-xl);
+}
+
+.dept-vm-icon {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, var(--dept-navy) 0%, var(--dept-blue) 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  margin: 0 auto 2rem;
+}
+
+.dept-vm-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--dept-navy);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.dept-vm-text {
+  color: var(--dept-text-secondary);
+  line-height: 1.7;
+  font-size: 1.125rem;
+}
+
+/* HOD Section */
+.dept-hod {
+  padding: 6rem 0;
+}
+
+.dept-section-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--dept-navy);
+  margin-bottom: 1rem;
+}
+
+.dept-section-subtitle {
+  font-size: 1.125rem;
+  color: var(--dept-text-secondary);
+  margin-bottom: 0;
+}
+
+.dept-hod-card {
+  border: none;
+  border-radius: var(--dept-radius-lg);
+  box-shadow: var(--dept-shadow-lg);
+  padding: 2rem;
+}
+
+.dept-hod-avatar {
+  margin-bottom: 2rem;
+}
+
+.dept-hod-avatar img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border: 4px solid var(--dept-blue-light);
+  box-shadow: var(--dept-shadow-md);
+}
+
+.dept-hod-name {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--dept-navy);
+  margin-bottom: 0.5rem;
+}
+
+.dept-hod-title {
+  font-size: 1.25rem;
+  color: var(--dept-blue);
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.dept-hod-qualification,
+.dept-hod-experience,
+.dept-hod-specialization {
+  color: var(--dept-text-secondary);
+  margin-bottom: 0.75rem;
+  font-size: 1.125rem;
+}
+
+.dept-hod-contact {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.dept-hod-contact-item {
+  color: var(--dept-text-muted);
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+/* Courses Section */
+.dept-courses {
+  padding: 6rem 0;
+  background: var(--dept-bg-white);
+}
+
+.dept-course-card {
+  border: none;
+  border-radius: var(--dept-radius-lg);
+  box-shadow: var(--dept-shadow-md);
+  transition: var(--dept-transition);
+  overflow: hidden;
+  height: 100%;
+}
+
+.dept-course-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--dept-shadow-xl);
+}
+
+/* Course Card Themes */
+.dept-course-card-1 {
+  background: linear-gradient(135deg, #dbeafe 0%, #e0e7ff 100%);
+  border-left: 6px solid #3b82f6;
+}
+
+.dept-course-card-2 {
+  background: linear-gradient(135deg, #fce7f3 0%, #f3e8ff 100%);
+  border-left: 6px solid #bb8ce8;
+}
+
+.dept-course-card-3 {
+  background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+  border-left: 6px solid #75caae;
+}
+
+.dept-course-card-4 {
+  background: linear-gradient(135deg, #fed7aa 0%, #fde68a 100%);
+  border-left: 6px solid #d2ae70;
+}
+
+.dept-course-header {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+}
+
+.dept-course-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: var(--dept-radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  margin-right: 1.5rem;
+  flex-shrink: 0;
+}
+
+.dept-course-icon-1 {
+  background: linear-gradient(135deg, #5e96ef 0%, #7b7de5 100%);
+}
+
+.dept-course-icon-2 {
+  background: linear-gradient(135deg, #a56dda 0%, #c25f90 100%);
+}
+
+.dept-course-icon-3 {
+  background: linear-gradient(135deg, #97e8cd 0%, #83e4c5 100%);
+}
+
+.dept-course-icon-4 {
+  background: linear-gradient(135deg, #dab87f 0%, #e3b887 100%);
+}
+
+.dept-course-basic {
+  flex-grow: 1;
+}
+
+.dept-course-name {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--dept-navy);
+  margin-bottom: 0.5rem;
+}
+
+.dept-course-full-name {
+  font-size: 1.125rem;
+  color: var(--dept-text-secondary);
+  margin-bottom: 1rem;
+}
+
+.dept-course-meta {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.dept-course-duration,
+.dept-course-seats {
+  background: rgba(30, 58, 138, 0.1);
+  color: var(--dept-navy);
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  font-size: 0.875rem;
+}
+
+.dept-course-description {
+  color: var(--dept-text-secondary);
+  line-height: 1.7;
+  margin-bottom: 2rem;
+  font-size: 1.125rem;
+}
+
+.dept-course-details {
+  margin-bottom: 2rem;
+}
+
+.dept-course-detail-section {
+  margin-bottom: 2rem;
+}
+
+.dept-course-detail-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--dept-navy);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.dept-course-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.dept-course-list li {
+  color: var(--dept-text-secondary);
+  margin-bottom: 0.5rem;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.dept-course-list li::before {
+  content: '•';
+  color: var(--dept-blue);
+  font-weight: bold;
+  position: absolute;
+  left: 0;
+}
+
+.dept-course-footer {
+  background: rgba(255, 255, 255, 0.7);
+  padding: 1.5rem;
+  border-radius: var(--dept-radius);
+  margin-bottom: 2rem;
+}
+
+.dept-course-salary,
+.dept-course-recruiters {
+  color: var(--dept-text-secondary);
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+}
+
+.dept-course-salary:last-child,
+.dept-course-recruiters:last-child {
+  margin-bottom: 0;
+}
+
+.dept-course-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.dept-course-btn-primary {
+  background: linear-gradient(135deg, var(--dept-navy) 0%, var(--dept-blue) 100%);
+  border: none;
+  padding: 0.875rem 2rem;
+  border-radius: var(--dept-radius);
+  font-weight: 600;
+  transition: var(--dept-transition);
+}
+
+.dept-course-btn-primary:hover {
+  background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%);
+  transform: translateY(-2px);
+  box-shadow: var(--dept-shadow-md);
+}
+
+.dept-course-btn-secondary {
+  border-color: var(--dept-navy);
+  color: var(--dept-navy);
+  padding: 0.875rem 2rem;
+  border-radius: var(--dept-radius);
+  font-weight: 600;
+  transition: var(--dept-transition);
+}
+
+.dept-course-btn-secondary:hover {
+  background: var(--dept-navy);
+  border-color: var(--dept-navy);
+  color: white;
+}
+
+/* Facilities Section */
+.dept-facilities {
+  padding: 6rem 0;
+}
+
+.dept-facility-card {
+  border: none;
+  border-radius: var(--dept-radius);
+  box-shadow: var(--dept-shadow-sm);
+  transition: var(--dept-transition);
+  height: 100%;
+}
+
+.dept-facility-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--dept-shadow-md);
+}
+
+.dept-facility-icon {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, var(--dept-navy) 0%, var(--dept-blue) 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  margin: 0 auto 1.5rem;
+}
+
+.dept-facility-title {
+  color: var(--dept-navy);
+  font-weight: 600;
+  font-size: 1.125rem;
+  margin-bottom: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .dept-hero-title {
+    font-size: 2.5rem;
+  }
+  
+  .dept-hero-subtitle {
+    font-size: 1.25rem;
+  }
+  
+  .dept-overview-title {
+    font-size: 2.25rem;
+  }
+  
+  .dept-overview-content {
+    padding-right: 0;
+    margin-bottom: 3rem;
+  }
+  
+  .dept-course-header {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .dept-course-icon {
+    margin-right: 0;
+    margin-bottom: 1.5rem;
+  }
+  
+  .dept-course-actions {
+    justify-content: center;
+  }
+  
+  .dept-nav-link {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.875rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .dept-hero {
+    padding: 4rem 0 3rem;
+  }
+  
+  .dept-overview,
+  .dept-courses,
+  .dept-hod,
+  .dept-facilities {
+    padding: 4rem 0;
+  }
+  
+  .dept-course-name {
+    font-size: 1.5rem;
+  }
+  
+  .dept-course-actions {
+    flex-direction: column;
+  }
+  
+  .dept-course-btn-primary,
+  .dept-course-btn-secondary {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .dept-nav-section {
+    display: none;
+  }
+  
+  .dept-hero {
+    background: white;
+    color: var(--dept-navy);
+    padding: 2rem 0;
+  }
+  
+  .dept-course-card,
+  .dept-vm-card,
+  .dept-hod-card {
+    box-shadow: none;
+    border: 1px solid var(--dept-border);
+  }
+}

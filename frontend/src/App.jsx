@@ -1,15 +1,14 @@
-import { Home } from './pages/home';
-import { About } from './pages/about';
-import { Paper } from './pages/Paper';
-import { Syllabus } from './pages/Syllabus';
-import { Econtent } from './pages/Econtent';
+import { Home } from './pages/Home';
+import { About } from './pages/About';
 import {BrowserRouter as Router,Routes,Route } from 'react-router-dom';
-import { Contact } from './pages/Contact';
-import { Rules } from './pages/Rule';
-import { AdminDashboard } from './pages/AdminDashboard';
-import { CourseDetails } from './pages/CourseDetails';
-import { FacultyDashboard } from './components/FacultyDashboard/FacultyDashboard';
+import { Contact } from './pages/contact';
+import { Resources } from './pages/Resources';
+// import { FacultyDashboard } from './components/FacultyDashboard/FacultyDashboard';
 import { ScrollToTop } from './components/ScrollToTop';
+import { AdminPage } from './pages/AdminPage';
+import { DepartmentsPage } from './pages/DepartmentsPage';
+// import { FacultyDashboardPage } from './pages/FacultyDashboardPage';
+import './App.css';
 
 
 function App() {
@@ -20,14 +19,16 @@ function App() {
         <Routes>
           <Route path="/" element={<Home/>}/>
           <Route path="/about" element={<About/>}/>
-          <Route path="/paper" element={<Paper/>}/>
-          <Route path="/syllabus" element={<Syllabus/>}/>
-          <Route path="/econtent" element={<Econtent/>}/>
+          {/* <Route path="/paper" element={<Paper/>}/> */}
+          {/* <Route path="/syllabus" element={<Syllabus/>}/> */}
+          {/* <Route path="/econtent" element={<Econtent/>}/> */}
           <Route path="/contact" element={<Contact/>}/>
-          <Route path="/rules" element={<Rules/>}/>
-          <Route path="/api/admin/dashboard" element={<AdminDashboard/>}/>
-          <Route path="/faculty" element={<FacultyDashboard/>}/>
-          <Route path="/course/:courseId" element={<CourseDetails />} />
+          {/* <Route path="/rules" element={<Rules/>}/> */}
+          <Route path='/resources' element={<Resources/>}/>
+          <Route path="/admin-dashboard" element={<AdminPage/>}/>
+          <Route path="/departments" element={<DepartmentsPage/>} />
+          {/* <Route path="/faculty-dashboard" element={<FacultyDashboardPage/>}/> */}
+          {/* <Route path="/course/:courseId" element={<CourseDetails />} /> */}
         </Routes>
       </ScrollToTop>
     </>

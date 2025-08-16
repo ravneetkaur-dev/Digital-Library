@@ -1,9 +1,8 @@
-import { sendEmail } from '../utils/mailer.js';
 import faculty from '../models/faculty.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 export const registerUser = async (req, res) => {
-    const { name, email, password, role ,designation, department,subjects } = req.body;
+    const { name, email, password, role } = req.body;
     try {
         const existingUser = await faculty.findOne({ email });
         if (existingUser) {
@@ -16,26 +15,19 @@ export const registerUser = async (req, res) => {
             name,
             email,
             password: hashedPassword,
-            role,
-            designation,
-            department,
-            subjects
+            role
         });
 
         await newFaculty.save();
 
         const token = jwt.sign({ userId: newFaculty._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-        await sendEmail(email, name, password);
-        console.log('Email sent successfully to:', email);
+
         res.status(201).json({
             user: {
                 id: newFaculty._id,
                 name: newFaculty.name,
                 email: newFaculty.email,
-                role: newFaculty.role,
-                designation: newFaculty.designation || 'Not specified',
-                department: newFaculty.department || 'Not specified',
-                subjects: newFaculty.subjects || []
+                role: newFaculty.role
             },
             token,
             message: 'Faculty registered successfully'
@@ -49,11 +41,11 @@ export const registerUser = async (req, res) => {
 // Update a faculty
 export const updateFaculty = async (req, res) => {
     const { id } = req.params;
-    const { name, email, role,designation,department,subjects } = req.body;
+    const { name, email, role } = req.body;
     try {
         const updatedFaculty = await faculty.findByIdAndUpdate(
             id,
-            { name, email, role,designation, department, subjects },
+            { name, email, role },
             { new: true }
         );
         if (!updatedFaculty) {
@@ -64,10 +56,7 @@ export const updateFaculty = async (req, res) => {
                 id: updatedFaculty._id,
                 name: updatedFaculty.name,
                 email: updatedFaculty.email,
-                role: updatedFaculty.role,
-                designation: updatedFaculty.designation || 'Not specified',
-                department: updatedFaculty.department || 'Not specified',
-                subjects: updatedFaculty.subjects || []
+                role: updatedFaculty.role
             },
             message: 'Faculty updated successfully'
         });
@@ -91,16 +80,6 @@ export const deleteFaculty = async (req, res) => {
         res.status(500).json({ message: 'Internal server error' });
     }
 };
-export const getFaculty = async (req, res) => {
-    try {
-        const faculties = await faculty.find();
-        res.status(200).json(faculties);
-    }
-    catch (error) {
-        console.error('Error fetching faculties:', error);
-        res.status(500).json({ message: 'Internal server error' });
-    }
-}
 
 // module.exports = {
 //     registerUser,

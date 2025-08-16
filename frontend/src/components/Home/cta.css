@@ -1,0 +1,34 @@
+.cta-section {
+  background: var(--gradient-primary);
+  padding: 5rem 0;
+  color: white;
+}
+
+.cta-title {
+  margin-bottom: 24px;
+}
+
+.cta-description {
+  max-width: 800px;
+  margin: 0 auto 2rem;
+  opacity: 0.9;
+}
+
+.cta-btn-primary {
+  padding: 12px 32px;
+  font-weight: 600;
+  border-radius: var(--border-radius);
+}
+
+.cta-btn-secondary {
+  padding: 12px 32px;
+  font-weight: 600;
+  border-radius: var(--border-radius);
+  border-color: white;
+  color: white;
+}
+
+.cta-btn-secondary:hover {
+  background-color: white;
+  color: var(--primary-color);
+}

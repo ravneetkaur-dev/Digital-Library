@@ -1,0 +1,79 @@
+.departments-section {
+  background-color: var(--bg-white);
+  padding: 5rem 0;
+}
+
+.section-title {
+  color: var(--text-primary);
+  margin-bottom: 24px;
+}
+
+.section-description {
+  color: var(--text-secondary);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.department-card {
+  transition: var(--transition);
+  cursor: pointer;
+  border: none;
+}
+
+.department-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-lg);
+}
+
+.department-icon-container {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--border-radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--gradient-primary);
+  color: white;
+  margin-bottom: 1.5rem;
+  transition: transform 0.3s ease;
+}
+
+.department-icon-container.business {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+}
+
+.department-title {
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.department-subtitle {
+  color: var(--text-muted);
+}
+
+.department-description {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.department-badge {
+  padding: 8px 16px;
+  margin-right: 8px;
+}
+
+.department-badge.cs {
+  background-color: #dbeafe;
+  color: white;
+}
+
+.department-badge.business {
+  background-color: #d1fae5;
+  color: white;
+}
+
+.department-btn {
+  border-color: var(--border-color);
+  color: #374151;
+  font-weight: 600;
+}

@@ -1,70 +1,80 @@
-import { Nav, Navbar, Container, Dropdown } from "react-bootstrap";
-import { Link } from 'react-router-dom';
-import { LoginModal } from "../Login/LoginModal";
-import { useState } from "react";
-import './navBar.css';
+"use client"
+
+import { useState } from "react"
+import { Link } from "react-router-dom"
+import { Container, Navbar, Nav, Button } from "react-bootstrap"
+import { FaBook, FaBars } from "react-icons/fa"
+import { LoginModal } from "../Login/LoginModal"
+import "./NavBar.css"
 
 export const NavBar = () => {
-  const [showLogin, setShowLogin] = useState(false);
-  const [selectedRole, setSelectedRole] = useState(""); 
+  const [showLogin, setShowLogin] = useState(false)
 
-  const handleLoginSelect = (role) => {
-    setSelectedRole(role);
-    setShowLogin(true);
-  };
+  const handleClose = () => setShowLogin(false)
 
-  const handleClose = () => {
-    setShowLogin(false);
-    setSelectedRole("");
-  };
+  const handleForgotPassword = () => {
+    setShowLogin(false)
+    // Navigate to your forgot password route or open a reset modal
+    console.log("Navigate to forgot-password")
+  }
 
   return (
     <>
-      <Navbar expand="lg" className="sticky-top nav shadow">
-        <Container fluid className="px-4">
-          <Navbar.Brand href="/" className="brand">MAIMT</Navbar.Brand>
+      <Navbar bg="white" expand="lg" sticky="top" className="shadow-sm custom-navbar">
+        <Container>
+          <Navbar.Brand as={Link} to="/" className="navbar-brand-container">
+            <div className="navbar-logo">
+              <FaBook color="white" size={20} />
+            </div>
+            <div>
+              <div className="navbar-brand-text">MAIMT</div>
+              <div className="navbar-brand-subtitle">Digital Library</div>
+            </div>
+          </Navbar.Brand>
 
-          <Navbar.Toggle aria-controls="navbar-nav" />
+          <Navbar.Toggle aria-controls="basic-navbar-nav">
+            <FaBars />
+          </Navbar.Toggle>
 
-          <Navbar.Collapse id="navbar-nav" className="justify-content-center">
-            <Nav className="nav-links">
-              <Nav.Link as={Link} to="/">Home</Nav.Link>
-              <Nav.Link as={Link} to="/about">About Us</Nav.Link>
-              <Nav.Link as={Link} to="/paper">Paper</Nav.Link>
-              <Nav.Link as={Link} to="/syllabus">Syllabus</Nav.Link>
-              <Nav.Link as={Link} to="/rules">Rules & Regulations</Nav.Link>
-              <Nav.Link as={Link} to="/econtent">E-Content</Nav.Link>
-              <Nav.Link as={Link} to="/contact">Contact Us</Nav.Link>
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="ms-auto align-items-center">
+              <Nav.Link as={Link} to="/" className="navbar-nav-link">
+                Home
+              </Nav.Link>
+              <Nav.Link as={Link} to="/resources" className="navbar-nav-link">
+                Resources
+              </Nav.Link>
+              <Nav.Link as={Link} to="/departments" className="navbar-nav-link">
+                Departments
+              </Nav.Link>
+              <Nav.Link as={Link} to="/about" className="navbar-nav-link">
+                About
+              </Nav.Link>
+              <Nav.Link as={Link} to="/contact" className="navbar-nav-link">
+                Contact
+              </Nav.Link>
 
-              <Dropdown className="mt-3 d-lg-none" onSelect={handleLoginSelect}>
-                <Dropdown.Toggle
-                  style={{ backgroundColor: "#fdc800", color: "#002147", border: "none" }}
-                >
-                  Login
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                  <Dropdown.Item eventKey="admin">Admin</Dropdown.Item>
-                  <Dropdown.Item eventKey="faculty">Faculty</Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
+              <Button
+                className="navbar-signin-btn"
+                variant="outline-primary"
+                onClick={(e) => {
+                  e.preventDefault()
+                  setShowLogin(true)
+                }}
+              >
+                Login
+              </Button>
             </Nav>
           </Navbar.Collapse>
-
-          <Dropdown className="d-none d-lg-block" onSelect={handleLoginSelect}>
-            <Dropdown.Toggle
-              style={{ backgroundColor: "#fdc800", color: "#002147", border: "none" }}
-            >
-              Login
-            </Dropdown.Toggle>
-            <Dropdown.Menu className="login-option">
-              <Dropdown.Item eventKey="admin">Admin</Dropdown.Item>
-              <Dropdown.Item eventKey="faculty">Faculty</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
         </Container>
       </Navbar>
 
-      <LoginModal show={showLogin} handleClose={handleClose} role={selectedRole} />
+      <LoginModal
+        show={showLogin}
+        initialRole="faculty"
+        onClose={handleClose}
+        onForgotPassword={handleForgotPassword}
+      />
     </>
-  );
-};
+  )
+}

@@ -28,7 +28,11 @@ const UserSchema = mongoose.Schema({
     createdAt:{
        type:Date,
        default:Date.now
-    }
+    },
+    profileImage: {
+        type: String,
+        default: "backend/utils/images/images.jpeg"
+    },
 })
 const admin=mongoose.model("User",UserSchema);
 export default admin;

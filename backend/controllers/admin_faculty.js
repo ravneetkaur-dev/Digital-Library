@@ -1,10 +1,10 @@
 
+import admin from '../models/Admin.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import  admin from '../models/Admin.js' 
+// import { admin } from '../models/Admin.js'; 
 export const createAdmin = async () => {
   try {
-    console.log("Creating admin...");
     const name = "raju";
     const email = "raju@gmail.com";
     const role = "admin";

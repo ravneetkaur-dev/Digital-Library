@@ -1,0 +1,39 @@
+.testimonials-section {
+  background: linear-gradient(135deg, #dbeafe 0%, #e0e7ff 100%);
+  padding: 5rem 0;
+}
+
+.testimonial-card {
+  background-color: white;
+  border: none;
+  box-shadow: var(--shadow-md);
+}
+
+.testimonial-rating {
+  margin-bottom: 12px;
+}
+
+.testimonial-quote {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 24px;
+  font-style: italic;
+}
+
+.testimonial-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  margin-right: 12px;
+}
+
+.testimonial-name {
+  color: var(--text-primary);
+  font-weight: bold;
+  margin-bottom: 0;
+}
+
+.testimonial-role {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}

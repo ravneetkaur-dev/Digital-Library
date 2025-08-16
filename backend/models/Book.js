@@ -59,6 +59,11 @@ const BookSchema = mongoose.Schema({
     uploadedAt: {
         type: Date,
         default: Date.now
+    },
+    Course:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Course',
+        required: true
     }
 });
 const book = mongoose.model("Book", BookSchema);

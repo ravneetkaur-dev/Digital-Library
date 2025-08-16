@@ -1,114 +1,99 @@
-.site-footer {
-  background-image: url('/images/maimt1.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-attachment: fixed;
-  color: #f9f4ef;
-  padding: 40px 0;
-  position: relative;
-  z-index: 2;
+.footer-section {
+  background-color: #111827;
+  padding: 4rem 0;
+  color: white;
 }
 
-.site-footer::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: #05103be3;
-  z-index: 1;
+.footer-brand-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
 }
 
-.footer-top {
+.footer-logo {
+  width: 40px;
+  height: 40px;
+  background: var(--gradient-primary);
+  border-radius: var(--border-radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+}
+
+.footer-brand-title {
+  margin-bottom: 0;
+}
+
+.footer-brand-subtitle {
+  color: var(--text-light);
+  font-size: 0.875rem;
+}
+
+.footer-description {
+  color: var(--text-light);
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.footer-social-icons {
+  display: flex;
+  gap: 12px;
+}
+
+.footer-social-icon {
+  color: var(--text-light);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.footer-social-icon:hover {
+  color: white;
+}
+
+.footer-section-title {
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.footer-links {
   display: flex;
   flex-direction: column;
+  gap: 8px;
+}
+
+.footer-link {
+  color: var(--text-light);
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.footer-link:hover {
+  color: white;
+}
+
+.footer-contact-item {
+  display: flex;
   align-items: center;
+  margin-bottom: 12px;
+}
+
+.footer-contact-icon {
+  color: var(--text-light);
+  margin-right: 12px;
+}
+
+.footer-contact-text {
+  color: var(--text-light);
+}
+
+.footer-divider {
+  border-color: rgba(255,255,255,0.1);
+  margin: 3rem 0 2rem;
+}
+
+.footer-copyright {
+  color: var(--text-light);
+  margin: 0;
   text-align: center;
-  position: relative;
-  z-index: 2;
-}
-
-.footer-img {
-  width: auto;
-  height: 20vh; 
-}
-
-.footer-hr {
-  position: relative;
-  z-index: 2;
-  border: none;
-  border-top: 2px solid #fff;
-  opacity: 0.6;
-  margin: 20px 0;
-}
-
-.footer-hr-sm {
-  border: none;
-  border-top: 1px solid #fff;
-  opacity: 0.4;
-  margin: 10px 0;
-}
-
-.site-footer h4 {
-  font-size: 1.3rem;
-  margin-bottom: 10px;
-  position: relative;
-  z-index: 2;
-}
-
-.site-footer p {
-  font-size: 0.95rem;
-  margin: 0 0 5px;
-  position: relative;
-  z-index: 2;
-}
-
-.maimt-info {
-  position: relative;
-  z-index: 2;
-  border-right: none;
-}
-
-.contact-info {
-  position: relative;
-  z-index: 2;
-}
-
-.social-info {
-  position: relative;
-  z-index: 2;
-}
-
-.social-link {
-  font-size: 2rem;
-  position: relative;
-  z-index: 2;
-}
-
-.maimt-logo {
-  width: auto;
-  height: 10vh; 
-}
-
-.copyright {
-  font-size: 0.8rem;
-  color: #ddd0c1;
-  position: relative;
-  z-index: 2;
-}
-
-@media (min-width: 768px) {
-  .maimt-info {
-    text-align: center;
-    border-right: 2px solid #fff;
-  }
-
-  .contact-info {
-    padding-left: 2rem;
-    text-align: left;
-    border-right: 2px solid #fff;
-  }
-
-  .social-info {
-    padding-left: 2rem;
-    text-align: left;
-  }
 }
