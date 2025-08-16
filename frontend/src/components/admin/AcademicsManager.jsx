@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react"
 import { Card, Row, Col, Form, Button, Table, Alert } from "react-bootstrap"
-import { ENDPOINTS, apiGet, apiJson } from "../../utils/api"
+import { ENDPOINTS, apiGet, api } from "../../utils/api"
 
 export default function AcademicsManager() {
   // Lists

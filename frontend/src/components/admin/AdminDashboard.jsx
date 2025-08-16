@@ -24,7 +24,7 @@ const StatCard = ({ title, value, icon }) => (
   </Card>
 )
 
-export default function AdminDashboard() {
+export const AdminDashboard=()=> {
   const [active, setActive] = useState("overview")
   const [counts, setCounts] = useState({ faculty: 0, books: 0, syllabus: 0, papers: 0, feedback: 0 })
   const [loadingCounts, setLoadingCounts] = useState(true)
