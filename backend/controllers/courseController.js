@@ -4,9 +4,6 @@ import Semester from '../models/Semester.js';
 import mongoose from 'mongoose';
 
 
-// ======================
-// Add Department
-// ======================
 export const createDepartment = async (req, res) => {
   try {
     const { name } = req.body;
@@ -22,9 +19,55 @@ export const createDepartment = async (req, res) => {
 };
 
 
-// ======================
+// Update Department
+
+export const updateDepartment = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name } = req.body;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "Invalid department ID" });
+    }
+
+    const updated = await Department.findByIdAndUpdate(
+      id,
+      { name: name.trim() },
+      { new: true }
+    );
+
+    if (!updated) return res.status(404).json({ message: "Department not found" });
+
+    res.status(200).json(updated);
+  } catch (err) {
+    res.status(500).json({ message: "Error updating department", error: err.message });
+  }
+};
+
+
+// Delete Department
+
+export const deleteDepartment = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "Invalid department ID" });
+    }
+
+    const deleted = await Department.findByIdAndDelete(id);
+
+    if (!deleted) return res.status(404).json({ message: "Department not found" });
+
+    res.status(200).json({ message: "Department deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ message: "Error deleting department", error: err.message });
+  }
+};
+
+
 // Add Course under Department
-// ======================
+
 export const createCourse = async (req, res) => {
   try {
     const { name, departmentId } = req.body;
@@ -46,9 +89,55 @@ export const createCourse = async (req, res) => {
 };
 
 
-// ======================
+// Update Course
+
+export const updateCourse = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name } = req.body;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "Invalid course ID" });
+    }
+
+    const updated = await Course.findByIdAndUpdate(
+      id,
+      { name: name.trim() },
+      { new: true }
+    );
+
+    if (!updated) return res.status(404).json({ message: "Course not found" });
+
+    res.status(200).json(updated);
+  } catch (err) {
+    res.status(500).json({ message: "Error updating course", error: err.message });
+  }
+};
+
+
+// Delete Course
+
+export const deleteCourse = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "Invalid course ID" });
+    }
+
+    const deleted = await Course.findByIdAndDelete(id);
+
+    if (!deleted) return res.status(404).json({ message: "Course not found" });
+
+    res.status(200).json({ message: "Course deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ message: "Error deleting course", error: err.message });
+  }
+};
+
+
 // Add Semester under Course
-// ======================
+
 export const createSemester = async (req, res) => {
   try {
     const { number, courseId } = req.body;
@@ -69,10 +158,51 @@ export const createSemester = async (req, res) => {
   }
 };
 
+// Update Semester
 
-// ======================
-// Get All Departments
-// ======================
+export const updateSemester = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { number } = req.body;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "Invalid semester ID" });
+    }
+
+    const updated = await Semester.findByIdAndUpdate(
+      id,
+      { number: number.trim() },
+      { new: true }
+    );
+
+    if (!updated) return res.status(404).json({ message: "Semester not found" });
+
+    res.status(200).json(updated);
+  } catch (err) {
+    res.status(500).json({ message: "Error updating semester", error: err.message });
+  }
+};
+
+// Delete Semester
+
+export const deleteSemester = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "Invalid semester ID" });
+    }
+
+    const deleted = await Semester.findByIdAndDelete(id);
+
+    if (!deleted) return res.status(404).json({ message: "Semester not found" });
+
+    res.status(200).json({ message: "Semester deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ message: "Error deleting semester", error: err.message });
+  }
+};
+
 export const getDepartments = async (req, res) => {
   try {
     const departments = await Department.find().sort({ name: 1 });
@@ -83,9 +213,9 @@ export const getDepartments = async (req, res) => {
 };
 
 
-// ======================
+
 // Get Courses by Department
-// ======================
+
 export const getCoursesByDepartment = async (req, res) => {
   try {
     const { departmentId } = req.params;
@@ -101,9 +231,8 @@ export const getCoursesByDepartment = async (req, res) => {
 };
 
 
-// ======================
 // Get Semesters by Course
-// ======================
+
 export const getSemestersByCourse = async (req, res) => {
   try {
     const { courseId } = req.params;
@@ -117,3 +246,4 @@ export const getSemestersByCourse = async (req, res) => {
     res.status(500).json({ message: "Error fetching semesters", error: err.message });
   }
 };
+
