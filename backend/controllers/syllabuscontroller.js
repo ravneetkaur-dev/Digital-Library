@@ -56,7 +56,7 @@ export const getSyllabus = async (req, res) => {
     try {
         const syllabusList = await syllabusmodel.find()
             .populate('subject', 'name')
-            .populate('semester', 'name')
+            .populate('semester', 'number')
             .populate('Course', 'name')
             .populate('department', 'name')
             .populate('createdBy', 'name email')
@@ -74,7 +74,7 @@ export const getSyllabusById = async (req, res) => {
         const syllabusId = req.params.id;
         const syllabusItem = await syllabusmodel.findById(syllabusId)
             .populate('subject', 'name')
-            .populate('semester', 'name')
+            .populate('semester', 'number')
             .populate('Course', 'name')
             .populate('department', 'name')
             .populate('createdBy', 'name email');

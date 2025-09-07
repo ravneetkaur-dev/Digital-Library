@@ -5,6 +5,7 @@ import jwt from 'jsonwebtoken';
 
 export const registerUser = async (req, res) => {
     const { name, email, password, role, designation, department, subjects } = req.body;
+    console.log(req.body);
 
     try {
         const existingUser = await faculty.findOne({ email });
@@ -14,7 +15,7 @@ export const registerUser = async (req, res) => {
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        // ✅ Handle profile image from multer
+        // Handle profile image from multer
         const profileImage = req.file
             ? `/uploads/facultyimages/${req.file.filename}`
             : "/backend/utils/images/images.jpeg"; // default image
@@ -34,8 +35,12 @@ export const registerUser = async (req, res) => {
 
         const token = jwt.sign({ userId: newFaculty._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-        await sendEmail(email, name, password);
-        console.log('Email sent successfully to:', email);
+        try {
+            await sendEmail(email, name, password);
+            console.log('Email sent successfully to:', email);
+            } catch (err) {
+            console.error('Error sending email:', err.message);
+        }
 
         res.status(201).json({
             user: {
