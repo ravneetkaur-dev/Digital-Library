@@ -25,7 +25,7 @@ const PORT = process.env.PORT || 5000;
 
 db();
 app.use(cors({
-    origin: '*',
+    origin: process.env.FRONTEND_URL,
     credentials: true
 }));
 app.set('view engine', 'ejs');
