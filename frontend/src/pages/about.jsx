@@ -23,7 +23,7 @@ import {
   FaTwitter,
   FaGraduationCap,
 } from "react-icons/fa"
-import "./About.css"
+import "./about.css"
 
 export const About = () => {
   const stats = [

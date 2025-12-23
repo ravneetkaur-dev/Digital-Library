@@ -46,7 +46,7 @@ import {ReferencesSection} from '../components/Home/References';
 import {TestimonialsSection} from '../components/Home/Messages';
 import {CTASection} from '../components/Home/CTASection';
 import {Footer} from '../components/Footer/Footer';
-import './Home.css';
+import './home.css';
 
 export const Home = () => {
   return (

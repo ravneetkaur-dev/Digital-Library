@@ -2,7 +2,7 @@ import axios from "axios"
 
 export const API_BASE_URL =
   // (typeof window !== "undefined" && (localStorage.getItem("API_BASE_URL") || window.API_BASE_URL)) ||
-  "https://digital-library-mxou.onrender.com"
+  import.meta.env.VITE_API_BASE_URL
 
 export const api = axios.create({
   baseURL: API_BASE_URL,
