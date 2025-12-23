@@ -1,8 +1,9 @@
 import { Row, Col, Card, Button } from "react-bootstrap";
-import { FaArrowLeft, FaBookOpen, FaDownload } from "react-icons/fa";
+import { FaArrowLeft, FaBookOpen, FaDownload, FaEye } from "react-icons/fa";
 import LoadingSpinner from "./LoadingSpinner";
 import ErrorAlert from "./ErrorAlert";
 import { handleDownload } from "../../utils/resourcesHelpers";
+import { handleView } from "../../utils/resourcesHelpers";
 
 const BooksView = ({ selectedSubject, books, loadingBooks, error, onBack, onErrorClose }) => {
   return (
@@ -57,13 +58,22 @@ const BooksView = ({ selectedSubject, books, loadingBooks, error, onBack, onErro
                     </div>
 
                     <div className="res-book-actions">
-                      <Button
+                      {/* <Button
                         className="res-book-btn res-book-btn-download"
                         onClick={() => handleDownload(book.fileUrl, book.originalname)}
                       >
                         <FaDownload className="me-1" />
                         Download
+                      </Button> */}
+                      <Button
+                        className="res-book-btn res-book-btn-download"
+                        variant="secondary"
+                        onClick={() => handleView(book.fileUrl)}
+                      >
+                        <FaEye className="me-1" />
+                        View
                       </Button>
+
                     </div>
                   </Card.Body>
                 </Card>

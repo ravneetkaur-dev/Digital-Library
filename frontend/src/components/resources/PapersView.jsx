@@ -1,4 +1,3 @@
-"use client"
 import { Button } from "react-bootstrap"
 import { FaArrowLeft, FaFilePdf, FaDownload, FaEye } from "react-icons/fa"
 import LoadingSpinner from "./LoadingSpinner"

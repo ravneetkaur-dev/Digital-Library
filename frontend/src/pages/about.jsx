@@ -1,6 +1,6 @@
 import { Container, Row, Col, Card, Button, Badge } from "react-bootstrap"
 import { Link } from "react-router-dom";
-import { NavBar } from "../components/NavBar/NavBar";
+import { NavBar } from "../components/Navbar/NavBar";
 import {
   FaUsers,
   FaAward,
@@ -106,32 +106,39 @@ export const About = () => {
 
   const developers = [
     {
-      name: "Frontend Developer & Integration Specialist",
-      role: "Lead Frontend Developer",
+      name: "Gayatri Kamboj",
+      role: "Backend Developer - Database & Security Management",
+      description:
+        "Worked jointly on backend systems, handling database design, query optimization, and data security. Focused on implementing secure authentication, role-based access, and efficient data management.",
+      skills: ["Node.js", "Express", "MongoDB", "Security", "Database Management", "Server Architecture"],
+      pic: "/images/gayatri.jpg",
+      colorClass: "backend-dev-1",
+      git: "https://github.com/G822-g",
+      linkedin: "https://www.linkedin.com/in/gayatri-kamboj/"
+    },
+    {
+      name: "Diksha Sharma",
+      role: "Backend Developer - Server & API Development",
+      description:
+        "Collaboratively developed and maintained backend architecture, including RESTful APIs, authentication, and server-side logic. Focused on ensuring scalability and reliability.",
+      skills: ["Node.js", "Express", "Database Optimization", "Server Management", "API Design", "Routing"],
+      pic: "/images/diksha.jpg",
+      colorClass: "backend-dev-2",
+      git: "https://github.com/Diksha-sharma12",
+      linkedin: "https://www.linkedin.com/in/diksha-sharma03/"
+    },
+    {
+      name: "Ravneet Kaur",
+      role: "Frontend Developer & Integration Specialist",
       description:
         "Responsible for user interface design, user experience optimization, and seamless integration of frontend with backend services. Focused on creating intuitive and responsive designs that enhance the overall user experience.",
       skills: ["React", "JavaScript", "CSS", "UI/UX Design", "API Integration", "Responsive Design"],
-      icon: <FaPalette size={32} />,
+      pic: "/images/ravneet.jpg",
       colorClass: "frontend-dev",
+      git: "https://github.com/ravneetkaur-dev",
+      linkedin: "https://www.linkedin.com/in/ravneet-kaur07/"
     },
-    {
-      name: "Backend Developer",
-      role: "Senior Backend Engineer",
-      description:
-        "Architected and developed the robust backend infrastructure, database design, and API development for seamless data management. Specialized in creating scalable and efficient server-side solutions.",
-      skills: ["Node.js", "Express", "MongoDB", "API Design", "Database Management", "Server Architecture"],
-      icon: <FaServer size={32} />,
-      colorClass: "backend-dev-1",
-    },
-    {
-      name: "Backend Developer",
-      role: "Backend Systems Engineer",
-      description:
-        "Focused on server optimization, security implementation, and backend service integration to ensure reliable and secure operations. Expertise in system performance and data security.",
-      skills: ["Node.js", "Database Optimization", "Security", "Server Management", "DevOps", "System Integration"],
-      icon: <FaCode size={32} />,
-      colorClass: "backend-dev-2",
-    },
+    
   ]
 
   return (
@@ -171,7 +178,7 @@ export const About = () => {
                 <img
                   src="/images/maimt1.jpg"
                   alt="MAIMT Digital Library"
-                  className="img-fluid rounded-4 shadow-lg"
+                  className="img-fluid rounded-4 shadow-lg about-image"
                 />
                 <div className="about-hero-badge">
                   <FaAward size={24} />
@@ -355,7 +362,13 @@ export const About = () => {
                 <Card className={`team-card h-100 border-0 shadow-lg ${dev.colorClass}`}>
                   <div className="team-card-header"></div>
                   <Card.Body className="p-4 text-center">
-                    <div className="team-icon mb-4">{dev.icon}</div>
+                    <div className="dev-avatar">
+                        <img 
+                          src={dev.pic}
+                          alt={dev.name}
+                          className="rounded-circle"
+                        />
+                      </div>
                     <h4 className="fw-bold mb-2">{dev.name}</h4>
                     <p className="team-role mb-4">{dev.role}</p>
                     <p className="text-muted mb-4">{dev.description}</p>
@@ -372,15 +385,13 @@ export const About = () => {
                     </div>
 
                     <div className="team-social">
-                      <Button variant="outline-secondary" size="sm" className="me-2">
+                      <Link to={dev.git}><Button variant="outline-secondary" size="sm" className="me-2">
                         <FaGithub />
-                      </Button>
-                      <Button variant="outline-secondary" size="sm" className="me-2">
+                      </Button></Link>
+                      <Link to={dev.linkedin}><Button variant="outline-secondary" size="sm" className="me-2">
                         <FaLinkedin />
-                      </Button>
-                      <Button variant="outline-secondary" size="sm">
-                        <FaTwitter />
-                      </Button>
+                      </Button></Link>
+                      
                     </div>
                   </Card.Body>
                 </Card>

@@ -1,5 +1,3 @@
-"use client"
-
 import { useEffect, useState } from "react"
 import { Modal, Form, Button, Row, Col, Spinner } from "react-bootstrap"
 import { apiUpload, ENDPOINTS } from "../../utils/api"
@@ -81,24 +79,11 @@ export default function FacultyFormModal({ show, onHide, initialData, onSaved })
       }
 
       if (isEdit) {
-        // Update supports multipart too
-        const url = ENDPOINTS.faculty.update(initialData._id || initialData.id)
-        // Some backends expect PUT/PATCH; FormData with method PUT may not be accepted by all servers; adjust if needed
-        const res = await fetch(`${url.startsWith("http") ? url : new URL(url, location.origin)}`, {
-          method: "PUT",
-          body: payload,
-          credentials: "include",
-          headers: {
-            // Auth handled by cookie or token; if Bearer needed, switch to api helper instead and add headers.
-          },
-        })
-        if (!res.ok) {
-          const msg = (await res.json().catch(() => null))?.message || "Update failed"
-          throw new Error(msg)
-        }
-      } else {
-        await apiUpload(ENDPOINTS.faculty.create, payload)
-      }
+      const url = ENDPOINTS.faculty.update(initialData._id || initialData.id)
+      await apiUpload(url, payload)   
+    } else {
+      await apiUpload(ENDPOINTS.faculty.create, payload)
+    }
       onSaved?.()
     } catch (err) {
       setError(err.message || "Failed to save faculty")

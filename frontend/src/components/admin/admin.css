@@ -17,62 +17,208 @@
 .admin-dashboard {
   background-color: #f8fafc;
   min-height: 100vh;
+  overflow-x: hidden; /* Prevent horizontal scroll */
 }
+
 .admin-header {
   background: linear-gradient(90deg, #002147, #173a5e);
   color: #fff;
   padding: 16px 20px;
   border-bottom: 3px solid #0ea5e9;
+  /* position: sticky; */
+  top: 0;
+  z-index: 1030;
+  transition: all 0.3s ease;
 }
+
 .admin-header h2 {
   margin: 0;
   font-weight: 700;
+  transition: font-size 0.3s ease;
 }
+
+/* Mobile menu button styling */
+.mobile-menu-btn {
+  border: none !important;
+  color: #fff !important;
+  text-decoration: none !important;
+  transition: all 0.3s ease;
+}
+
+.mobile-menu-btn:hover,
+.mobile-menu-btn:focus {
+  color: #0ea5e9 !important;
+  transform: scale(1.1);
+}
+
 .admin-container {
   display: grid;
   grid-template-columns: 260px 1fr;
   gap: 0;
+  transition: grid-template-columns 0.3s ease;
 }
+
 .admin-sidebar {
   background: #ffffff;
   border-right: 1px solid #e5e7eb;
   min-height: calc(100vh - 64px);
+  position: sticky;
+  top: 64px;
+  height: calc(100vh - 64px);
+  overflow-y: auto;
+  flex: 0 0 260px;
+  transition: all 0.3s ease;
 }
-.admin-sidebar .nav-link {
-  color: #334155;
+
+.sidebar-content {
+  padding: 1rem 0;
+}
+
+.admin-sidebar .nav-link,
+.sidebar-nav-link {
+  color: #334155 !important;
   padding: 12px 16px;
   border-radius: 6px;
   margin: 6px 8px;
   font-weight: 500;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  border: none;
+  background: none;
 }
+
 .admin-sidebar .nav-link.active,
-.admin-sidebar .nav-link:hover {
-  background-color: #e6f2ff;
-  color: #002147;
+.admin-sidebar .nav-link:hover,
+.sidebar-nav-link.active,
+.sidebar-nav-link:hover {
+  background-color: #e6f2ff !important;
+  color: #002147 !important;
+  transform: translateX(4px);
 }
+
+/* Mobile sidebar styling */
+.admin-mobile-sidebar .offcanvas-header {
+  background: linear-gradient(90deg, #002147, #173a5e);
+  color: #fff;
+  border-bottom: 3px solid #0ea5e9;
+}
+
+.admin-mobile-sidebar .offcanvas-title {
+  color: #fff;
+  font-weight: 700;
+}
+
+.admin-mobile-sidebar .btn-close {
+  filter: invert(1);
+}
+
+.admin-mobile-sidebar .offcanvas-body {
+  background: #ffffff;
+  padding: 0;
+}
+
+.mobile-nav .sidebar-nav-link {
+  margin: 2px 8px;
+  border-radius: 6px;
+}
+
 .admin-content {
   padding: 20px;
+  transition: all 0.3s ease;
+  max-width: 100%;
+  overflow-x: hidden;
 }
+
 .stat-card {
   border-left: 4px solid #0ea5e9;
+  transition: all 0.3s ease;
 }
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.overview-section {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive breakpoints */
 @media (max-width: 992px) {
   .admin-container {
     grid-template-columns: 1fr;
   }
+
   .admin-sidebar {
-    min-height: auto;
+    display: none;
+  }
+
+  .admin-content {
+    padding: 15px;
+  }
+
+  .admin-header h2 {
+    font-size: 1.5rem;
   }
 }
 
-/* ========== Faculty Table Card ========== */
+@media (max-width: 768px) {
+  .admin-header {
+    padding: 12px 15px;
+  }
 
+  .admin-header h2 {
+    font-size: 1.3rem;
+  }
+
+  .admin-content {
+    padding: 10px;
+  }
+
+  .stat-card {
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .admin-header h2 {
+    font-size: 1.1rem;
+  }
+
+  .admin-content {
+    padding: 8px;
+  }
+
+  .card-body {
+    padding: 1rem 0.75rem;
+  }
+}
+
+/* Faculty Table Card */
 .ft-card {
   border: 1px solid var(--border);
   border-radius: 12px;
   background: var(--bg);
   box-shadow: 0 10px 22px rgba(30, 58, 138, 0.08);
   overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.ft-card:hover {
+  box-shadow: 0 15px 30px rgba(30, 58, 138, 0.12);
 }
 
 .ft-header {
@@ -83,41 +229,56 @@
   padding: 14px 16px;
   background: linear-gradient(135deg, #e0e7ff 0%, #dbeafe 100%);
   border-bottom: 1px solid var(--border);
+  transition: all 0.3s ease;
 }
 
 .ft-titles {
   display: flex;
   flex-direction: column;
 }
+
 .ft-title {
   margin: 0;
   font-size: 16px;
   font-weight: 800;
   color: var(--navy);
   letter-spacing: 0.02em;
+  transition: color 0.3s ease;
 }
+
 .ft-subtitle {
   margin: 0;
   color: var(--muted);
   font-size: 12px;
+  transition: color 0.3s ease;
 }
 
 .ft-search {
   max-width: 380px;
   min-width: 240px;
+  transition: all 0.3s ease;
 }
+
 .search-addon {
   background: #fff;
   border-right: 0;
   color: var(--muted);
+  transition: all 0.3s ease;
 }
+
 .search-input {
   border-left: 0 !important;
+  transition: all 0.3s ease;
+}
+
+.search-input:focus {
+  box-shadow: 0 0 0 0.2rem rgba(30, 58, 138, 0.25);
 }
 
 .ft-body {
   padding: 16px;
 }
+
 .ft-loading {
   display: inline-flex;
   align-items: center;
@@ -143,6 +304,7 @@
   top: 0;
   z-index: 2;
   padding: 10px 12px;
+  transition: all 0.3s ease;
 }
 
 .admin-table tbody td {
@@ -150,6 +312,7 @@
   padding: 12px;
   vertical-align: middle;
   background: #fff;
+  transition: all 0.3s ease;
 }
 
 .admin-table tbody tr:nth-child(even) td {
@@ -158,6 +321,7 @@
 
 .admin-table tbody tr:hover td {
   background: #eef6ff;
+  transform: scale(1.01);
 }
 
 .ft-user {
@@ -165,6 +329,7 @@
   align-items: center;
   gap: 10px;
 }
+
 .ft-avatar {
   width: 32px;
   height: 32px;
@@ -175,20 +340,30 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  transition: all 0.3s ease;
 }
+
+.ft-avatar:hover {
+  transform: scale(1.1);
+}
+
 .avatar-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: all 0.3s ease;
 }
+
 .ft-avatar-fallback {
   color: var(--blue);
   background: #eff6ff;
   border-color: #bfdbfe;
 }
+
 .ft-user-name {
   font-weight: 600;
   color: var(--navy);
+  transition: color 0.3s ease;
 }
 
 .ft-muted {
@@ -204,12 +379,19 @@
   text-transform: uppercase;
   letter-spacing: 0.04em;
   border: 1px solid transparent;
+  transition: all 0.3s ease;
 }
+
+.ft-role:hover {
+  transform: scale(1.05);
+}
+
 .ft-role-admin {
   background: #fee2e2;
   color: #7f1d1d;
   border-color: #fecaca;
 }
+
 .ft-role-faculty {
   background: #e0f2fe;
   color: #082f49;
@@ -224,6 +406,11 @@
   font-weight: 700;
   font-size: 12px;
   display: inline-block;
+  transition: all 0.3s ease;
+}
+
+.ft-pill:hover {
+  transform: scale(1.05);
 }
 
 .ft-actions {
@@ -231,19 +418,153 @@
   gap: 8px;
 }
 
+.ft-actions .btn {
+  transition: all 0.3s ease;
+}
+
+.ft-actions .btn:hover {
+  transform: translateY(-1px);
+}
+
 .ft-empty {
   color: var(--muted);
   padding: 20px 0;
 }
 
-/* Responsive */
+/* Enhanced responsive design */
 @media (max-width: 768px) {
   .ft-header {
     flex-direction: column;
     align-items: stretch;
+    padding: 12px;
   }
+
   .ft-search {
     max-width: none;
     width: 100%;
+    min-width: auto;
   }
+
+  .ft-title {
+    font-size: 14px;
+  }
+
+  .ft-subtitle {
+    font-size: 11px;
+  }
+
+  .ft-body {
+    padding: 12px;
+  }
+
+  /* Make table responsive with horizontal scroll */
+  .ft-table {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .admin-table {
+    min-width: 600px;
+  }
+
+  .admin-table thead th,
+  .admin-table tbody td {
+    padding: 8px;
+    font-size: 12px;
+  }
+
+  .ft-avatar {
+    width: 28px;
+    height: 28px;
+  }
+
+  .ft-actions {
+    flex-direction: column;
+    gap: 4px;
+  }
+}
+
+@media (max-width: 576px) {
+  .ft-header {
+    padding: 10px;
+  }
+
+  .ft-body {
+    padding: 10px;
+  }
+
+  .admin-table thead th,
+  .admin-table tbody td {
+    padding: 6px;
+    font-size: 11px;
+  }
+
+  .ft-user {
+    gap: 6px;
+  }
+
+  .ft-avatar {
+    width: 24px;
+    height: 24px;
+  }
+
+  .ft-role,
+  .ft-pill {
+    font-size: 10px;
+    padding: 2px 6px;
+  }
+}
+
+/* Button transitions */
+.btn {
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+/* Card transitions */
+.card {
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Loading spinner animation */
+.spinner-border {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Prevent horizontal overflow on all elements */
+* {
+  box-sizing: border-box;
+}
+
+.container-fluid,
+.row,
+.col,
+[class*="col-"] {
+  max-width: 100%;
+  overflow-x: hidden;
 }

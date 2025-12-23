@@ -1,0 +1,251 @@
+/* html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+} */
+
+.academics-manager {
+  background: #f8f9fa;
+  min-height: 100vh;
+  padding: 20px 0;
+}
+
+.academics-header {
+  background: linear-gradient(135deg, #002147 0%, #173a5e 100%);
+  color: white;
+  padding: 30px;
+  border-radius: 12px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 20px rgba(0, 33, 71, 0.15);
+}
+
+.academics-header h2 {
+  margin: 0;
+  font-weight: 600;
+}
+
+.academics-header p {
+  margin: 8px 0 0 0;
+  opacity: 0.9;
+}
+
+.academics-nav {
+  background: white;
+  border-radius: 12px;
+  padding: 15px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  position: sticky;
+  top: 20px;
+}
+
+.academics-nav-link {
+  border: none !important;
+  border-radius: 8px !important;
+  padding: 12px 16px !important;
+  margin-bottom: 8px !important;
+  color: #495057 !important;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.academics-nav-link:hover {
+  background: #f8f9fa !important;
+  color: #002147 !important;
+  transform: translateX(4px);
+}
+
+.academics-nav-link.active {
+  background: linear-gradient(135deg, #002147 0%, #173a5e 100%) !important;
+  color: white !important;
+  box-shadow: 0 4px 15px rgba(0, 33, 71, 0.3);
+}
+
+.academics-nav-link .badge {
+  font-size: 0.75rem;
+  padding: 4px 8px;
+}
+
+.academics-nav-link.active .badge {
+  background: rgba(255, 255, 255, 0.2) !important;
+  color: white !important;
+}
+
+/* Card Styling */
+.departments-manager .card,
+.courses-manager .card,
+.semesters-manager .card,
+.subjects-manager .card {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.card-header {
+  background: white !important;
+  border-bottom: 1px solid #e9ecef;
+  padding: 20px;
+}
+
+.card-header h5 {
+  color: #002147;
+  font-weight: 600;
+}
+
+/* Table Styling */
+.table {
+  margin: 0;
+}
+
+.table thead th {
+  background: #f8f9fa;
+  border: none;
+  color: #495057;
+  font-weight: 600;
+  padding: 15px 20px;
+  font-size: 0.875rem;
+}
+
+.table tbody td {
+  padding: 15px 20px;
+  border-color: #f1f3f4;
+  vertical-align: middle;
+}
+
+.table tbody tr:hover {
+  background: #f8f9fa;
+}
+
+/* Button Groups */
+.btn-group .btn {
+  border-radius: 6px !important;
+  margin-right: 4px;
+}
+
+.btn-group .btn:last-child {
+  margin-right: 0;
+}
+
+/* Badges */
+.badge {
+  font-weight: 500;
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+
+/* Modal Styling */
+.modal-content {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+
+.modal-header {
+  background: linear-gradient(135deg, #002147 0%, #173a5e 100%);
+  color: white;
+  border-radius: 12px 12px 0 0;
+  border: none;
+}
+
+.modal-header .btn-close {
+  filter: invert(1);
+}
+
+.modal-body {
+  padding: 30px;
+}
+
+.modal-footer {
+  border: none;
+  padding: 20px 30px;
+  background: #f8f9fa;
+}
+
+/* Form Controls */
+.form-control,
+.form-select {
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  padding: 10px 15px;
+  transition: all 0.3s ease;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: #0ea5e9;
+  box-shadow: 0 0 0 0.2rem rgba(14, 165, 233, 0.15);
+}
+
+.form-label {
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 8px;
+}
+
+/* Empty State */
+.table tbody td[colspan] {
+  padding: 40px 20px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .academics-nav {
+    position: static;
+    margin-bottom: 20px;
+  }
+
+  .academics-header {
+    padding: 20px;
+    text-align: center;
+  }
+
+  .card-header .d-flex {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .card-header .d-flex > div {
+    width: 100%;
+  }
+}
+
+/* Animation */
+.fade-in {
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Loading States */
+.spinner-border-sm {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* Success/Error States */
+.alert {
+  border: none;
+  border-radius: 8px;
+  padding: 15px 20px;
+}
+
+.alert-success {
+  background: #d1f2eb;
+  color: #0c5460;
+}
+
+.alert-danger {
+  background: #f8d7da;
+  color: #721c24;
+}

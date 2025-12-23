@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react"
 import { Table, Button, Form, InputGroup, Spinner } from "react-bootstrap"
 import { apiDelete, apiGet, ENDPOINTS } from "../../utils/api"
 import { FaEdit, FaTrash, FaSearch, FaUser } from "react-icons/fa"
+import { toast, ToastContainer } from "react-toastify"
 import "./admin.css"
 
 export default function FacultyTable({ onEdit }) {

@@ -11,7 +11,7 @@
   overflow: hidden;
 }
 
-.about-hero::before {
+/* .about-hero::before {
   content: "";
   position: absolute;
   top: 0;
@@ -20,7 +20,7 @@
   bottom: 0;
   background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="%23e2e8f0" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
   opacity: 0.3;
-}
+} */
 
 .about-badge {
   background: linear-gradient(135deg, #3b82f6, #1e40af);
@@ -78,6 +78,7 @@
 }
 
 .about-hero-image {
+  /* overflow: hidden; */
   position: relative;
 }
 
@@ -348,15 +349,16 @@
   background: linear-gradient(135deg, #8b5cf6, #7c3aed);
 }
 
-.team-icon {
-  width: 80px;
-  height: 80px;
-  border-radius: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto;
-  color: white;
+.dev-avatar{
+  margin-bottom: 2rem;
+}
+
+.dev-avatar img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border: 2px solid black;
+  box-shadow: var(--dept-shadow-md);
   transition: all 0.3s ease;
 }
 

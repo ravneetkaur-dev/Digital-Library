@@ -1,8 +1,8 @@
-"use client"
 import { Row, Col, Card, Button } from "react-bootstrap"
-import { FaArrowLeft, FaDownload } from "react-icons/fa"
+import { FaArrowLeft, FaDownload, FaEye } from "react-icons/fa"
 import LoadingSpinner from "./LoadingSpinner"
 import ErrorAlert from "./ErrorAlert"
+import { handleView } from "../../utils/resourcesHelpers"
 import { handleDownload } from "../../utils/resourcesHelpers"
 
 const SyllabusView = ({ selectedSubject, syllabusData = [], loadingSyllabus, error, onBack, onErrorClose }) => {
@@ -40,6 +40,15 @@ const SyllabusView = ({ selectedSubject, syllabusData = [], loadingSyllabus, err
                       >
                         <FaDownload className="me-2" />
                         Download
+                      </Button>
+                    </Col>
+                    <Col xs="auto">
+                      <Button
+                        className="res-syllabus-download-btn"
+                        onClick={() => handleView(syllabus.fileUrl)}
+                      >
+                        <FaEye className="me-2" />
+                        View
                       </Button>
                     </Col>
                   </Row>

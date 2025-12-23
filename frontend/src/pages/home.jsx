@@ -38,7 +38,7 @@ import {
   FiUsers,
   FiTrendingUp 
 } from 'react-icons/fi';
-import {NavBar} from '../components/NavBar/NavBar';
+import { NavBar } from '../components/Navbar/NavBar';
 import { HeroSection } from '../components/Home/Hero';
 import {Departments} from '../components/Home/Departments';
 import {FeaturesSection} from '../components/Home/Features';

@@ -1,0 +1,314 @@
+/* Welcome.css - Blue Theme */
+
+.welcome-page {
+  position: relative;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #001f3f 0%, #003366 50%, #0074D9 100%);
+  overflow: hidden;
+  color: #ffffff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Geometric Background Pattern */
+.geometric-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.1;
+  z-index: 1;
+}
+
+.geometric-shape {
+  position: absolute;
+  background: rgba(173, 216, 230, 0.3);
+  border: 1px solid rgba(135, 206, 250, 0.4);
+}
+
+.shape-1 {
+  top: 10%;
+  left: 10%;
+  width: 120px;
+  height: 120px;
+  background: linear-gradient(45deg, #1E90FF, #00BFFF);
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+}
+
+.shape-2 {
+  top: 60%;
+  right: 15%;
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #4169E1, #6495ED);
+  border-radius: 50%;
+}
+
+.shape-3 {
+  bottom: 20%;
+  left: 20%;
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(225deg, #0000FF, #1E90FF);
+  transform: rotate(45deg);
+}
+
+.shape-4 {
+  top: 30%;
+  right: 25%;
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(315deg, #00BFFF, #87CEFA);
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+/* Grid Overlay */
+.grid-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(rgba(0, 86, 179, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 86, 179, 0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+  z-index: 2;
+}
+
+/* Welcome Container */
+.welcome-container {
+  position: relative;
+  z-index: 3;
+}
+
+/* Header Section */
+.header-section {
+  margin-bottom: 3rem;
+}
+
+.main-title {
+  font-size: 4rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 1.5rem;
+}
+
+.title-line-1 {
+  display: block;
+  color: #E6F2FF;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.title-line-2 {
+  display: block;
+  color: #B3D9FF;
+  font-size: 2.5rem;
+  font-weight: 300;
+  letter-spacing: 1px;
+}
+
+.institution-details {
+  margin-top: 2rem;
+}
+
+.institution-name {
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: #CCE5FF;
+  margin-bottom: 1rem;
+}
+
+.divider-line {
+  width: 100px;
+  height: 3px;
+  background: linear-gradient(90deg, #0074D9, #00BFFF);
+  margin: 1rem auto;
+  border-radius: 2px;
+}
+
+.tagline {
+  font-size: 1.1rem;
+  color: #99CCFF;
+  font-style: italic;
+}
+
+/* Quote Section */
+.quote-section {
+  margin: 3rem 0;
+}
+
+.quote-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: rgba(0, 86, 179, 0.2);
+  border-left: 4px solid #0074D9;
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
+}
+
+.quote-text {
+  font-size: 1.3rem;
+  font-style: italic;
+  color: #E6F2FF;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  quotes: "“" "”" "‘" "’";
+}
+
+.quote-text::before {
+  content: open-quote;
+  color: #00BFFF;
+  font-size: 2rem;
+}
+
+.quote-text::after {
+  content: close-quote;
+  color: #00BFFF;
+  font-size: 2rem;
+}
+
+.quote-author {
+  display: block;
+  font-size: 1rem;
+  color: #B3D9FF;
+  font-style: normal;
+  text-align: right;
+}
+
+/* Action Section */
+.action-section {
+  margin-top: 3rem;
+}
+
+.enter-btn {
+  background: linear-gradient(135deg, #0074D9 0%, #0056b3 100%);
+  border: none;
+  padding: 1rem 2.5rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: white;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 116, 217, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.enter-btn:hover {
+  background: linear-gradient(135deg, #0056b3 0%, #003d82 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 116, 217, 0.4);
+}
+
+.enter-btn:active {
+  transform: translateY(0);
+}
+
+.btn-content {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-icon {
+  font-size: 1.5rem;
+  transition: transform 0.3s ease;
+}
+
+.enter-btn:hover .btn-icon {
+  transform: translateX(5px);
+}
+
+.access-note {
+  margin-top: 1rem;
+  color: #99CCFF;
+  font-size: 0.9rem;
+}
+
+/* Corner Accents */
+.corner-accent {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  z-index: 2;
+  opacity: 0.1;
+}
+
+.corner-top-left {
+  top: -100px;
+  left: -100px;
+  background: radial-gradient(circle, #00BFFF 0%, transparent 70%);
+}
+
+.corner-bottom-right {
+  bottom: -100px;
+  right: -100px;
+  background: radial-gradient(circle, #0074D9 0%, transparent 70%);
+}
+
+/* Animations */
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 0.8s ease forwards;
+}
+
+.delay-1 {
+  animation-delay: 0.3s;
+}
+
+.delay-2 {
+  animation-delay: 0.6s;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .main-title {
+    font-size: 2.5rem;
+  }
+  
+  .title-line-2 {
+    font-size: 1.8rem;
+  }
+  
+  .institution-name {
+    font-size: 1.2rem;
+  }
+  
+  .quote-text {
+    font-size: 1.1rem;
+  }
+  
+  .enter-btn {
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+  }
+  
+  .geometric-shape {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-title {
+    font-size: 2rem;
+  }
+  
+  .title-line-2 {
+    font-size: 1.5rem;
+  }
+  
+  .quote-container {
+    padding: 1.5rem;
+  }
+}

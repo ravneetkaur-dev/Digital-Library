@@ -2,6 +2,8 @@
 import { useState } from "react"
 import { Modal, Form, Button, Row, Col, Spinner } from "react-bootstrap"
 import { FaVideo, FaLink } from "react-icons/fa"
+import { apiPost, apiUpload, ENDPOINTS } from "../../../utils/api"
+import { toast, ToastContainer } from "react-toastify"
 
 export const AddNoteModal = ({ show, onHide, subjects, selectedSubject, onAddNote, loading }) => {
   const [noteForm, setNoteForm] = useState({
@@ -25,11 +27,42 @@ export const AddNoteModal = ({ show, onHide, subjects, selectedSubject, onAddNot
         ...noteForm,
         subject: currentSubject,
       })
+      await apiUpload(ENDPOINTS.notes.create)
+      toast.success("Notes uploaded successfully.", {
+                position: "top-right",
+                autoClose: 4000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                style: {
+                  backgroundColor: "#ffffff",
+                  color: "#333333",
+                },
+                progressStyle: {
+                  backgroundColor: "#22c55e",
+                },
+              })
       resetForm()
       onHide()
-    } catch (error) {
-      console.error("Add note failed:", error)
-    }
+    } catch (err) {
+        toast.error(err.message || "Upload failed", {
+              position: "top-right",
+              autoClose: 4000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              style: {
+                backgroundColor: "#ffffff",
+                color: "#333333",
+              },
+              progressStyle: {
+              backgroundColor: "#ef4444",
+            },
+        })
+            // setMsg(err.message || "Upload failed")
+          }
   }
 
   const resetForm = () => {
@@ -52,6 +85,19 @@ export const AddNoteModal = ({ show, onHide, subjects, selectedSubject, onAddNot
   }
 
   return (
+    <>
+    <ToastContainer
+            position="top-center"
+            autoClose={4000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+          />
     <Modal show={show} onHide={handleClose} size="lg" centered>
       <Modal.Header closeButton>
         <Modal.Title>Add New Note {currentSubject && `- ${currentSubject}`}</Modal.Title>
@@ -192,5 +238,6 @@ export const AddNoteModal = ({ show, onHide, subjects, selectedSubject, onAddNot
         </Button>
       </Modal.Footer>
     </Modal>
+    </>
   )
 }

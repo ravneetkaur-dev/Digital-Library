@@ -1,4 +1,3 @@
-"use client"
 import { Row, Col, Card } from "react-bootstrap"
 import { FaChevronRight } from "react-icons/fa"
 import { getDepartmentIcon, getDepartmentDescription } from "../../utils/resourcesHelpers"

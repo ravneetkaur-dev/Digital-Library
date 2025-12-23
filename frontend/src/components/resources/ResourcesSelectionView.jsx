@@ -1,4 +1,3 @@
-"use client"
 import { Row, Col, Card, Button } from "react-bootstrap"
 import { FaArrowLeft, FaFilePdf, FaBook, FaGraduationCap } from "react-icons/fa"
 import ErrorAlert from "./ErrorAlert"

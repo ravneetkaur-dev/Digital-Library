@@ -1,12 +1,13 @@
-"use client";
+"use client"
 
-import { useState, useEffect } from "react";
-import { Form, Button, Row, Col, Spinner } from "react-bootstrap";
-import { Formik, Field, Form as FormikForm, ErrorMessage } from "formik";
-import * as Yup from "yup";
-import { apiUpload, apiGet, ENDPOINTS } from "../../../utils/api";
+import { useState, useEffect } from "react"
+import { Form, Button, Row, Col, Spinner } from "react-bootstrap"
+import { useFormik } from "formik"
+import * as Yup from "yup"
+import { apiUpload, apiGet, ENDPOINTS } from "../../../utils/api"
+import { toast, ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 
-// ✅ Validation schema
 const validationSchema = Yup.object({
   title: Yup.string().required("Title is required"),
   department: Yup.string().required("Department is required"),
@@ -14,289 +15,395 @@ const validationSchema = Yup.object({
   semester: Yup.string().required("Semester is required"),
   subject: Yup.string().required("Subject is required"),
   year: Yup.number()
+    .typeError("Year must be a number")
     .required("Year is required")
-    .min(1900, "Enter a valid year")
-    .max(new Date().getFullYear(), "Year cannot be in the future"),
-  file: Yup.mixed().required("File is required"),
-});
+    .min(1900, "Year too small")
+    .max(new Date().getFullYear() + 5, "Invalid year"),
+  visibility: Yup.string().required("Visibility is required"),
+  file: Yup.mixed()
+    .required("Paper file is required")
+    .test("fileType", "Only PDF files are allowed", (value) => {
+      return value && value.type === "application/pdf"
+    })
+    .test("fileSize", "File size must be less than 50MB", (value) => {
+      return value && value.size <= 50 * 1024 * 1024 // 50MB
+    }),
+})
 
 export default function PaperUploadForm() {
-  const [departments, setDepartments] = useState([]);
-  const [courses, setCourses] = useState([]);
-  const [semesters, setSemesters] = useState([]);
-  const [subjects, setSubjects] = useState([]);
-  const [saving, setSaving] = useState(false);
-  const [msg, setMsg] = useState("");
+  const initialFormState = {
+    title: "",
+    subject: "",
+    semester: "",
+    year: "",
+    uploadedBy: "",
+    visibility: "public",
+    available: true,
+    department: "",
+    course: "",
+    description: "",
+    file: null,
+  }
 
-  const STORAGE_KEY = "paperUploadDraft";
+  const [departments, setDepartments] = useState([])
+  const [courses, setCourses] = useState([])
+  const [semesters, setSemesters] = useState([])
+  const [subjects, setSubjects] = useState([])
+  const [saving, setSaving] = useState(false)
 
-  // 🔹 Load saved draft from localStorage
-  const loadDraft = () => {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    return saved
-      ? JSON.parse(saved)
-      : {
-          title: "",
-          subject: "",
-          semester: "",
-          year: "",
-          uploadedBy: "",
-          visibility: "public",
-          available: true,
-          department: "",
-          course: "",
-          description: "",
-          file: null,
-        };
-  };
+  // Load stored form data
+  const loadStoredForm = () => {
+    const saved = localStorage.getItem("paperUploadForm")
+    return saved ? { ...initialFormState, ...JSON.parse(saved), file: null } : initialFormState
+  }
 
-  // Fetch departments
+  const formik = useFormik({
+    initialValues: loadStoredForm(),
+    validationSchema,
+    enableReinitialize: true,
+    onSubmit: async (values, { resetForm }) => {
+      try {
+        setSaving(true)
+        const fd = new FormData()
+        fd.append("title", values.title)
+        fd.append("subject", values.subject)
+        fd.append("semester", values.semester)
+        fd.append("year", values.year.toString())
+        fd.append("uploadedBy", values.uploadedBy)
+        fd.append("visibility", values.visibility)
+        fd.append("available", values.available.toString())
+        fd.append("course", values.course)
+        fd.append("department", values.department)
+        if (values.description) fd.append("description", values.description)
+        if (values.file) fd.append("resources", values.file)
+
+        await apiUpload(ENDPOINTS.papers.create, fd)
+        toast.success("Paper uploaded successfully.", {
+          position: "top-right",
+          autoClose: 4000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          style: {
+            backgroundColor: "#ffffff",
+            color: "#333333",
+          },
+          progressStyle: {
+            backgroundColor: "#22c55e",
+          },
+        })
+
+        resetForm({ values: initialFormState })
+        localStorage.removeItem("paperUploadForm")
+        setCourses([])
+        setSemesters([])
+        setSubjects([])
+      } catch (err) {
+        toast.error(err.message || "Upload failed", {
+          position: "top-right",
+          autoClose: 4000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          style: {
+            backgroundColor: "#ffffff",
+            color: "#333333",
+          },
+          progressStyle: {
+            backgroundColor: "#ef4444",
+          },
+        })
+      } finally {
+        setSaving(false)
+      }
+    },
+  })
+
+  // Persist form in localStorage (excluding file)
+  useEffect(() => {
+    const { file, ...formDataToSave } = formik.values
+    localStorage.setItem("paperUploadForm", JSON.stringify(formDataToSave))
+  }, [formik.values])
+
+  // Fetch departments on mount
   useEffect(() => {
     async function fetchDepartments() {
       try {
-        const data = await apiGet(ENDPOINTS.course.departments.list);
-        setDepartments(data);
+        const data = await apiGet(ENDPOINTS.course.departments.list)
+        setDepartments(data)
       } catch (err) {
-        console.error("Error fetching departments:", err);
+        console.error("Error fetching departments:", err)
       }
     }
-    fetchDepartments();
-  }, []);
+    fetchDepartments()
+  }, [])
 
-  const handleSubmit = async (values, { resetForm }) => {
-    setMsg("");
-    try {
-      setSaving(true);
-      const fd = new FormData();
-      Object.entries(values).forEach(([key, val]) => {
-        if (val !== null && val !== undefined) {
-          if (key === "file") {
-            if (val instanceof File) fd.append("resources", val);
-          } else {
-            fd.append(key, val);
-          }
-        }
-      });
-
-      await apiUpload(ENDPOINTS.papers.create, fd);
-      setMsg("Paper uploaded successfully.");
-      localStorage.removeItem(STORAGE_KEY); // ✅ clear draft
-      resetForm();
-      setCourses([]);
-      setSemesters([]);
-      setSubjects([]);
-    } catch (err) {
-      setMsg(err.message || "Upload failed");
-    } finally {
-      setSaving(false);
+  // Fetch courses when department changes
+  useEffect(() => {
+    async function fetchCourses() {
+      if (!formik.values.department) return
+      try {
+        const data = await apiGet(ENDPOINTS.course.courses.byDepartment(formik.values.department))
+        setCourses(data)
+        formik.setFieldValue("course", "")
+        formik.setFieldValue("semester", "")
+        formik.setFieldValue("subject", "")
+        setSemesters([])
+        setSubjects([])
+      } catch (err) {
+        console.error("Error fetching courses:", err)
+      }
     }
-  };
+    fetchCourses()
+  }, [formik.values.department])
+
+  // Fetch semesters when course changes
+  useEffect(() => {
+    async function fetchSemesters() {
+      if (!formik.values.course) return
+      try {
+        const data = await apiGet(ENDPOINTS.course.semesters.byCourse(formik.values.course))
+        setSemesters(data)
+        formik.setFieldValue("semester", "")
+        formik.setFieldValue("subject", "")
+        setSubjects([])
+      } catch (err) {
+        console.error("Error fetching semesters:", err)
+      }
+    }
+    fetchSemesters()
+  }, [formik.values.course])
+
+  // Fetch subjects when semester changes
+  useEffect(() => {
+    async function fetchSubjects() {
+      if (!formik.values.semester) return
+      try {
+        const data = await apiGet(`${ENDPOINTS.subjects.list}?semester=${formik.values.semester}`)
+        setSubjects(data)
+        formik.setFieldValue("subject", "")
+      } catch (err) {
+        console.error("Error fetching subjects:", err)
+      }
+    }
+    fetchSubjects()
+  }, [formik.values.semester])
 
   return (
-    <Formik
-      initialValues={loadDraft()}
-      validationSchema={validationSchema}
-      enableReinitialize
-      onSubmit={handleSubmit}
-    >
-      {({ values, setFieldValue }) => {
-        // 🔹 Auto-save to localStorage
-        useEffect(() => {
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(values));
-        }, [values]);
+    <>
+      <ToastContainer
+        position="top-center"
+        autoClose={4000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+      <Form onSubmit={formik.handleSubmit}>
+        {/* Title & Department */}
+        <Row className="mb-3">
+          <Col md={6}>
+            <Form.Group>
+              <Form.Label>Title</Form.Label>
+              <Form.Control
+                name="title"
+                value={formik.values.title}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                isInvalid={formik.touched.title && !!formik.errors.title}
+              />
+              <Form.Control.Feedback type="invalid">{formik.errors.title}</Form.Control.Feedback>
+            </Form.Group>
+          </Col>
 
-        return (
-          <FormikForm>
-            {msg && (
-              <div
-                className={`alert ${
-                  msg.includes("successfully") ? "alert-success" : "alert-danger"
-                }`}
+          <Col md={6}>
+            <Form.Group>
+              <Form.Label>Department</Form.Label>
+              <Form.Select
+                name="department"
+                value={formik.values.department}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                isInvalid={formik.touched.department && !!formik.errors.department}
               >
-                {msg}
-              </div>
-            )}
-
-            {/* Title & Department */}
-            <Row className="mb-3">
-              <Col md={6}>
-                <Form.Group>
-                  <Form.Label>Title</Form.Label>
-                  <Field name="title" as={Form.Control} />
-                  <ErrorMessage
-                    name="title"
-                    component="div"
-                    className="text-danger small"
-                  />
-                </Form.Group>
-              </Col>
-
-              <Col md={6}>
-                <Form.Group>
-                  <Form.Label>Department</Form.Label>
-                  <Field name="department" as={Form.Select}>
-                    <option value="">-- Select Department --</option>
-                    {departments.map((d) => (
-                      <option key={d._id} value={d._id}>
-                        {d.name}
-                      </option>
-                    ))}
-                  </Field>
-                  <ErrorMessage
-                    name="department"
-                    component="div"
-                    className="text-danger small"
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
-
-            {/* Course & Semester */}
-            <Row className="mb-3">
-              <Col md={6}>
-                <Form.Group>
-                  <Form.Label>Course</Form.Label>
-                  <Field
-                    name="course"
-                    as={Form.Select}
-                    disabled={!courses.length}
-                  >
-                    <option value="">-- Select Course --</option>
-                    {courses.map((c) => (
-                      <option key={c._id} value={c._id}>
-                        {c.name}
-                      </option>
-                    ))}
-                  </Field>
-                  <ErrorMessage
-                    name="course"
-                    component="div"
-                    className="text-danger small"
-                  />
-                </Form.Group>
-              </Col>
-
-              <Col md={6}>
-                <Form.Group>
-                  <Form.Label>Semester</Form.Label>
-                  <Field
-                    name="semester"
-                    as={Form.Select}
-                    disabled={!semesters.length}
-                  >
-                    <option value="">-- Select Semester --</option>
-                    {semesters.map((s) => (
-                      <option key={s._id} value={s._id}>
-                        {s.number}
-                      </option>
-                    ))}
-                  </Field>
-                  <ErrorMessage
-                    name="semester"
-                    component="div"
-                    className="text-danger small"
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
-
-            {/* Subject & Year */}
-            <Row className="mb-3">
-              <Col md={6}>
-                <Form.Group>
-                  <Form.Label>Subject</Form.Label>
-                  <Field
-                    name="subject"
-                    as={Form.Select}
-                    disabled={!subjects.length}
-                  >
-                    <option value="">-- Select Subject --</option>
-                    {subjects.map((s) => (
-                      <option key={s._id} value={s._id}>
-                        {s.name}
-                      </option>
-                    ))}
-                  </Field>
-                  <ErrorMessage
-                    name="subject"
-                    component="div"
-                    className="text-danger small"
-                  />
-                </Form.Group>
-              </Col>
-
-              <Col md={6}>
-                <Form.Group>
-                  <Form.Label>Year</Form.Label>
-                  <Field type="number" name="year" as={Form.Control} />
-                  <ErrorMessage
-                    name="year"
-                    component="div"
-                    className="text-danger small"
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
-
-            {/* Visibility & Available */}
-            <Row className="mb-3">
-              <Col md={6}>
-                <Form.Group>
-                  <Form.Label>Visibility</Form.Label>
-                  <Field name="visibility" as={Form.Select}>
-                    <option value="public">Public</option>
-                    <option value="faculty-only">Faculty Only</option>
-                    <option value="students">Students</option>
-                  </Field>
-                </Form.Group>
-              </Col>
-
-              <Col md={6} className="d-flex align-items-center">
-                <Form.Check
-                  type="checkbox"
-                  name="available"
-                  checked={values.available}
-                  onChange={(e) => setFieldValue("available", e.target.checked)}
-                  label="Available"
-                />
-              </Col>
-            </Row>
-
-            {/* Description */}
-            <Form.Group className="mb-3">
-              <Form.Label>Description (optional)</Form.Label>
-              <Field as="textarea" rows={3} name="description" className="form-control" />
+                <option value="">-- Select Department --</option>
+                {departments.map((d) => (
+                  <option key={d._id} value={d._id}>
+                    {d.name}
+                  </option>
+                ))}
+              </Form.Select>
+              <Form.Control.Feedback type="invalid">{formik.errors.department}</Form.Control.Feedback>
             </Form.Group>
+          </Col>
+        </Row>
 
-            {/* File Upload */}
-            <Form.Group className="mb-3">
-              <Form.Label>Paper File (PDF)</Form.Label>
-              <input
-                type="file"
-                accept="application/pdf"
-                name="file"
-                className="form-control"
-                onChange={(e) => setFieldValue("file", e.currentTarget.files[0])}
-              />
-              <ErrorMessage
-                name="file"
-                component="div"
-                className="text-danger small"
-              />
+        {/* Course & Semester */}
+        <Row className="mb-3">
+          <Col md={6}>
+            <Form.Group>
+              <Form.Label>Course</Form.Label>
+              <Form.Select
+                name="course"
+                value={formik.values.course}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                disabled={!courses.length}
+                isInvalid={formik.touched.course && !!formik.errors.course}
+              >
+                <option value="">-- Select Course --</option>
+                {courses.map((c) => (
+                  <option key={c._id} value={c._id}>
+                    {c.name}
+                  </option>
+                ))}
+              </Form.Select>
+              <Form.Control.Feedback type="invalid">{formik.errors.course}</Form.Control.Feedback>
             </Form.Group>
+          </Col>
 
-            <Button type="submit" variant="primary" disabled={saving}>
-              {saving ? (
-                <>
-                  <Spinner size="sm" animation="border" className="me-2" /> Uploading...
-                </>
-              ) : (
-                "Upload Paper"
-              )}
-            </Button>
-          </FormikForm>
-        );
-      }}
-    </Formik>
-  );
+          <Col md={6}>
+            <Form.Group>
+              <Form.Label>Semester</Form.Label>
+              <Form.Select
+                name="semester"
+                value={formik.values.semester}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                disabled={!semesters.length}
+                isInvalid={formik.touched.semester && !!formik.errors.semester}
+              >
+                <option value="">-- Select Semester --</option>
+                {semesters.map((s) => (
+                  <option key={s._id} value={s._id}>
+                    {s.number || s.name}
+                  </option>
+                ))}
+              </Form.Select>
+              <Form.Control.Feedback type="invalid">{formik.errors.semester}</Form.Control.Feedback>
+            </Form.Group>
+          </Col>
+        </Row>
+
+        {/* Subject & Year */}
+        <Row className="mb-3">
+          <Col md={6}>
+            <Form.Group>
+              <Form.Label>Subject</Form.Label>
+              <Form.Select
+                name="subject"
+                value={formik.values.subject}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                disabled={!subjects.length}
+                isInvalid={formik.touched.subject && !!formik.errors.subject}
+              >
+                <option value="">-- Select Subject --</option>
+                {subjects.map((subj) => (
+                  <option key={subj._id} value={subj._id}>
+                    {subj.name}
+                  </option>
+                ))}
+              </Form.Select>
+              <Form.Control.Feedback type="invalid">{formik.errors.subject}</Form.Control.Feedback>
+            </Form.Group>
+          </Col>
+
+          <Col md={6}>
+            <Form.Group>
+              <Form.Label>Year</Form.Label>
+              <Form.Control
+                type="number"
+                name="year"
+                value={formik.values.year}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                isInvalid={formik.touched.year && !!formik.errors.year}
+              />
+              <Form.Control.Feedback type="invalid">{formik.errors.year}</Form.Control.Feedback>
+            </Form.Group>
+          </Col>
+        </Row>
+
+        {/* Uploaded By & Visibility */}
+        <Row className="mb-3">
+          <Col md={6}>
+            <Form.Group>
+              <Form.Label>Visibility</Form.Label>
+              <Form.Select
+                name="visibility"
+                value={formik.values.visibility}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                isInvalid={formik.touched.visibility && !!formik.errors.visibility}
+              >
+                <option value="public">Public</option>
+                <option value="faculty-only">Faculty Only</option>
+                <option value="students">Students</option>
+              </Form.Select>
+              <Form.Control.Feedback type="invalid">{formik.errors.visibility}</Form.Control.Feedback>
+            </Form.Group>
+          </Col>
+        </Row>
+
+        {/* Available Checkbox */}
+        <Row className="mb-3">
+          <Col md={12}>
+            <Form.Check
+              type="checkbox"
+              name="available"
+              checked={formik.values.available}
+              onChange={(e) => formik.setFieldValue("available", e.target.checked)}
+              label="Available for download"
+            />
+          </Col>
+        </Row>
+
+        {/* Description */}
+        <Form.Group className="mb-3">
+          <Form.Label>Description (optional)</Form.Label>
+          <Form.Control
+            as="textarea"
+            rows={3}
+            name="description"
+            value={formik.values.description}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            placeholder="Enter a brief description of the paper..."
+          />
+        </Form.Group>
+
+        {/* File Upload */}
+        <Form.Group className="mb-3">
+          <Form.Label>Paper File (PDF)</Form.Label>
+          <Form.Control
+            type="file"
+            accept="application/pdf"
+            name="file"
+            onChange={(e) => formik.setFieldValue("file", e.target.files[0])}
+            onBlur={formik.handleBlur}
+            isInvalid={formik.touched.file && !!formik.errors.file}
+          />
+          <Form.Control.Feedback type="invalid">{formik.errors.file}</Form.Control.Feedback>
+          <Form.Text className="text-muted">Maximum file size: 50MB. Only PDF files are allowed.</Form.Text>
+        </Form.Group>
+
+        <Button type="submit" variant="primary" disabled={saving || !formik.isValid}>
+          {saving ? (
+            <>
+              <Spinner size="sm" animation="border" className="me-2" /> Uploading...
+            </>
+          ) : (
+            "Upload Paper"
+          )}
+        </Button>
+      </Form>
+    </>
+  )
 }

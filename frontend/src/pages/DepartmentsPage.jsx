@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Card, Badge, Button, Nav, Tab } from 'react-bootstrap';
 import { 
   FaCode, 
@@ -30,9 +30,19 @@ import {
 //   FiBarChart3
 } from 'react-icons/fi';
 import './DepartmentsPage.css';
+import { NavBar } from '../components/Navbar/NavBar';
+import { useParams, useNavigate } from 'react-router-dom';
+import { Footer } from '../components/Footer/Footer';
 
 export const DepartmentsPage = () => {
-  const [activeTab, setActiveTab] = useState('computer-applications');
+  const {id} = useParams();
+  const navigate= useNavigate();
+  const [activeTab, setActiveTab] = useState(id||'computer-applications');
+  useEffect(()=>{
+    if(id){
+      setActiveTab(id);
+    }
+  },[id])
 
   const departments = {
     'computer-applications': {
@@ -325,6 +335,7 @@ export const DepartmentsPage = () => {
 
   return (
     <div className="dept-page">
+      <NavBar/>
       {/* Hero Section */}
       <section className="dept-hero">
         <Container>
@@ -626,6 +637,7 @@ export const DepartmentsPage = () => {
           </section>
         </Tab.Pane>
       </Tab.Content>
+      <Footer/>
     </div>
   );
 };

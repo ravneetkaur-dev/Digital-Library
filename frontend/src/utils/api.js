@@ -1,28 +1,24 @@
 import axios from "axios"
 
-// Base API URL (change if needed)
 export const API_BASE_URL =
   (typeof window !== "undefined" && (localStorage.getItem("API_BASE_URL") || window.API_BASE_URL)) ||
   "http://localhost:5000"
 
-// Create axios instance
 export const api = axios.create({
   baseURL: API_BASE_URL,
   withCredentials: true,
 })
 
-// Attach token automatically
 api.interceptors.request.use((config) => {
-  const facultyToken = typeof window !== "undefined" ? localStorage.getItem("faculty_token") : null
   const adminToken = typeof window !== "undefined" ? localStorage.getItem("admin_token") : null
-  const token = facultyToken || adminToken
+  const facultyToken = typeof window !== "undefined" ? localStorage.getItem("faculty_token") : null
+  const token = adminToken || facultyToken 
   if (token) {
     config.headers.Authorization = `Bearer ${token}`
   }
   return config
 })
 
-// Global response handler
 api.interceptors.response.use(
   (response) => response.data,
   (error) => {
@@ -60,6 +56,7 @@ export const ENDPOINTS = {
   },
   syllabus: {
     list: "/api/syllabus/getsyllabus",
+    listbyId: (id)=> `/api/syllabus/getsyllabus/${id}`,
     create: "/api/syllabus/uploadsyllabus",
     delete: (id) => `/api/syllabus/${id}`,
   },

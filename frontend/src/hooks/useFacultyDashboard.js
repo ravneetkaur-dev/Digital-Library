@@ -1,4 +1,3 @@
-"use client"
 
 import { useState, useEffect } from "react"
 import { apiGet, apiPut, apiDelete, apiUpload, ENDPOINTS } from "../utils/api"

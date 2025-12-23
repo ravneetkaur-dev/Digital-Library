@@ -9,6 +9,7 @@ import { AdminPage } from './pages/AdminPage';
 import { DepartmentsPage } from './pages/DepartmentsPage';
 import { FacultyDashboardPage } from './pages/FacultyDashboardPage';
 import './App.css';
+import {WelcomePage} from './pages/Welcome';
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
     <>
       <ScrollToTop>
         <Routes>
+          {/* <Route path='/' element={<WelcomePage/>}/> */}
           <Route path="/" element={<Home/>}/>
           <Route path="/about" element={<About/>}/>
           {/* <Route path="/paper" element={<Paper/>}/> */}
@@ -26,7 +28,7 @@ function App() {
           {/* <Route path="/rules" element={<Rules/>}/> */}
           <Route path='/resources' element={<Resources/>}/>
           <Route path="/admin-dashboard" element={<AdminPage/>}/>
-          <Route path="/departments" element={<DepartmentsPage/>} />
+          <Route path="/departments/:id" element={<DepartmentsPage/>} />
           <Route path="/faculty-dashboard" element={<FacultyDashboardPage/>}/>
           {/* <Route path="/course/:courseId" element={<CourseDetails />} /> */}
         </Routes>

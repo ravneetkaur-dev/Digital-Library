@@ -27,11 +27,11 @@ const notesSchema = mongoose.Schema({
         enum: ["public", "faculty-only", "students"],
         default: "public"
     },
-    Course:{
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Course',
-            required: true
-        },
+    // Course:{
+    //         type: mongoose.Schema.Types.ObjectId,
+    //         ref: 'Course',
+    //         required: true
+    //     },
     // available: {
     //     type: Boolean,
     //     default: true

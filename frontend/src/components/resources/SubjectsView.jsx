@@ -1,4 +1,3 @@
-"use client"
 import { Row, Col, Button, Form, Spinner } from "react-bootstrap"
 import { FaArrowLeft, FaSearch } from "react-icons/fa"
 import LoadingSpinner from "./LoadingSpinner"

@@ -44,7 +44,7 @@ export const NavBar = () => {
               <Nav.Link as={Link} to="/resources" className="navbar-nav-link">
                 Resources
               </Nav.Link>
-              <Nav.Link as={Link} to="/departments" className="navbar-nav-link">
+              <Nav.Link as={Link} to="/departments/computer-applications" className="navbar-nav-link">
                 Departments
               </Nav.Link>
               <Nav.Link as={Link} to="/about" className="navbar-nav-link">

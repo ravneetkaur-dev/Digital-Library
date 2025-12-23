@@ -50,7 +50,7 @@ function BooksTable() {
             <th>Semester</th>
             <th>Year</th>
             <th>Course</th>
-            <th>Actions</th>
+            <th>Departments</th>
             <th style={{ width: 120 }}>Actions</th>
           </tr>
         </thead>
@@ -133,6 +133,8 @@ function SyllabusTable() {
             <th>Subject</th>
             <th>Semester</th>
             <th>Year</th>
+            <th>Course</th>
+            <th>Departments</th>
             <th style={{ width: 120 }}>Actions</th>
           </tr>
         </thead>
@@ -143,7 +145,7 @@ function SyllabusTable() {
               <td>{r.subject?.name || "N/A"}</td>
               <td>{r.semester?.number || r.semester?.name || "N/A"}</td>
               <td>{r.year || "N/A"}</td>
-              <td>{r.course?.name || "N/A"}</td>
+              <td>{r.Course?.name || "N/A"}</td>
               <td>{r.department?.name || "N/A"}</td>
               <td>
                 <Button
@@ -214,6 +216,8 @@ function PapersTable() {
             <th>Subject</th>
             <th>Semester</th>
             <th>Year</th>
+            <th>Course</th>
+            <th>Department</th>
             <th style={{ width: 120 }}>Actions</th>
           </tr>
         </thead>

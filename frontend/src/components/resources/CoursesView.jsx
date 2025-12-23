@@ -1,4 +1,3 @@
-"use client"
 import { Row, Col, Card, Button } from "react-bootstrap"
 import { FaArrowLeft, FaChevronRight } from "react-icons/fa"
 import { FiBookOpen } from "react-icons/fi"

@@ -2,6 +2,7 @@ import React from 'react';
 import { Container, Row, Col, Badge, Button } from 'react-bootstrap';
 import { FaChevronRight } from 'react-icons/fa';
 import './Hero.css';
+import { Link } from 'react-router-dom';
 
 export const HeroSection = () => {
   return (
@@ -10,9 +11,9 @@ export const HeroSection = () => {
         <Row className="align-items-center g-5">
           <Col lg={6}>
             <div className="mb-4">
-              <Badge className="hero-badge">
+              {/* <Badge className="hero-badge">
                 🎓 Academic Excellence Platform
-              </Badge>
+              </Badge> */}
               
               <h1 className="display-3 fw-bold hero-title">
                 Unlock Your{' '}
@@ -28,13 +29,13 @@ export const HeroSection = () => {
             </div>
             
             <div className="d-flex flex-column flex-sm-row gap-3 mb-5">
-              <Button size="lg" className="hero-btn-primary">
+              <Link as={Link} to="/resources"><Button size="lg" className="hero-btn-primary">
                 Explore Resources
                 <FaChevronRight className="ms-2" size={16} />
-              </Button>
-              <Button variant="outline-primary" size="lg" className="hero-btn-secondary">
+              </Button></Link>
+              {/* <Button variant="outline-primary" size="lg" className="hero-btn-secondary">
                 Take Virtual Tour
-              </Button>
+              </Button> */}
             </div>
             
             <Row className="text-center pt-4">

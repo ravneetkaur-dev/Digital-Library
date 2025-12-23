@@ -1,7 +1,6 @@
-
 import { useEffect, useMemo, useState } from "react"
-import { Card, Row, Col, Nav, Button, Spinner } from "react-bootstrap"
-import { FaUsersCog, FaUpload, FaBook, FaList, FaHome, FaComments } from "react-icons/fa"
+import { Card, Row, Col, Nav, Button, Spinner, Offcanvas } from "react-bootstrap"
+import { FaUsersCog, FaUpload, FaBook, FaList, FaHome, FaComments, FaBars, FaTimes } from "react-icons/fa"
 import "./admin.css"
 import FacultyManager from "./FacultyManager"
 import UploadManager from "./UploadManager"
@@ -24,10 +23,12 @@ const StatCard = ({ title, value, icon }) => (
   </Card>
 )
 
-export const AdminDashboard=()=> {
+export const AdminDashboard = () => {
   const [active, setActive] = useState("overview")
   const [counts, setCounts] = useState({ faculty: 0, books: 0, syllabus: 0, papers: 0, feedback: 0 })
   const [loadingCounts, setLoadingCounts] = useState(true)
+  const [showSidebar, setShowSidebar] = useState(false)
+  
   const isAuthed = useMemo(() => {
     if (typeof window === "undefined") return false
     return !!localStorage.getItem("admin_token")
@@ -66,100 +67,141 @@ export const AdminDashboard=()=> {
     }
   }, [])
 
+  const handleNavClick = (section) => {
+    setActive(section)
+    setShowSidebar(false) // Close sidebar on mobile after selection
+  }
+
+  const navigationItems = [
+    { key: "overview", label: "Overview", icon: FaHome },
+    { key: "faculty", label: "Faculty", icon: FaUsersCog },
+    { key: "uploads", label: "Uploads", icon: FaUpload },
+    { key: "academics", label: "Academics", icon: FaList },
+    { key: "library", label: "Library", icon: FaBook },
+    { key: "feedback", label: "Feedback", icon: FaComments },
+  ]
+
+  const SidebarContent = ({ isMobile = false }) => (
+    <Nav variant="pills" className={`flex-column ${isMobile ? 'mobile-nav' : ''}`}>
+      {navigationItems.map(({ key, label, icon: Icon }) => (
+        <Nav.Link 
+          key={key}
+          active={active === key} 
+          onClick={() => handleNavClick(key)}
+          className={`sidebar-nav-link ${active === key ? 'active' : ''}`}
+        >
+          <Icon className="me-2" /> {label}
+        </Nav.Link>
+      ))}
+    </Nav>
+  )
+
   return (
     <div className="admin-dashboard">
       <header className="admin-header">
-        <h2 className="d-flex align-items-center gap-2">
-          <FaHome className="me-2" /> Admin Dashboard
-        </h2>
-        {!isAuthed && (
-          <div className="mt-2">
-            <span className="badge bg-warning text-dark">You are not logged in as admin. Some actions may fail.</span>
+        <div className="d-flex align-items-center justify-content-between">
+          <div className="d-flex align-items-center">
+            <Button
+              variant="link"
+              className="d-lg-none me-2 p-0 text-white mobile-menu-btn"
+              onClick={() => setShowSidebar(true)}
+              aria-label="Open navigation menu"
+            >
+              <FaBars size={20} />
+            </Button>
+            <h2 className="d-flex align-items-center gap-2 mb-0">
+              <FaHome className="me-2" /> Admin Dashboard
+            </h2>
           </div>
-        )}
+          {!isAuthed && (
+            <div>
+              <span className="badge bg-warning text-dark">Not logged in as admin</span>
+            </div>
+          )}
+        </div>
       </header>
 
       <div className="admin-container">
-        <aside className="admin-sidebar p-2">
-          <Nav variant="pills" className="flex-column">
-            <Nav.Link active={active === "overview"} onClick={() => setActive("overview")}>
-              <FaHome className="me-2" /> Overview
-            </Nav.Link>
-            <Nav.Link active={active === "faculty"} onClick={() => setActive("faculty")}>
-              <FaUsersCog className="me-2" /> Faculty
-            </Nav.Link>
-            <Nav.Link active={active === "uploads"} onClick={() => setActive("uploads")}>
-              <FaUpload className="me-2" /> Uploads
-            </Nav.Link>
-            <Nav.Link active={active === "academics"} onClick={() => setActive("academics")}>
-              <FaList className="me-2" /> Academics
-            </Nav.Link>
-            <Nav.Link active={active === "library"} onClick={() => setActive("library")}>
-              <FaBook className="me-2" /> Library
-            </Nav.Link>
-            <Nav.Link active={active === "feedback"} onClick={() => setActive("feedback")}>
-              <FaComments className="me-2" /> Feedback
-            </Nav.Link>
-          </Nav>
+        {/* Desktop Sidebar */}
+        <aside className="admin-sidebar d-none d-lg-block">
+          <div className="sidebar-content">
+            <SidebarContent />
+          </div>
         </aside>
+
+        {/* Mobile Sidebar (Offcanvas) */}
+        <Offcanvas 
+          show={showSidebar} 
+          onHide={() => setShowSidebar(false)} 
+          placement="start"
+          className="d-lg-none admin-mobile-sidebar"
+        >
+          <Offcanvas.Header closeButton className="admin-mobile-header">
+            <Offcanvas.Title>
+              <FaHome className="me-2" />
+              Admin Panel
+            </Offcanvas.Title>
+          </Offcanvas.Header>
+          <Offcanvas.Body className="p-0">
+            <SidebarContent isMobile={true} />
+          </Offcanvas.Body>
+        </Offcanvas>
 
         <main className="admin-content">
           {active === "overview" && (
-            <>
+            <div className="overview-section">
               <Row className="mb-4">
-                <Col md={6} lg={3}>
+                <Col xs={12} sm={6} lg={3}>
                   <StatCard title="Faculty" value={counts.faculty} icon={<FaUsersCog size={28} />} />
                 </Col>
-                <Col md={6} lg={3}>
+                <Col xs={12} sm={6} lg={3}>
                   <StatCard title="Books" value={counts.books} icon={<FaBook size={28} />} />
                 </Col>
-                <Col md={6} lg={3}>
+                <Col xs={12} sm={6} lg={3}>
                   <StatCard title="Syllabus" value={counts.syllabus} icon={<FaList size={28} />} />
                 </Col>
-                <Col md={6} lg={3}>
+                <Col xs={12} sm={6} lg={3}>
                   <StatCard title="Papers" value={counts.papers} icon={<FaList size={28} />} />
                 </Col>
-                <Col md={6} lg={3}>
+                <Col xs={12} sm={6} lg={3}>
                   <StatCard title="Feedback" value={counts.feedback} icon={<FaComments size={28} />} />
                 </Col>
               </Row>
+              
               <Card className="shadow-sm">
                 <Card.Header className="bg-white">
                   <strong>Quick Actions</strong>
                 </Card.Header>
                 <Card.Body>
                   <div className="d-flex flex-wrap gap-2">
-                    <Button variant="outline-primary" onClick={() => setActive("faculty")}>
+                    <Button variant="outline-primary" onClick={() => handleNavClick("faculty")}>
                       Manage Faculty
                     </Button>
-                    <Button variant="primary" onClick={() => setActive("uploads")}>
+                    <Button variant="primary" onClick={() => handleNavClick("uploads")}>
                       Upload Content
                     </Button>
-                    <Button variant="outline-secondary" onClick={() => setActive("library")}>
+                    <Button variant="outline-secondary" onClick={() => handleNavClick("library")}>
                       View Library
                     </Button>
-                    <Button variant="outline-info" onClick={() => setActive("feedback")}>
+                    <Button variant="outline-info" onClick={() => handleNavClick("feedback")}>
                       View Feedback
                     </Button>
                   </div>
                 </Card.Body>
               </Card>
+              
               {loadingCounts && (
                 <div className="mt-3 text-muted d-flex align-items-center gap-2">
                   <Spinner size="sm" animation="border" /> Refreshing counts...
                 </div>
               )}
-            </>
+            </div>
           )}
 
           {active === "faculty" && <FacultyManager />}
-
           {active === "uploads" && <UploadManager />}
-
           {active === "academics" && <AcademicsManager />}
-
           {active === "library" && <LibraryManager />}
-
           {active === "feedback" && <FeedbackManager />}
         </main>
       </div>

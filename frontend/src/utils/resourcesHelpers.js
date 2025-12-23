@@ -21,6 +21,13 @@ export const handleDownload = (fileUrl, filename) => {
   document.body.removeChild(link)
 }
 
+export const handleView = (fileUrl) => {
+    if (!fileUrl) return
+    const normalizedUrl = fileUrl.startsWith("/") ? fileUrl : `/${fileUrl}`
+    const fullUrl = `${API_BASE_URL}${normalizedUrl}`
+    window.open(fullUrl, "_blank")
+  }
+
 export const getBreadcrumbItems = (currentView, selectedDept, selectedCourse, selectedSubject, selectedResource) => {
   const items = [
     { label: "Home", href: "/", active: false },

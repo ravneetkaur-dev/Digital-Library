@@ -4,11 +4,11 @@ import { FaCode, FaChevronRight } from 'react-icons/fa';
 import { FiTrendingUp } from 'react-icons/fi';
 import { NavBar } from '../Navbar/NavBar';
 import './Departments.css';
+import { Link } from 'react-router-dom';
 
 export const Departments = () => {
   return (
     <section className="departments-section">
-      <NavBar/>
       <Container>
         <div className="text-center mb-5">
           <h2 className="display-4 fw-bold section-title">
@@ -49,10 +49,11 @@ export const Departments = () => {
                   <Badge className="department-badge cs">MCA</Badge>
                 </div>
                 
+                <Link as={Link} to={"/departments/computer-applications"}>
                 <Button variant="outline-primary" className="department-btn">
                   Explore Department
                   <FaChevronRight className="ms-2" size={14} />
-                </Button>
+                </Button></Link>
               </Card.Body>
             </Card>
           </Col>
@@ -84,10 +85,11 @@ export const Departments = () => {
                   <Badge className="department-badge business">MBA</Badge>
                 </div>
                 
+                <Link as={Link} to={"/departments/business-management"}>
                 <Button variant="outline-success" className="department-btn">
                   Explore Department
                   <FaChevronRight className="ms-2" size={14} />
-                </Button>
+                </Button></Link>
               </Card.Body>
             </Card>
           </Col>

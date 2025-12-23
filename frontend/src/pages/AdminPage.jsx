@@ -1,4 +1,4 @@
-import { NavBar } from "../components/NavBar/NavBar"
+import { NavBar } from "../components/Navbar/NavBar"
 import {AdminDashboard} from "../components/admin/AdminDashboard"
 
 export const AdminPage=()=> {

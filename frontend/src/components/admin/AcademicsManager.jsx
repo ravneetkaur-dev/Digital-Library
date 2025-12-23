@@ -1,534 +1,156 @@
-"use client"
-
-import { useEffect, useMemo, useState } from "react"
-import { Card, Row, Col, Form, Button, Table, Alert } from "react-bootstrap"
-import { ENDPOINTS, apiGet, api } from "../../utils/api"
+import { useState, useEffect } from "react"
+import { Container, Row, Col, Nav, Tab, Alert } from "react-bootstrap"
+import { FaGraduationCap, FaBuilding, FaBook, FaCalendarAlt } from "react-icons/fa"
+import DepartmentsManager from "./academics/DepartmentsManager"
+import CoursesManager from "./academics/CoursesManager"
+import SemestersManager from "./academics/SemestersManager"
+import SubjectsManager from "./academics/SubjectsManager"
+import { apiGet, ENDPOINTS } from "../../utils/api"
+import './academics.css';
 
 export default function AcademicsManager() {
-  // Lists
-  const [departments, setDepartments] = useState([])
-  const [courses, setCourses] = useState([])
-  const [semesters, setSemesters] = useState([])
-  const [subjects, setSubjects] = useState([])
-
-  // Selections
-  const [selectedDept, setSelectedDept] = useState("")
-  const [selectedCourse, setSelectedCourse] = useState("")
-  const [selectedSemester, setSelectedSemester] = useState("")
-
-  // Forms
-  const [deptName, setDeptName] = useState("")
-  const [courseName, setCourseName] = useState("")
-  const [semesterNumber, setSemesterNumber] = useState("")
-  const [subjectName, setSubjectName] = useState("")
-  const [subjectCode, setSubjectCode] = useState("")
-  const [subjectDesc, setSubjectDesc] = useState("")
-
-  // UI
-  const [loading, setLoading] = useState(false)
+  const [activeTab, setActiveTab] = useState("departments")
   const [message, setMessage] = useState(null)
+  const [globalData, setGlobalData] = useState({
+    departments: [],
+    courses: [],
+    semesters: [],
+    subjects: [],
+  })
 
-  function notify(type, text) {
+  const notify = (type, text) => {
     setMessage({ type, text })
-    setTimeout(() => setMessage(null), 2500)
+    setTimeout(() => setMessage(null), 3000)
   }
 
-  // Load base lists
-  async function loadDepartments() {
-    const data = await apiGet(ENDPOINTS.course.departments.list)
-    setDepartments(Array.isArray(data) ? data : [])
-  }
+  const loadAllData = async () => {
+    try {
+      const [departments, subjects] = await Promise.all([
+        apiGet(ENDPOINTS.course.departments.list),
+        apiGet(ENDPOINTS.subjects.list),
+      ])
 
-  async function loadSubjects() {
-    const data = await apiGet(ENDPOINTS.subjects.list)
-    setSubjects(Array.isArray(data) ? data : [])
-  }
-
-  async function loadCoursesForDept(deptId) {
-    if (!deptId) {
-      setCourses([])
-      return
+      setGlobalData((prev) => ({
+        ...prev,
+        departments: Array.isArray(departments) ? departments : [],
+        subjects: Array.isArray(subjects) ? subjects : [],
+      }))
+    } catch (error) {
+      notify("error", "Failed to load data")
     }
-    const data = await apiGet(ENDPOINTS.course.courses.byDepartment(deptId))
-    setCourses(Array.isArray(data) ? data : [])
-  }
-
-  async function loadSemestersForCourse(courseId) {
-    if (!courseId) {
-      setSemesters([])
-      return
-    }
-    const data = await apiGet(ENDPOINTS.course.semesters.byCourse(courseId))
-    setSemesters(Array.isArray(data) ? data : [])
   }
 
   useEffect(() => {
-    let mounted = true
-    ;(async () => {
-      try {
-        setLoading(true)
-        await Promise.all([loadDepartments(), loadSubjects()])
-      } catch (e) {
-        notify("error", e.message || "Failed to load data")
-      } finally {
-        if (mounted) setLoading(false)
-      }
-    })()
-    return () => {
-      mounted = false
-    }
+    loadAllData()
   }, [])
 
-  // Cascade when department changes
-  useEffect(() => {
-    setSelectedCourse("")
-    setSemesters([])
-    if (selectedDept) {
-      loadCoursesForDept(selectedDept)
+  const refreshData = (type) => {
+    if (type === "all") {
+      loadAllData()
     } else {
-      setCourses([])
-    }
-  }, [selectedDept])
-
-  // Cascade when course changes
-  useEffect(() => {
-    setSelectedSemester("")
-    if (selectedCourse) {
-      loadSemestersForCourse(selectedCourse)
-    } else {
-      setSemesters([])
-    }
-  }, [selectedCourse])
-
-  // Create handlers
-  async function handleCreateDepartment(e) {
-    e.preventDefault()
-    if (!deptName.trim()) return notify("error", "Enter department name")
-    try {
-      setLoading(true)
-      await apiJson(ENDPOINTS.course.departments.create, {
-        method: "POST",
-        body: JSON.stringify({ name: deptName.trim() }),
-      })
-      setDeptName("")
-      await loadDepartments()
-      notify("success", "Department created")
-    } catch (e) {
-      notify("error", e.message || "Failed to create department")
-    } finally {
-      setLoading(false)
+      // Refresh specific data type
+      loadAllData()
     }
   }
-
-  async function handleCreateCourse(e) {
-    e.preventDefault()
-    if (!courseName.trim() || !selectedDept) {
-      return notify("error", "Select department and enter course name")
-    }
-    try {
-      setLoading(true)
-      await apiJson(ENDPOINTS.course.courses.create, {
-        method: "POST",
-        body: JSON.stringify({ name: courseName.trim(), departmentId: selectedDept }),
-      })
-      setCourseName("")
-      await loadCoursesForDept(selectedDept)
-      notify("success", "Course created")
-    } catch (e) {
-      notify("error", e.message || "Failed to create course")
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  async function handleCreateSemester(e) {
-    e.preventDefault()
-    if (!semesterNumber.trim() || !selectedCourse) {
-      return notify("error", "Select course and enter semester number/name")
-    }
-    try {
-      setLoading(true)
-      await apiJson(ENDPOINTS.course.semesters.create, {
-        method: "POST",
-        body: JSON.stringify({ number: semesterNumber.trim(), courseId: selectedCourse }),
-      })
-      setSemesterNumber("")
-      await loadSemestersForCourse(selectedCourse)
-      notify("success", "Semester created")
-    } catch (e) {
-      notify("error", e.message || "Failed to create semester")
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  async function handleCreateSubject(e) {
-    e.preventDefault()
-    if (!subjectName.trim() || !subjectCode.trim() || !selectedDept || !selectedCourse || !selectedSemester) {
-      return notify("error", "Fill subject fields and select department, course, semester")
-    }
-    try {
-      setLoading(true)
-      await apiJson(ENDPOINTS.subjects.create, {
-        method: "POST",
-        body: JSON.stringify({
-          name: subjectName.trim(),
-          code: subjectCode.trim(),
-          department: selectedDept,
-          course: selectedCourse,
-          semester: selectedSemester,
-          description: subjectDesc.trim(),
-        }),
-      })
-      setSubjectName("")
-      setSubjectCode("")
-      setSubjectDesc("")
-      await loadSubjects()
-      notify("success", "Subject created")
-    } catch (e) {
-      notify("error", e.message || "Failed to create subject")
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  const filteredSubjects = useMemo(() => {
-    return subjects.filter((s) => {
-      const okDept = selectedDept ? String(s.department?._id || s.department) === String(selectedDept) : true
-      const okCourse = selectedCourse ? String(s.course?._id || s.course) === String(selectedCourse) : true
-      const okSem = selectedSemester ? String(s.semester?._id || s.semester) === String(selectedSemester) : true
-      return okDept && okCourse && okSem
-    })
-  }, [subjects, selectedDept, selectedCourse, selectedSemester])
 
   return (
-    <div className="admin-content">
-      {message && (
-        <Alert variant={message.type === "success" ? "success" : "danger"} className="mb-3">
-          {message.text}
-        </Alert>
-      )}
+    <div className="academics-manager">
+      <Container fluid>
+        <div className="academics-header mb-4">
+          <h2 className="text-primary">
+            <FaGraduationCap className="me-2" />
+            Academic Structure Management
+          </h2>
+          <p className="text-white">Manage departments, courses, semesters, and subjects</p>
+        </div>
 
-      <Row className="g-3">
-        <Col md={6}>
-          <Card className="shadow-sm">
-            <Card.Header className="bg-white fw-bold">Add Department</Card.Header>
-            <Card.Body>
-              <Form onSubmit={handleCreateDepartment} className="d-flex gap-2">
-                <Form.Control
-                  placeholder="Department name (e.g., Computer Science)"
-                  value={deptName}
-                  onChange={(e) => setDeptName(e.target.value)}
-                />
-                <Button type="submit" variant="primary" disabled={loading}>
-                  {loading ? "Saving..." : "Add"}
-                </Button>
-              </Form>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col md={6}>
-          <Card className="shadow-sm">
-            <Card.Header className="bg-white fw-bold">Add Course</Card.Header>
-            <Card.Body>
-              <Form onSubmit={handleCreateCourse} className="d-flex gap-2">
-                <Form.Select value={selectedDept} onChange={(e) => setSelectedDept(e.target.value)}>
-                  <option value="">Select Department</option>
-                  {departments.map((d) => (
-                    <option key={d._id} value={d._id}>
-                      {d.name}
-                    </option>
-                  ))}
-                </Form.Select>
-                <Form.Control
-                  placeholder="Course name (e.g., B.Tech IT)"
-                  value={courseName}
-                  onChange={(e) => setCourseName(e.target.value)}
-                />
-                <Button type="submit" variant="primary" disabled={loading || !selectedDept}>
-                  {loading ? "Saving..." : "Add"}
-                </Button>
-              </Form>
-            </Card.Body>
-          </Card>
-        </Col>
+        {message && (
+          <Alert
+            variant={message.type === "success" ? "success" : "danger"}
+            dismissible
+            onClose={() => setMessage(null)}
+            className="mb-4"
+          >
+            {message.text}
+          </Alert>
+        )}
 
-        <Col md={6}>
-          <Card className="shadow-sm">
-            <Card.Header className="bg-white fw-bold">Add Semester</Card.Header>
-            <Card.Body>
-              <Form onSubmit={handleCreateSemester} className="d-flex flex-wrap gap-2">
-                <Form.Select
-                  value={selectedDept}
-                  onChange={(e) => setSelectedDept(e.target.value)}
-                  className="flex-grow-1"
-                >
-                  <option value="">Select Department</option>
-                  {departments.map((d) => (
-                    <option key={d._id} value={d._id}>
-                      {d.name}
-                    </option>
-                  ))}
-                </Form.Select>
-                <Form.Select
-                  value={selectedCourse}
-                  onChange={(e) => setSelectedCourse(e.target.value)}
-                  disabled={!selectedDept}
-                  className="flex-grow-1"
-                >
-                  <option value="">{selectedDept ? "Select Course" : "Pick Department first"}</option>
-                  {courses.map((c) => (
-                    <option key={c._id} value={c._id}>
-                      {c.name}
-                    </option>
-                  ))}
-                </Form.Select>
-                <Form.Control
-                  placeholder="Semester (e.g., 1, 2, 3, or First)"
-                  value={semesterNumber}
-                  onChange={(e) => setSemesterNumber(e.target.value)}
-                />
-                <Button type="submit" variant="primary" disabled={loading || !selectedCourse}>
-                  {loading ? "Saving..." : "Add"}
-                </Button>
-              </Form>
-            </Card.Body>
-          </Card>
-        </Col>
+        <Tab.Container activeKey={activeTab} onSelect={setActiveTab}>
+          <Row>
+            <Col md={3}>
+              <Nav variant="pills" className="flex-column academics-nav">
+                <Nav.Item>
+                  <Nav.Link eventKey="departments" className="academics-nav-link">
+                    <FaBuilding className="me-2" />
+                    Departments
+                    <span className="badge bg-primary ms-auto">{globalData.departments.length}</span>
+                  </Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link eventKey="courses" className="academics-nav-link">
+                    <FaBook className="me-2" />
+                    Courses
+                    <span className="badge bg-success ms-auto">{globalData.courses.length}</span>
+                  </Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link eventKey="semesters" className="academics-nav-link">
+                    <FaCalendarAlt className="me-2" />
+                    Semesters
+                    <span className="badge bg-warning ms-auto">{globalData.semesters.length}</span>
+                  </Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link eventKey="subjects" className="academics-nav-link">
+                    <FaBook className="me-2" />
+                    Subjects
+                    <span className="badge bg-info ms-auto">{globalData.subjects.length}</span>
+                  </Nav.Link>
+                </Nav.Item>
+              </Nav>
+            </Col>
 
-        <Col md={6}>
-          <Card className="shadow-sm">
-            <Card.Header className="bg-white fw-bold">Add Subject</Card.Header>
-            <Card.Body>
-              <Form onSubmit={handleCreateSubject} className="space-y-3">
-                <div className="d-flex flex-wrap gap-2">
-                  <Form.Select
-                    value={selectedDept}
-                    onChange={(e) => setSelectedDept(e.target.value)}
-                    className="flex-grow-1"
-                  >
-                    <option value="">Select Department</option>
-                    {departments.map((d) => (
-                      <option key={d._id} value={d._id}>
-                        {d.name}
-                      </option>
-                    ))}
-                  </Form.Select>
-                  <Form.Select
-                    value={selectedCourse}
-                    onChange={(e) => setSelectedCourse(e.target.value)}
-                    disabled={!selectedDept}
-                    className="flex-grow-1"
-                  >
-                    <option value="">{selectedDept ? "Select Course" : "Pick Department first"}</option>
-                    {courses.map((c) => (
-                      <option key={c._id} value={c._id}>
-                        {c.name}
-                      </option>
-                    ))}
-                  </Form.Select>
-                  <Form.Select
-                    value={selectedSemester}
-                    onChange={(e) => setSelectedSemester(e.target.value)}
-                    disabled={!selectedCourse}
-                    className="flex-grow-1"
-                  >
-                    <option value="">{selectedCourse ? "Select Semester" : "Pick Course first"}</option>
-                    {semesters.map((s) => (
-                      <option key={s._id} value={s._id}>
-                        {s.number}
-                      </option>
-                    ))}
-                  </Form.Select>
-                </div>
-                <div className="d-flex flex-wrap gap-2">
-                  <Form.Control
-                    placeholder="Subject name (e.g., Data Structures)"
-                    value={subjectName}
-                    onChange={(e) => setSubjectName(e.target.value)}
+            <Col md={9}>
+              <Tab.Content>
+                <Tab.Pane eventKey="departments">
+                  <DepartmentsManager
+                    notify={notify}
+                    onDataChange={() => refreshData("departments")}
+                    departments={globalData.departments}
                   />
-                  <Form.Control
-                    placeholder="Code (e.g., CS201)"
-                    value={subjectCode}
-                    onChange={(e) => setSubjectCode(e.target.value)}
-                    style={{ maxWidth: 200 }}
+                </Tab.Pane>
+                <Tab.Pane eventKey="courses">
+                  <CoursesManager
+                    notify={notify}
+                    onDataChange={() => refreshData("courses")}
+                    departments={globalData.departments}
+                    courses={globalData.courses}
+                    setGlobalData={setGlobalData}
                   />
-                </div>
-                <Form.Control
-                  as="textarea"
-                  rows={2}
-                  placeholder="Description (optional)"
-                  value={subjectDesc}
-                  onChange={(e) => setSubjectDesc(e.target.value)}
-                />
-                <div className="d-flex justify-content-end">
-                  <Button type="submit" variant="primary" disabled={loading || !selectedSemester}>
-                    {loading ? "Saving..." : "Add Subject"}
-                  </Button>
-                </div>
-              </Form>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-
-      <Row className="g-3 mt-3">
-        <Col md={6}>
-          <Card className="shadow-sm">
-            <Card.Header className="bg-white fw-bold">Departments</Card.Header>
-            <Card.Body className="p-0">
-              <div className="table-responsive">
-                <Table hover size="sm" className="mb-0">
-                  <thead>
-                    <tr>
-                      <th style={{ width: 60 }}>#</th>
-                      <th>Name</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {departments.map((d, idx) => (
-                      <tr key={d._id}>
-                        <td>{idx + 1}</td>
-                        <td>{d.name}</td>
-                      </tr>
-                    ))}
-                    {!departments.length && (
-                      <tr>
-                        <td colSpan={2} className="text-muted text-center py-3">
-                          No departments yet
-                        </td>
-                      </tr>
-                    )}
-                  </tbody>
-                </Table>
-              </div>
-            </Card.Body>
-          </Card>
-        </Col>
-
-        <Col md={6}>
-          <Card className="shadow-sm">
-            <Card.Header className="bg-white fw-bold">
-              Courses {selectedDept ? "for Department" : ""}{" "}
-              {selectedDept ? (
-                <span className="text-muted">
-                  ({departments.find((d) => String(d._id) === String(selectedDept))?.name || "Selected"})
-                </span>
-              ) : null}
-            </Card.Header>
-            <Card.Body className="p-0">
-              <div className="table-responsive">
-                <Table hover size="sm" className="mb-0">
-                  <thead>
-                    <tr>
-                      <th style={{ width: 60 }}>#</th>
-                      <th>Name</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {courses.map((c, idx) => (
-                      <tr key={c._id}>
-                        <td>{idx + 1}</td>
-                        <td>{c.name}</td>
-                      </tr>
-                    ))}
-                    {!courses.length && (
-                      <tr>
-                        <td colSpan={2} className="text-muted text-center py-3">
-                          {selectedDept ? "No courses yet in this department" : "Pick a department to view courses"}
-                        </td>
-                      </tr>
-                    )}
-                  </tbody>
-                </Table>
-              </div>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-
-      <Row className="g-3 mt-3">
-        <Col md={6}>
-          <Card className="shadow-sm">
-            <Card.Header className="bg-white fw-bold">
-              Semesters {selectedCourse ? "for Course" : ""}{" "}
-              {selectedCourse ? (
-                <span className="text-muted">
-                  ({courses.find((c) => String(c._id) === String(selectedCourse))?.name || "Selected"})
-                </span>
-              ) : null}
-            </Card.Header>
-            <Card.Body className="p-0">
-              <div className="table-responsive">
-                <Table hover size="sm" className="mb-0">
-                  <thead>
-                    <tr>
-                      <th style={{ width: 60 }}>#</th>
-                      <th>Number/Name</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {semesters.map((s, idx) => (
-                      <tr key={s._id}>
-                        <td>{idx + 1}</td>
-                        <td>{s.number}</td>
-                      </tr>
-                    ))}
-                    {!semesters.length && (
-                      <tr>
-                        <td colSpan={2} className="text-muted text-center py-3">
-                          {selectedCourse ? "No semesters yet for this course" : "Pick a course to view semesters"}
-                        </td>
-                      </tr>
-                    )}
-                  </tbody>
-                </Table>
-              </div>
-            </Card.Body>
-          </Card>
-        </Col>
-
-        <Col md={6}>
-          <Card className="shadow-sm">
-            <Card.Header className="bg-white fw-bold">Subjects</Card.Header>
-            <Card.Body>
-              <div className="table-responsive">
-                <Table hover size="sm" className="mb-0">
-                  <thead>
-                    <tr>
-                      <th>Name</th>
-                      <th>Code</th>
-                      <th>Dept</th>
-                      <th>Course</th>
-                      <th>Sem</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {filteredSubjects.map((s) => (
-                      <tr key={s._id}>
-                        <td>{s.name}</td>
-                        <td>{s.code}</td>
-                        <td>{s.department?.name || "-"}</td>
-                        <td>{s.course?.name || "-"}</td>
-                        <td>{s.semester?.number || "-"}</td>
-                      </tr>
-                    ))}
-                    {!filteredSubjects.length && (
-                      <tr>
-                        <td colSpan={5} className="text-muted text-center py-3">
-                          {subjects.length ? "No subjects match current filters" : "No subjects yet"}
-                        </td>
-                      </tr>
-                    )}
-                  </tbody>
-                </Table>
-              </div>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
+                </Tab.Pane>
+                <Tab.Pane eventKey="semesters">
+                  <SemestersManager
+                    notify={notify}
+                    onDataChange={() => refreshData("semesters")}
+                    departments={globalData.departments}
+                    courses={globalData.courses}
+                    semesters={globalData.semesters}
+                    setGlobalData={setGlobalData}
+                  />
+                </Tab.Pane>
+                <Tab.Pane eventKey="subjects">
+                  <SubjectsManager
+                    notify={notify}
+                    onDataChange={() => refreshData("subjects")}
+                    globalData={globalData}
+                    setGlobalData={setGlobalData}
+                  />
+                </Tab.Pane>
+              </Tab.Content>
+            </Col>
+          </Row>
+        </Tab.Container>
+      </Container>
     </div>
   )
 }
-
-
