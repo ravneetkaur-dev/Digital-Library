@@ -1,8 +1,8 @@
 import axios from "axios"
 
 export const API_BASE_URL =
-  (typeof window !== "undefined" && (localStorage.getItem("API_BASE_URL") || window.API_BASE_URL)) ||
-  "http://localhost:5000"
+  // (typeof window !== "undefined" && (localStorage.getItem("API_BASE_URL") || window.API_BASE_URL)) ||
+  "https://digital-library-mxou.onrender.com"
 
 export const api = axios.create({
   baseURL: API_BASE_URL,
