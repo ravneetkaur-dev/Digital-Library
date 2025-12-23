@@ -5,12 +5,17 @@ import dotenv from 'dotenv';
 import multer from 'multer';
 import path from 'path';
 import { faculty } from '../models/index.js';
+import uploadDir from '../config/uploads.js';
 
 dotenv.config();
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'uploads/facultyimages/'); // make sure this folder exists
-  },
+        const facultyFolder = path.join(uploadDir, 'facultyimages'); // /tmp/uploads/facultyimages
+        if (!fs.existsSync(facultyFolder)) {
+            fs.mkdirSync(facultyFolder, { recursive: true });
+        }
+        cb(null, facultyFolder);
+    },
   filename: (req, file, cb) => {
     cb(null, `${Date.now()}-${file.originalname}`);
   }

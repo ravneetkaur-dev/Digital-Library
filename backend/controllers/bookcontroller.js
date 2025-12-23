@@ -1,10 +1,11 @@
 import book from '../models/Book.js';
 import multer from 'multer';
 import mongoose from 'mongoose';
+import uploadDir from '../config/uploads.js';
 
 // Multer storage config
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, "./uploads"),
+  destination: (req, file, cb) => cb(null, uploadDir),
   filename: (req, file, cb) => cb(null, `${Date.now()}+${file.originalname}`)
 });
 

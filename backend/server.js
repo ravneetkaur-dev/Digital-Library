@@ -17,6 +17,7 @@ import notes from './routes/notes.js';
 import notification from './routes/notification.js';
 import course from './routes/courseRoute.js'; // Import course routes
 import subjects from './routes/subjects.js';
+import uploadDir from './config/uploads.js';
 dotenv.config();
 
 const app = express();
@@ -28,7 +29,7 @@ app.use(cors({
     credentials: true
 }));
 app.set('view engine', 'ejs');
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/uploads', express.static(uploadDir));
 app.use(express.json()); 
 app.use('/api/faculty', facultyRouter);
 //app.use('/api/admin', adminRouter);

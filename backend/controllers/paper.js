@@ -4,11 +4,12 @@ import multer from 'multer'
 import notification from '../models/notification.js'
 import mongoose from 'mongoose'
 import { adminAuth } from '../middlewares/adminauth.js'
+import uploadDir from '../config/uploads.js'
 
 // Multer storage
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        return cb(null, './uploads');
+        return cb(null, uploadDir);
     },
     filename: function (req, file, cb) {
         return cb(null, `${Date.now()}+${file.originalname}`);

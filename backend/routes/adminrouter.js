@@ -1,12 +1,19 @@
 import express from 'express';
 import { registerUser, updateFaculty, deleteFaculty, getFaculty } from '../controllers/facultyManagmentController.js';
 import multer from 'multer';
+import uploadDir from '../config/uploads.js';
 
 const router = express.Router();
 
 // Multer config for profile image
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, './uploads/facultyimages'),
+  destination: (req, file, cb) => {
+        const facultyFolder = path.join(uploadDir, 'facultyimages'); // /tmp/uploads/facultyimages
+        if (!fs.existsSync(facultyFolder)) {
+            fs.mkdirSync(facultyFolder, { recursive: true });
+        }
+        cb(null, facultyFolder);
+    },
   filename: (req, file, cb) => cb(null, Date.now() + '-' + file.originalname),
 });
 const upload = multer({ storage });
