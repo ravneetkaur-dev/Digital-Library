@@ -1,5 +1,5 @@
 import { Home } from './pages/Home';
-import { About } from './pages/About';
+import { About } from './pages/about';
 import {BrowserRouter as Router,Routes,Route } from 'react-router-dom';
 import { Contact } from './pages/contact';
 import { Resources } from './pages/Resources';
@@ -18,8 +18,8 @@ function App() {
     <>
       <ScrollToTop>
         <Routes>
-          {/* <Route path='/' element={<WelcomePage/>}/> */}
-          <Route path="/" element={<Home/>}/>
+          <Route path='/' element={<WelcomePage/>}/>
+          <Route path="/home" element={<Home/>}/>
           <Route path="/about" element={<About/>}/>
           {/* <Route path="/paper" element={<Paper/>}/> */}
           {/* <Route path="/syllabus" element={<Syllabus/>}/> */}
