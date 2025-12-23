@@ -1,19 +1,22 @@
 import syllabusmodel from '../models/Syllabus.js';
 import multer from 'multer';
 import mongoose from 'mongoose';
+import uploadDir from '../config/uploads.js';
+import path from 'path'
+import fs from 'fs'
 
 // Multer setup
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         const syllabusFolder = path.join(uploadDir, 'syllabus'); // /tmp/uploads/syllabus
         if (!fs.existsSync(syllabusFolder)) {
-            fs.mkdirSync(syllabusFolder, { recursive: true });
-        }
+            fs.mkdirSync(syllabusFolder,{ recursive: true });
+        } 
         cb(null, syllabusFolder);
     },
     filename: (req, file, cb) => cb(null, `${Date.now()}+${file.originalname}`)
 });
-export const uploads = multer({ storage });
+export const upload = multer({ storage });
 
 // Upload new syllabus
 export const syllabus = async (req, res) => {

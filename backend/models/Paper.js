@@ -50,11 +50,15 @@ const paperSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    resources: [{
-        filename: String,
-        fileType: String,
-        fileUrl: String
-    }]
+    // resources: [{
+    //     filename: String,
+    //     fileType: String,
+    //     fileUrl: String
+    // }]
+    fileUrl: {
+        type: String,
+        required: true
+    },
 });
 
 const Paper = mongoose.model("Paper", paperSchema);

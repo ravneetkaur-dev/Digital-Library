@@ -58,7 +58,7 @@ const PapersView = ({ selectedSubject, papers, loadingPapers, error, onBack, onE
                         ? paper.semester
                         : paper.semester?.number || "N/A"
 
-                    const file = paper.resources?.[0]
+                    const file = paper.fileUrl
 
                     return (
                       <tr key={paper._id}>
@@ -77,7 +77,7 @@ const PapersView = ({ selectedSubject, papers, loadingPapers, error, onBack, onE
                                 <Button
                                   variant="outline-primary"
                                   className="res-paper-btn res-paper-btn-download"
-                                  onClick={() => handleView(file.fileUrl)}
+                                  onClick={() => handleView(file)}
                                 >
                                   <FaEye className="me-1" />
                                   View

@@ -5,16 +5,35 @@ import notification from '../models/notification.js'
 import mongoose from 'mongoose'
 import { adminAuth } from '../middlewares/adminauth.js'
 import uploadDir from '../config/uploads.js'
+import path from 'path'
+import fs from 'fs'
 
 // Multer storage
+// const storage = multer.diskStorage({
+//     destination: function (req, file, cb) {
+//         return cb(null, uploadDir);
+//     },
+//     filename: function (req, file, cb) {
+//         return cb(null, `${Date.now()}+${file.originalname}`);
+//     }
+// });
+
+
+
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        return cb(null, uploadDir);
-    },
-    filename: function (req, file, cb) {
-        return cb(null, `${Date.now()}+${file.originalname}`);
-    }
+    destination: (req, file, cb) => {
+        const paperFolder = path.join(uploadDir, 'papers'); // /tmp/uploads/syllabus
+        if (!fs.existsSync(paperFolder)) {
+            fs.mkdirSync(paperFolder, { recursive: true });
+        }
+        cb(null, paperFolder);
+    }, 
+    filename: (req, file, cb) => cb(null, `${Date.now()}+${file.originalname}`)
 });
+// export const upload = multer({ storage }).fields([
+//   { name: 'file', maxCount: 1 },
+//   { name: 'coverImage', maxCount: 1 }
+// ]);
 
 export const upload = multer({ storage });
 
@@ -31,13 +50,19 @@ export const papercontroller = async (req, res) => {
             return res.status(401).json({ error: 'Unauthorized: User ID missing' });
         }
 
-        const resources = req.files
-            ? req.files.map(f => ({
-                filename: f.filename,
-                fileType: f.mimetype,
-                fileUrl: `/uploads/${f.filename}`
-            }))
-            : [];
+        if (!req.file) {
+            return res.status(400).json({ message: "File is required" });
+        }
+
+        const fileUrl = `/uploads/papers/${req.file.filename}`;
+
+        // const resources = req.files
+        //     ? req.files.map(f => ({
+        //         filename: f.filename,
+        //         fileType: f.mimetype,
+        //         fileUrl: `/uploads/${f.filename}`
+        //     }))
+        //     : [];
 
         const newnote = new Paper({
             title,
@@ -47,7 +72,7 @@ export const papercontroller = async (req, res) => {
             year,
             uploadedBy,
             description,
-            resources,
+            fileUrl,
             course
         });
 

@@ -75,7 +75,7 @@ export default function PaperUploadForm() {
         fd.append("course", values.course)
         fd.append("department", values.department)
         if (values.description) fd.append("description", values.description)
-        if (values.file) fd.append("resources", values.file)
+        if (values.file) fd.append("file", values.file)
 
         await apiUpload(ENDPOINTS.papers.create, fd)
         toast.success("Paper uploaded successfully.", {

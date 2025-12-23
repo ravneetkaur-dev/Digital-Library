@@ -2,14 +2,33 @@ import book from '../models/Book.js';
 import multer from 'multer';
 import mongoose from 'mongoose';
 import uploadDir from '../config/uploads.js';
+import path from 'path';
+import fs from 'fs';
 
 // Multer storage config
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, uploadDir),
-  filename: (req, file, cb) => cb(null, `${Date.now()}+${file.originalname}`)
-});
+// const storage = multer.diskStorage({
+//   destination: (req, file, cb) => cb(null, uploadDir),
+//   filename: (req, file, cb) => cb(null, `${Date.now()}+${file.originalname}`)
+// });
 
-// Accept single 'file' and optional 'coverImage'
+// // Accept single 'file' and optional 'coverImage'
+// export const upload = multer({ storage }).fields([
+//   { name: 'file', maxCount: 1 },
+//   { name: 'coverImage', maxCount: 1 }
+// ]);
+
+
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        const bookFolder = path.join(uploadDir, 'books'); // /tmp/uploads/syllabus
+        if (!fs.existsSync(bookFolder)) {
+            fs.mkdirSync(bookFolder, { recursive: true });
+        }
+        cb(null, bookFolder);
+    }, 
+    filename: (req, file, cb) => cb(null, `${Date.now()}+${file.originalname}`)
+});
 export const upload = multer({ storage }).fields([
   { name: 'file', maxCount: 1 },
   { name: 'coverImage', maxCount: 1 }
@@ -26,6 +45,7 @@ export const uploadedfile = async (req, res) => {
 
     const mainFile = req.files.file[0];
     const coverFile = req.files.coverImage ? req.files.coverImage[0] : undefined;
+    console.log(mainFile, coverFile)
 
     const newBook = new book({
       title,
@@ -37,8 +57,8 @@ export const uploadedfile = async (req, res) => {
       isbn: isbn || undefined,
       edition: edition || undefined,
       pages: pages ? Number(pages) : undefined,
-      fileUrl: mainFile.path,
-      coverImageUrl: coverFile ? coverFile.path : undefined,
+      fileUrl: `/uploads/books/${mainFile.filename}`,
+      coverImageUrl: coverFile ? `/uploads/books/${coverFile.filename}` : undefined,
       uploadedBy: new mongoose.Types.ObjectId(uploadedBy),
       visibility: visibility || "public",
       available: available !== undefined ? Boolean(available) : true,

@@ -29,13 +29,13 @@ export const note = async (req, res) => {
       type: req.body[`extraLinks[${i}][type]`] || link.type
     }));
 
-    // Handle files
+    // Handle files            
     const resources = req.files
       ? req.files.map(f => ({
           filename: f.filename,
           fileType: f.mimetype,
           fileUrl: `/uploads/${f.filename}`
-        }))
+        }))         
       : [];
 
     // Save note

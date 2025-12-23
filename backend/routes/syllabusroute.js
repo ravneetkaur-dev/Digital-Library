@@ -1,9 +1,10 @@
 import express from 'express';
 import multer from 'multer';
 import { adminAuth } from '../middlewares/adminauth.js';
-import { syllabus, getSyllabus, getSyllabusById, deleteSyllabus ,uploads} from '../controllers/syllabuscontroller.js';
+import { upload } from '../controllers/syllabuscontroller.js';
+import { syllabus, getSyllabus, getSyllabusById, deleteSyllabus } from '../controllers/syllabuscontroller.js';
 const router = express.Router();
-const upload =multer({dest: '/uploads/syllabus/'});
+// const upload =multer({dest: '/uploads/syllabus/'});
 router.post('/uploadsyllabus',adminAuth, upload.single('file'), syllabus);
 router.get('/getsyllabus', getSyllabus);
 router.get('/getsyllabus/:id', getSyllabusById);
