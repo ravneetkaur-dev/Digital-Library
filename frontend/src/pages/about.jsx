@@ -129,9 +129,9 @@ export const About = () => {
     },
     {
       name: "Ravneet Kaur",
-      role: "Frontend Developer & Integration Specialist",
+      role: "Frontend Developer | Integration & Deployment",
       description:
-        "Responsible for user interface design, user experience optimization, and seamless integration of frontend with backend services. Focused on creating intuitive and responsive designs that enhance the overall user experience.",
+        "Crafted a responsive and accessible user interface with React and Bootstrap, enabled efficient integration with backend services, and managed the deployment to deliver a consistent user experience across devices.",
       skills: ["React", "JavaScript", "CSS", "UI/UX Design", "API Integration", "Responsive Design"],
       pic: "/images/ravneet.jpg",
       colorClass: "frontend-dev",
