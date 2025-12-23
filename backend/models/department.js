@@ -6,7 +6,7 @@ const departmentSchema = new mongoose.Schema({
     required: true,
     unique: true,
     trim: true,
-    enum: ['Computer Applications', 'Business Managament']
+    // enum: ['Computer Applications', 'Business Management']
   }
 }, { timestamps: true });
 
