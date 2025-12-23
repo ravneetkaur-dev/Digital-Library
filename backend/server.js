@@ -28,7 +28,7 @@ app.use(cors({
     credentials: true
 }));
 app.set('view engine', 'ejs');
-app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(express.json()); 
 app.use('/api/faculty', facultyRouter);
 //app.use('/api/admin', adminRouter);
